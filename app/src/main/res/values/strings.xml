@@ -12,4 +12,6 @@
     <string name="btn_depositar">Depositar</string>
     <string name="btn_retirar">Retirar</string>
     <string name="nueva_skill">Nueva Skill</string>
+    <string name="hint_et_titulo">Título*</string>
+    <string name="tv_categoria">Seleccione una categoria:</string>
 </resources>

@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 			BalanceFragment balanceFragment = new BalanceFragment();
 			transaction.replace(R.id.flPrincipal, balanceFragment);
 		} else if (menuItem.getItemId() == R.id.botNavVarAdd) {
-			Intent i = new Intent(this, NuevaSkillActivity.class);
+			Intent i = new Intent(this, SeleccionActivity.class);
 			startActivity(i);
 //		} else if (menuItem.getItemId() == R.id.botNavVarPerfil) {
 //			Intent i = new Intent(this, MiPerfilActivity.class);
