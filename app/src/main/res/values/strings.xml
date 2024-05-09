@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">ArmoniaSkills</string>
+    <string name="inicio">Inicio</string>
+    <string name="mi_perfil">Perfil</string>
+    <string name="mi_balance">Balance</string>
+    <string name="chat">Chat</string>
+    <string name="nuevo">Nuevo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="barra_buscar">Buscar</string>
+    <string name="eliminar_hist">Borrar historial</string>
+    <string name="btn_depositar">Depositar</string>
+    <string name="btn_retirar">Retirar</string>
+    <string name="nueva_skill">Nueva Skill</string>
 </resources>
