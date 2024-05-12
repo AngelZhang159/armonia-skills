@@ -5,8 +5,6 @@
     <string name="mi_balance">Balance</string>
     <string name="chat">Chat</string>
     <string name="nuevo">Nuevo</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="barra_buscar">Buscar</string>
     <string name="eliminar_hist">Borrar historial</string>
     <string name="btn_depositar">Depositar</string>
@@ -14,4 +12,26 @@
     <string name="nueva_skill">Nueva Skill</string>
     <string name="hint_et_titulo">Título*</string>
     <string name="tv_categoria">Seleccione una categoria:</string>
+    <string name="login_bienvenida">Bienvenido a</string>
+    <string name="introduce_tu_email">Introduce tu email</string>
+    <string name="introduce_tu_contra">Introduce tu contraseña</string>
+    <string name="btn_login">Iniciar sesión</string>
+    <string name="btn_reg">Registrar nueva cuenta</string>
+    <string name="campos_obligatorios">Tienes que introducir ambos campos</string>
+    <string name="err_login">Email o contraseña incorrectos</string>
+    <string name="err_servidor">Error de conexión con el servidor</string>
+    <string name="err_desconocido">Error desconocido</string>
+    <string name="ok_login">Sesión iniciada</string>
+    <string name="tv_registro">Registro</string>
+    <string name="btn_crear_cuenta">Crear cuenta</string>
+    <string name="hint_et_telefono">Número de tlf. (Opcional)</string>
+    <string name="hint_et_contra">Contraseña*</string>
+    <string name="hint_et_email">Correo electrónico*</string>
+    <string name="hint_et_nombre">Nombre*</string>
+    <string name="hint_et_nombre_usuario">Nombre de usuario*</string>
+    <string name="hint_et_ape">Apellidos*</string>
+    <string name="registro_correcto">Cuenta registrada con éxito</string>
+    <string name="registro_incorrecto">Error al crear cuenta</string>
+    <string name="error_conexion">Error al conectar con el servidor</string>
+    <string name="err_sesion_expirada">Sesión expirada, vuelve a iniciar sesión</string>
 </resources>
