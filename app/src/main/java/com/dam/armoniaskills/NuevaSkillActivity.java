@@ -1,8 +1,13 @@
 package com.dam.armoniaskills;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -10,10 +15,10 @@ import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dam.armoniaskills.model.Categoria;
+import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.recyclerutils.AdapterImagenes;
 
 import java.util.ArrayList;
@@ -21,22 +26,34 @@ import java.util.List;
 
 public class NuevaSkillActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Categoria categoria;
     RecyclerView rvImagenes;
     AdapterImagenes adapter;
+    EditText etTitulo, etDescripcion, etPrecio, etCiudad;
+    TextView tvCategoria;
+    ImageView imvCategoria;
+    Button btnConfirmar, btnCancelar;
+
+    Uri uriVacio;
     Uri imageUri;
     List<Uri> listaImagenes;
-    int pos;
 
-    ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia = registerForActivityResult(
+    int pos;
+    String tituloI;
+    Categoria categoria;
+
+    /*ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia = registerForActivityResult(
             new ActivityResultContracts.PickMultipleVisualMedia(10), listaUris -> {
                 if (listaUris != null) {
                     listaImagenes = listaUris;
+
+                    for (int i = 0; i < 10 - listaImagenes.size(); i++) {
+                        listaImagenes.add(uriVacio);
+                    }
                     configurarRV();
                 } else {
                     Toast.makeText(this, "No ha seleccionado ninguna imagen", Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
 
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(
             new ActivityResultContracts.PickVisualMedia(), uri -> {
@@ -46,6 +63,7 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
                     adapter.notifyDataSetChanged();
                 } else {
                     listaImagenes.remove(pos);
+                    listaImagenes.add(pos, uriVacio);
                     adapter.notifyDataSetChanged();
                 }
             });
@@ -55,24 +73,73 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_skill);
 
+        uriVacio = Uri.parse("https://imgur.com/0Nx74cC");
+
         rvImagenes = findViewById(R.id.rvImagenes);
+        etTitulo = findViewById(R.id.etTituloNuevaSkill);
+        etDescripcion = findViewById(R.id.etDescNuevaSkill);
+        etPrecio = findViewById(R.id.etPrecioNuevaSkill);
+        tvCategoria = findViewById(R.id.tvCategoriaNuevaSkill);
+        imvCategoria = findViewById(R.id.imgCategoriaNuevaSkill);
+        btnConfirmar = findViewById(R.id.btnConfirmarNuevaSkill);
+        btnCancelar = findViewById(R.id.btnCancelarNuevaSkill);
 
         listaImagenes = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            listaImagenes.add(uriVacio);
+        }
 
-        pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
+        configurarRV();
+
+        /*pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                .build());
+                .build());*/
 
+        tituloI = getIntent().getStringExtra(SeleccionActivity.CLAVE_TITULO);
         categoria = getIntent().getParcelableExtra(SeleccionActivity.CLAVE_CAT);
+
+        etTitulo.setText(tituloI);
+        imvCategoria.setImageResource(categoria.getImagen());
+        tvCategoria.setText(categoria.getTitulo());
+
+        btnConfirmar.setOnClickListener(this);
+        btnCancelar.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        pos = rvImagenes.getChildAdapterPosition(v);
+        String titulo = etTitulo.getText().toString();
+        String descripcion = etDescripcion.getText().toString();
+        String precio = etPrecio.getText().toString();
+        String ciudad = etCiudad.getText().toString();
+        
+        if (v.getId() == R.id.btnConfirmarNuevaSkill) {
+            if(listaImagenes.isEmpty()) {
+                Toast.makeText(this, "Debe seleccionar al menos una imagen", Toast.LENGTH_SHORT).show();
+            } else if (titulo.isEmpty()) {
+                Toast.makeText(this, "Debe introducir un título", Toast.LENGTH_SHORT).show();
+            } else if (descripcion.isEmpty()) {
+                Toast.makeText(this, "Debe introducir una descripción", Toast.LENGTH_SHORT).show();
+            } else if (precio.isEmpty()) {
+                Toast.makeText(this, "Debe introducir un precio", Toast.LENGTH_SHORT).show();
+            } else {
+                Skill skill = new Skill(listaImagenes, titulo, descripcion, precio, categoria, ciudad);
+                crearSkill(skill);
+            }
+        } else if (v.getId() == R.id.btnCancelarNuevaSkill) {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+        } else {
+            pos = rvImagenes.getChildAdapterPosition(v);
 
-        pickMedia.launch(new PickVisualMediaRequest.Builder()
-                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                .build());
+            pickMedia.launch(new PickVisualMediaRequest.Builder()
+                    .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                    .build());
+        }
+    }
+
+    private void crearSkill(Skill skill) {
+
     }
 
     private void configurarRV() {

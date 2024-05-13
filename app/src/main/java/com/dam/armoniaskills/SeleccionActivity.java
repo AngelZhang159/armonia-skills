@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class SeleccionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 	public static final String CLAVE_CAT = "CATEGORIA";
+	public static final String CLAVE_TITULO = "TITULO";
 
 	CategoriaAdapter adapter;
 	ArrayList<Categoria> listaCategorias;
@@ -53,6 +54,7 @@ public class SeleccionActivity extends AppCompatActivity implements AdapterView.
 		} else {
 			Intent i = new Intent(this, NuevaSkillActivity.class);
 			i.putExtra(CLAVE_CAT, listaCategorias.get(position));
+			i.putExtra(CLAVE_TITULO, titulo);
 			startActivity(i);
 		}
 	}
