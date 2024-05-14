@@ -48,7 +48,7 @@
 <!--            </intent-filter>-->
         </activity>
         <activity
-            android:name=".PerfilActivity"
+            android:name=".MiPerfilActivity"
             android:exported="false" />
     </application>
 

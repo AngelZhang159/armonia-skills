@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 			Intent i = new Intent(this, SeleccionActivity.class);
 			startActivity(i);
 		} else if (menuItem.getItemId() == R.id.botNavVarPerfil) {
-			Intent i = new Intent(this, PerfilActivity.class);
+			Intent i = new Intent(this, MiPerfilActivity.class);
 			startActivity(i);
 		}
 		transaction.commit();

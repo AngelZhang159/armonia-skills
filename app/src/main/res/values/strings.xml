@@ -17,7 +17,7 @@
     <string name="introduce_tu_contra">Introduce tu contraseña</string>
     <string name="btn_login">Iniciar sesión</string>
     <string name="btn_reg">Registrar nueva cuenta</string>
-    <string name="campos_obligatorios">Tienes que introducir ambos campos</string>
+    <string name="campos_obligatorios">Tienes que introducir todos los campos obligatorios (*)</string>
     <string name="err_login">Email o contraseña incorrectos</string>
     <string name="err_servidor">Error de conexión con el servidor</string>
     <string name="err_desconocido">Error desconocido</string>
@@ -34,4 +34,19 @@
     <string name="registro_incorrecto">Error al crear cuenta</string>
     <string name="error_conexion">Error al conectar con el servidor</string>
     <string name="err_sesion_expirada">Sesión expirada, vuelve a iniciar sesión</string>
+    <string name="tv_perfil">Perfil</string>
+    <string name="cambiar_datos">Cambiar datos</string>
+    <string name="btn_actualizar_datos">Actualizar datos</string>
+    <string name="btn_cambiar_contrasenia">Cambiar contraseña</string>
+    <string name="hint_et_repcontra">Repetir contraseña</string>
+    <string name="btn_cerrar_sesion">Cerrar sesión</string>
+    <string name="seleccionar_img">No se ha seleccionado ninguna imagen</string>
+    <string name="dialog_msg_perfil">¿Estas seguro de que quieres cerrar la sesión?</string>
+    <string name="btn_aceptar_d">Aceptar</string>
+    <string name="btn_cancelar_d">Cancelar</string>
+    <string name="hint_et_username">Nombre de usuario*</string>
+    <string name="contra_obligatoria">Debe introducir una contraseña para cambiarla</string>
+    <string name="rep_contra_obligatoria">Por favor, repita la contraseña</string>
+    <string name="contra_no_coinciden">Las contraseñas no coinciden</string>
+    <string name="tlf_invalido">El número de teléfono es inválido</string>
 </resources>
