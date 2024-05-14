@@ -123,8 +123,9 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
             } else if (precio.isEmpty()) {
                 Toast.makeText(this, "Debe introducir un precio", Toast.LENGTH_SHORT).show();
             } else {
-                Skill skill = new Skill(listaImagenes, titulo, descripcion, precio, categoria, ciudad);
-                crearSkill(skill);
+                //TODO
+                //Skill skill = new Skill(titulo, descripcion, categoria, precio, ciudad,  ,listaImagenes);
+                //crearSkill(skill);
             }
         } else if (v.getId() == R.id.btnCancelarNuevaSkill) {
             Intent i = new Intent(this, MainActivity.class);

@@ -3,23 +3,26 @@ package com.dam.armoniaskills.model;
 import android.net.Uri;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Skill {
 
-    private List<Uri> imagenes;
     private String titulo;
     private String descripcion;
-    private String precio;
     private Categoria categoria;
+    private String precio;
     private String ciudad;
+    private UUID usuarioId;
+    private List<Uri> imagenes;
 
-    public Skill(List<Uri> imagenes, String titulo, String descripcion, String precio, Categoria categoria, String ciudad) {
+    public Skill(List<Uri> imagenes, String titulo, String descripcion, String precio, Categoria categoria, String ciudad, UUID usuarioId) {
         this.imagenes = imagenes;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.precio = precio;
         this.categoria = categoria;
         this.ciudad = ciudad;
+        this.usuarioId = usuarioId;
     }
 
     public List<Uri> getImagenes() {
