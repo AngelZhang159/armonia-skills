@@ -75,4 +75,6 @@
     <string name="categoria21">Turismo</string>
     <string name="categoria22">Otros</string>
     <string name="err_imagen_servidor">No se ha podido subir la imagen</string>
+    <string name="skill_creada">Skill creada con exito</string>
+    <string name="error_creacion_skill">Error al crear la Skill</string>
 </resources>

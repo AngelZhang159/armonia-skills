@@ -1,75 +1,72 @@
 package com.dam.armoniaskills.model;
 
-import android.net.Uri;
-
 import java.util.List;
 import java.util.UUID;
 
 public class Skill {
 
-    private String titulo;
-    private String descripcion;
-    private Categoria categoria;
-    private String precio;
-    private String ciudad;
-    private UUID usuarioId;
-    private List<Uri> imagenes;
+    private String title;
+    private String description;
+    private String category;
+    private String price;
+    private String location;
+    private UUID userID;
+    private List<String> imageList;
 
-    public Skill(List<Uri> imagenes, String titulo, String descripcion, String precio, Categoria categoria, String ciudad, UUID usuarioId) {
-        this.imagenes = imagenes;
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.categoria = categoria;
-        this.ciudad = ciudad;
-        this.usuarioId = usuarioId;
+    public Skill(String title, String description, String category, String price, String location, List<String> imageList) {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.price = price;
+        this.location = location;
+        this.imageList = imageList;
     }
 
-    public List<Uri> getImagenes() {
-        return imagenes;
+    public List<String> getImageList() {
+        return imageList;
     }
 
-    public void setImagenes(List<Uri> imagenes) {
-        this.imagenes = imagenes;
+    public void setImageList(List<String> imageList) {
+        this.imageList = imageList;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getPrecio() {
-        return precio;
+    public String getPrice() {
+        return price;
     }
 
-    public void setPrecio(String precio) {
-        this.precio = precio;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

@@ -18,12 +18,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.model.Categoria;
 import com.dam.armoniaskills.model.Skill;
+import com.dam.armoniaskills.network.ImageUpload;
+import com.dam.armoniaskills.network.RetrofitClient;
+import com.dam.armoniaskills.network.UploadCallback;
 import com.dam.armoniaskills.recyclerutils.AdapterImagenes;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NuevaSkillActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -119,14 +128,31 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
             } else if (precio.isEmpty()) {
                 Toast.makeText(this, "Debe introducir un precio", Toast.LENGTH_SHORT).show();
             } else {
+
+
+                List<String> imageList = new ArrayList<>();
+                ImageUpload imageUpload = new ImageUpload();
                 for (int i = 0; i < listaImagenes.size(); i++) {
-                    if (listaImagenes.get(i) == null) {
-                        listaImagenes.remove(i);
-                    }
+                    imageUpload.subirImagen(listaImagenes.get(i), getContentResolver(), new UploadCallback() {
+                        @Override
+                        public void onSuccess(String result) {
+                            imageList.add(result);
+                        }
+
+                        @Override
+                        public void onError(Throwable throwable) {
+                            Log.e("error", throwable.toString());
+                        }
+                    });
                 }
-                //TODO
-                //Skill skill = new Skill(titulo, descripcion, categoria, precio, ciudad,  ,listaImagenes);
-                //crearSkill(skill);
+
+
+                // Crear Skill y guardarla en la BBDD
+
+                Skill skill = new Skill(titulo, descripcion, categoria.getTitulo(), precio, ciudad, imageList);
+                crearSkill(skill);
+
+
             }
         } else if (v.getId() == R.id.btnCancelarNuevaSkill) {
             Intent i = new Intent(this, MainActivity.class);
@@ -147,6 +173,29 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void crearSkill(Skill skill) {
+
+        SharedPrefManager sharedPrefManager = new SharedPrefManager(getApplicationContext());
+
+        Call<ResponseBody> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .postSkill(sharedPrefManager.fetchJwt(), skill);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Toast.makeText(NuevaSkillActivity.this, R.string.skill_creada, Toast.LENGTH_SHORT).show();
+                finish();
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                Toast.makeText(NuevaSkillActivity.this, R.string.error_creacion_skill, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
 
     }
 

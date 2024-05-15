@@ -1,5 +1,6 @@
 package com.dam.armoniaskills.network;
 
+import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.model.User;
 
 import okhttp3.MultipartBody;
@@ -32,4 +33,9 @@ public interface Api {
 	@Multipart
 	@POST("api/v1/file/upload")
 	Call<ResponseBody> uploadImage(@Part MultipartBody.Part file);
+
+
+	//Crear nueva Skill
+	@POST("api/v1/skill")
+	Call<ResponseBody> postSkill(@Header("Authorization") String jwt, @Body Skill skill);
 }
