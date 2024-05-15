@@ -22,7 +22,6 @@ public class SeleccionActivity extends AppCompatActivity implements AdapterView.
 
 	CategoriaAdapter adapter;
 	ArrayList<Categoria> listaCategorias;
-	Categoria categoria;
 
 	EditText etTitulo;
 	ListView lstCat;
@@ -36,13 +35,26 @@ public class SeleccionActivity extends AppCompatActivity implements AdapterView.
 		lstCat = findViewById(R.id.lvCategorias);
 
 		listaCategorias = new ArrayList<>();
-		categoria = new Categoria(R.drawable.baseline_add_24, "Hola");
-		listaCategorias.add(categoria);
+		rellenarLista();
 
 		adapter = new CategoriaAdapter(this, listaCategorias);
 		lstCat.setAdapter(adapter);
 
 		lstCat.setOnItemClickListener(this);
+	}
+
+	private void rellenarLista() {
+		String[] nombres = {getString(R.string.categoria1), getString(R.string.categoria2), getString(R.string.categoria3), getString(R.string.categoria4)
+		, getString(R.string.categoria5), getString(R.string.categoria6), getString(R.string.categoria7), getString(R.string.categoria8)};
+
+		int[] imagenes = {R.drawable.design, R.drawable.digitalmarketing, R.drawable.videoediting,
+				R.drawable.musicalnote, R.drawable.webprogramming, R.drawable.cooperation,
+				R.drawable.photography, R.drawable.helmet};
+
+		for (int i = 0; i < nombres.length; i++) {
+			Categoria categoria = new Categoria(imagenes[i], nombres[i]);
+			listaCategorias.add(categoria);
+		}
 	}
 
 	@Override

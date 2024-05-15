@@ -52,4 +52,12 @@
     <string name="contra_actualizada">Contraseña actualizada correctamente.</string>
     <string name="datos_actualizados">Datos actualizados correctamente.</string>
     <string name="usuario_existente">El nombre de usuario ya existe.</string>
+    <string name="categoria1">Diseño grafico</string>
+    <string name="categoria2">Marketing digital</string>
+    <string name="categoria3">Animación &amp; Video</string>
+    <string name="categoria4">Música &amp; Audio</string>
+    <string name="categoria5">Programación &amp; Tecnologia</string>
+    <string name="categoria6">Negocios</string>
+    <string name="categoria7">Fotografía</string>
+    <string name="categoria8">Construcción &amp; Reformas</string>
 </resources>

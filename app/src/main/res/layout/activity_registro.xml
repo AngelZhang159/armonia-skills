@@ -27,7 +27,7 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/margen"
-        android:src="@drawable/perfil" />
+        android:src="@drawable/user" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
