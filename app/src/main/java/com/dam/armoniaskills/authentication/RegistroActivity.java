@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.model.User;
 import com.dam.armoniaskills.network.RetrofitClient;
@@ -54,20 +55,21 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnCrearCuentaReg) {
-            String username = etUsuario.getText().toString();
-            String fullName = etNombre.getText().toString() + etApe.getText().toString();
-            String email = etEmail.getText().toString();
-            String password = etContra.getText().toString();
+            String username = etUsuario.getText().toString().trim();
+            String name = etNombre.getText().toString().trim();
+            String surname = etApe.getText().toString().trim();
+            String email = etEmail.getText().toString().trim();
+            String password = etContra.getText().toString().trim();
             int phone = 0;
 
             if (!etTelf.getText().toString().isEmpty()) {
-                phone = Integer.parseInt(etTelf.getText().toString());
+                phone = Integer.parseInt(etTelf.getText().toString().trim());
             }
 
-            if (username.isEmpty() || fullName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            if (username.isEmpty() || name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, getString(R.string.campos_obligatorios), Toast.LENGTH_SHORT).show();
             } else {
-                User user = new User(fullName, username, email, phone, password);
+                User user = new User(name + " " + surname, username, email, phone, password);
                 registar(user);
             }
         }
@@ -89,12 +91,16 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
                      Toast.makeText(RegistroActivity.this, getString(R.string.registro_correcto), Toast.LENGTH_SHORT).show();
                      finish();
                  } else {
-                     Toast.makeText(RegistroActivity.this, getString(R.string.registro_incorrecto), Toast.LENGTH_SHORT).show();
+                     if (response.code() == 409) {
+						 Toast.makeText(RegistroActivity.this, R.string.usuario_existente, Toast.LENGTH_SHORT).show();
+                     } else {
+                         Toast.makeText(RegistroActivity.this, "otro error no 409", Toast.LENGTH_SHORT).show();
+                     }
                  }
              }
              @Override
              public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                 Toast.makeText(RegistroActivity.this, getString(R.string.error_conexion), Toast.LENGTH_SHORT).show();
+                 Toast.makeText(RegistroActivity.this, "err server", Toast.LENGTH_SHORT).show();
              }
          });
     }

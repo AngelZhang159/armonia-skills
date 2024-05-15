@@ -56,8 +56,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 	public void onClick(View v) {
 
 		if (v.getId() == R.id.btnIniciarSesionLogin) {
-			String email = etEmail.getText().toString();
-			String contra = etContra.getText().toString();
+			String email = etEmail.getText().toString().trim();
+			String contra = etContra.getText().toString().trim();
 
 			if (email.isEmpty() || contra.isEmpty()) {
 				Toast.makeText(this, getString(R.string.campos_obligatorios), Toast.LENGTH_SHORT).show();

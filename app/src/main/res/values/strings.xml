@@ -49,4 +49,7 @@
     <string name="rep_contra_obligatoria">Por favor, repita la contraseña</string>
     <string name="contra_no_coinciden">Las contraseñas no coinciden</string>
     <string name="tlf_invalido">El número de teléfono es inválido</string>
+    <string name="contra_actualizada">Contraseña actualizada correctamente.</string>
+    <string name="datos_actualizados">Datos actualizados correctamente.</string>
+    <string name="usuario_existente">El nombre de usuario ya existe.</string>
 </resources>
