@@ -75,19 +75,4 @@
     <string name="categoria21">Turismo</string>
     <string name="categoria22">Otros</string>
     <string name="err_imagen_servidor">No se ha podido subir la imagen</string>
-    <string name="categoria9">Hogar</string>
-    <string name="categoria10">Eventos</string>
-    <string name="categoria11">Transporte</string>
-    <string name="categoria12">Belleza &amp; bienestar</string>
-    <string name="categoria13">Reparaciones</string>
-    <string name="categoria14">Clases &amp; apoyo</string>
-    <string name="categoria15">Comida &amp; bebida</string>
-    <string name="categoria16">Asesoría financiera</string>
-    <string name="categoria17">Salud</string>
-    <string name="categoria18">Mascotas</string>
-    <string name="categoria19">Automoción</string>
-    <string name="categoria20">Entretenimiento</string>
-    <string name="categoria21">Turismo</string>
-    <string name="categoria22">Otros</string>
-    <string name="err_imagen_servidor">No se ha podido subir la imagen</string>
 </resources>

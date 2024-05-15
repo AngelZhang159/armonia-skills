@@ -3,6 +3,7 @@ package com.dam.armoniaskills;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +34,6 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
     ImageView imvCategoria;
     Button btnConfirmar, btnCancelar;
 
-    Uri uriVacio;
     Uri imageUri;
     List<Uri> listaImagenes;
 
@@ -62,7 +62,7 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
                     listaImagenes.set(pos, imageUri);
                     adapter.notifyDataSetChanged();
                 } else {
-                    listaImagenes.set(pos, uriVacio);
+                    listaImagenes.set(pos, null);
                     adapter.notifyDataSetChanged();
                 }
             });
@@ -72,13 +72,13 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_skill);
 
-        uriVacio = null;
         primera = true;
 
         rvImagenes = findViewById(R.id.rvImagenes);
         etTitulo = findViewById(R.id.etTituloNuevaSkill);
         etDescripcion = findViewById(R.id.etDescNuevaSkill);
         etPrecio = findViewById(R.id.etPrecioNuevaSkill);
+        etCiudad = findViewById(R.id.etCiudadNuevaSkill);
         tvCategoria = findViewById(R.id.tvCategoriaNuevaSkill);
         imvCategoria = findViewById(R.id.imgCategoriaNuevaSkill);
         btnConfirmar = findViewById(R.id.btnConfirmarNuevaSkill);
@@ -86,7 +86,7 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 
         listaImagenes = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            listaImagenes.add(uriVacio);
+            listaImagenes.add(null);
         }
 
         configurarRV();
@@ -119,6 +119,11 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
             } else if (precio.isEmpty()) {
                 Toast.makeText(this, "Debe introducir un precio", Toast.LENGTH_SHORT).show();
             } else {
+                for (int i = 0; i < listaImagenes.size(); i++) {
+                    if (listaImagenes.get(i) == null) {
+                        listaImagenes.remove(i);
+                    }
+                }
                 //TODO
                 //Skill skill = new Skill(titulo, descripcion, categoria, precio, ciudad,  ,listaImagenes);
                 //crearSkill(skill);
