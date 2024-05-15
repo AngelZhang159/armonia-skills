@@ -40,20 +40,20 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
     int pos;
     String tituloI;
     Categoria categoria;
+    boolean primera;
 
-    /*ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia = registerForActivityResult(
+    ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia = registerForActivityResult(
             new ActivityResultContracts.PickMultipleVisualMedia(10), listaUris -> {
                 if (listaUris != null) {
-                    listaImagenes = listaUris;
-
-                    for (int i = 0; i < 10 - listaImagenes.size(); i++) {
-                        listaImagenes.add(uriVacio);
+                    for (int i = 0; i < listaUris.size(); i++) {
+                        listaImagenes.set(i, listaUris.get(i));
                     }
-                    configurarRV();
+                    primera = false;
+                    adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(this, "No ha seleccionado ninguna imagen", Toast.LENGTH_SHORT).show();
                 }
-            });*/
+            });
 
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(
             new ActivityResultContracts.PickVisualMedia(), uri -> {
@@ -62,8 +62,7 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
                     listaImagenes.set(pos, imageUri);
                     adapter.notifyDataSetChanged();
                 } else {
-                    listaImagenes.remove(pos);
-                    listaImagenes.add(pos, uriVacio);
+                    listaImagenes.set(pos, uriVacio);
                     adapter.notifyDataSetChanged();
                 }
             });
@@ -73,7 +72,8 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_skill);
 
-        uriVacio = Uri.parse("https://imgur.com/0Nx74cC");
+        uriVacio = null;
+        primera = true;
 
         rvImagenes = findViewById(R.id.rvImagenes);
         etTitulo = findViewById(R.id.etTituloNuevaSkill);
@@ -91,10 +91,6 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 
         configurarRV();
 
-        /*pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
-                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                .build());*/
-
         tituloI = getIntent().getStringExtra(SeleccionActivity.CLAVE_TITULO);
         categoria = getIntent().getParcelableExtra(SeleccionActivity.CLAVE_CAT);
 
@@ -108,12 +104,12 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        String titulo = etTitulo.getText().toString();
-        String descripcion = etDescripcion.getText().toString();
-        String precio = etPrecio.getText().toString();
-        String ciudad = etCiudad.getText().toString();
-        
         if (v.getId() == R.id.btnConfirmarNuevaSkill) {
+            String titulo = etTitulo.getText().toString();
+            String descripcion = etDescripcion.getText().toString();
+            String precio = etPrecio.getText().toString();
+            String ciudad = etCiudad.getText().toString();
+
             if(listaImagenes.isEmpty()) {
                 Toast.makeText(this, "Debe seleccionar al menos una imagen", Toast.LENGTH_SHORT).show();
             } else if (titulo.isEmpty()) {
@@ -131,11 +127,17 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
         } else {
-            pos = rvImagenes.getChildAdapterPosition(v);
+            if (primera) {
+                pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build());
+            } else {
+                pos = rvImagenes.getChildAdapterPosition(v);
 
-            pickMedia.launch(new PickVisualMediaRequest.Builder()
-                    .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                    .build());
+                pickMedia.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build());
+            }
         }
     }
 

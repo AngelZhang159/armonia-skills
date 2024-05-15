@@ -42,7 +42,7 @@
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margen"
-                    android:src="@drawable/perfil" />
+                    android:src="@drawable/user" />
 
                 <TextView
                     android:text="@string/cambiar_datos"

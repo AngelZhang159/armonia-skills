@@ -11,7 +11,6 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="centerCrop"
-        app:shapeAppearance="@style/custom"
-        android:src="@drawable/baseline_photo_camera_24"/>
+        app:shapeAppearance="@style/custom"/>
 
 </RelativeLayout>
