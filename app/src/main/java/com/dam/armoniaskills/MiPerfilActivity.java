@@ -298,6 +298,7 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 						e.printStackTrace();
 					}
 				} else {
+					Log.e("Read User", "onResponse: " + response);
 					Toast.makeText(MiPerfilActivity.this, "Failed to get user data", Toast.LENGTH_SHORT).show();
 				}
 			}

@@ -93,6 +93,7 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 			@Override
 			public void onError(Throwable throwable) {
 				imageURL = null;
+				Log.e("Error imagen: ", throwable.toString());
 				Toast.makeText(RegistroActivity.this, R.string.err_imagen_servidor, Toast.LENGTH_SHORT).show();
 			}
 		});
@@ -111,7 +112,7 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 		}
 
 		if (username.isEmpty() || name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
-			Toast.makeText(RegistroActivity.this, R.string.err_imagen_servidor, Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegistroActivity.this, R.string.campos_obligatorios, Toast.LENGTH_SHORT).show();
 		} else {
 			User user = new User(name + " " + surname, username, email, phone, password, imageURL);
 			register(user);

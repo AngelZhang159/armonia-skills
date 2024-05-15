@@ -5,15 +5,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.dam.armoniaskills.R;
-import com.dam.armoniaskills.authentication.RegistroActivity;
-
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -24,59 +23,59 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ImageUpload {
-    public void subirImagen(Uri imageUri, ContentResolver contentResolver, UploadCallback callback) {
+	public void subirImagen(Uri imageUri, ContentResolver contentResolver, UploadCallback callback) {
 
-        if (imageUri == null) {
-            callback.onError(new NullPointerException("URI is null"));
-            return;
-        }
+		if (imageUri == null) {
+			callback.onError(new NullPointerException("URI is null"));
+			return;
+		}
 
-        MultipartBody.Part filePart = convertUriToMultipartBody(imageUri, contentResolver);
+		MultipartBody.Part filePart = convertUriToMultipartBody(imageUri, contentResolver);
 
-        Call<ResponseBody> call = RetrofitClient
-                .getInstance()
-                .getApi()
-                .uploadImage(filePart);
+		Call<ResponseBody> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.uploadImage(filePart);
 
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        String result = response.body().string();
-                        callback.onSuccess(result);
-                    } catch (IOException e) {
-                        callback.onError(e);
-                    }
-                } else {
-                    callback.onError(new Exception("Response not successful"));
-                }
-            }
+		call.enqueue(new Callback<ResponseBody>() {
+			@Override
+			public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+				if (response.isSuccessful()) {
+					try {
+						String result = response.body().string();
+						callback.onSuccess(result);
+					} catch (IOException e) {
+						callback.onError(e);
+					}
+				} else {
+					callback.onError(new Exception("Response not successful: " + response));
+				}
+			}
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                callback.onError(throwable);
-            }
-        });
-    }
+			@Override
+			public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+				callback.onError(throwable);
+			}
+		});
+	}
 
-    private MultipartBody.Part convertUriToMultipartBody(Uri uri, ContentResolver contentResolver) {
-        // Get the file path from the Uri
-        String filePath = getPathFromUri(uri, contentResolver);
-        File file = new File(filePath);
+	private MultipartBody.Part convertUriToMultipartBody(Uri uri, ContentResolver contentResolver) {
+		// Get the file path from the Uri
+		String filePath = getPathFromUri(uri, contentResolver);
+		File file = new File(filePath);
 
-        // Create a RequestBody instance from the file
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+		// Create a RequestBody instance from the file
+		RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
-        // Create MultipartBody.Part using the file
-        return MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-    }
+		// Create MultipartBody.Part using the file
+		return MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+	}
 
-    private String getPathFromUri(Uri uri, ContentResolver contentResolver) {
-        Cursor cursor = contentResolver.query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
-        cursor.close();
-        return path;
-    }
+	private String getPathFromUri(Uri uri, ContentResolver contentResolver) {
+		Cursor cursor = contentResolver.query(uri, null, null, null, null);
+		cursor.moveToFirst();
+		String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
+		cursor.close();
+		return path;
+	}
 }
