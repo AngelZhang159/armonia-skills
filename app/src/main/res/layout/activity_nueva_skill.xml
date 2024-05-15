@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Información básica"
+            style="@style/textos"
             android:textSize="25sp"
             android:textStyle="bold"/>
 
@@ -78,6 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Categoría"
+            style="@style/textos"
             android:layout_marginTop="@dimen/margen"
             android:textSize="25sp"
             android:textStyle="bold"/>
@@ -101,6 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"/>
         </LinearLayout>
@@ -109,6 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ubicación"
+            style="@style/textos"
             android:layout_marginTop="@dimen/margen"
             android:textSize="25sp"
             android:textStyle="bold"/>

@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login_bienvenida"
-            android:textColor="@color/material_dynamic_secondary50"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -25,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textColor="@color/material_dynamic_primary50"
+            style="@style/textos"
             android:textSize="50sp"
             android:textStyle="bold" />
 
@@ -34,9 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/margen"
             android:hint="@string/introduce_tu_email"
-            app:boxStrokeColor="@color/material_dynamic_primary50"
             app:endIconMode="clear_text"
-            app:hintTextColor="@color/material_dynamic_primary50"
             app:startIconDrawable="@drawable/baseline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -52,9 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/margen"
             android:hint="@string/introduce_tu_contra"
-            app:boxStrokeColor="@color/material_dynamic_primary50"
             app:endIconMode="password_toggle"
-            app:hintTextColor="@color/material_dynamic_primary50"
             app:startIconDrawable="@drawable/baseline_password_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -89,7 +84,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/margen" />
-
 
     </LinearLayout>
 

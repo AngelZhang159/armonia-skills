@@ -60,7 +60,7 @@ public class AdapterImagenes extends RecyclerView.Adapter<AdapterImagenes.Imagen
 
         public void bindImagen(Uri uri) {
             if (uri == null) {
-                imv.setImageResource(R.drawable.baseline_add_a_photo_24);
+                imv.setImageResource(R.drawable.image);
             } else {
                 imv.setImageURI(uri);
             }

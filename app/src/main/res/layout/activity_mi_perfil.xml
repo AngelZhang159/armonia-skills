@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tv_perfil"
+            style="@style/textos"
             android:textAlignment="center"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -48,6 +49,7 @@
                     android:text="@string/cambiar_datos"
                     android:textStyle="bold"
                     android:textSize="20sp"
+                    style="@style/textos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -127,6 +129,7 @@
                     android:text="@string/btn_cambiar_contrasenia"
                     android:textStyle="bold"
                     android:textSize="20sp"
+                    style="@style/textos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 

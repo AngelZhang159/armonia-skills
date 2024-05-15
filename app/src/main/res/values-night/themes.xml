@@ -48,4 +48,8 @@
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh_dark</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest_dark</item>
     </style>
+
+    <style name="textos">
+        <item name="android:textColor">@color/md_theme_primaryFixedDim_dark</item>
+    </style>
 </resources>
