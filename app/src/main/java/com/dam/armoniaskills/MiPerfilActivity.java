@@ -17,10 +17,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.dam.armoniaskills.authentication.LoginActivity;
 import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.model.User;
+import com.dam.armoniaskills.network.ImageUpload;
 import com.dam.armoniaskills.network.RetrofitClient;
+import com.dam.armoniaskills.network.UploadCallback;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONException;
@@ -38,15 +41,16 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 	ImageView ivPerfil;
 	EditText etNombre, etEmail, etUsername, etTlf, etPassword, etRepPassword;
 	Button btnUpdate, btnCambiar, btnCerrarSesion;
-
-	User user;
 	Uri imageUri;
+	String imageURL;
 
 	ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(
 			new ActivityResultContracts.PickVisualMedia(), uri -> {
 				if (uri != null) {
+
 					imageUri = uri;
 					ivPerfil.setImageURI(uri);
+
 				} else {
 					Toast.makeText(MiPerfilActivity.this, getString(R.string.seleccionar_img), Toast.LENGTH_SHORT).show();
 				}
@@ -90,6 +94,8 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 			pickMedia.launch(new PickVisualMediaRequest.Builder()
 					.setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
 					.build());
+
+
 		}
 	}
 
@@ -123,6 +129,27 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 	}
 
 	private void updateData() {
+
+		if (imageUri != null) {
+			ImageUpload imageUpload = new ImageUpload();
+			imageUpload.subirImagen(imageUri, getContentResolver(), new UploadCallback() {
+				@Override
+				public void onSuccess(String result) {
+					imageURL = result;
+					actualizarDatos();
+				}
+
+				@Override
+				public void onError(Throwable throwable) {
+					Toast.makeText(MiPerfilActivity.this, R.string.err_imagen_servidor, Toast.LENGTH_SHORT).show();
+				}
+			});
+		} else {
+			actualizarDatos();
+		}
+	}
+
+	private void actualizarDatos() {
 		String nombre = etNombre.getText().toString();
 		String username = etUsername.getText().toString();
 		String tlf = etTlf.getText().toString();
@@ -136,13 +163,15 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 			user.setFullName(nombre);
 			user.setUsername(username);
 
+			if (imageURL != null) {
+				user.setImageURL(imageURL);
+			}
+
 			if (!tlf.isEmpty()) {
 				user.setPhone(Integer.parseInt(tlf));
 			}
 
 			updateUsuario(user);
-
-
 		}
 	}
 
@@ -250,7 +279,9 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 						String email = jsonObject.getString("email");
 						String fullName = jsonObject.getString("fullName");
 						String phone = jsonObject.getString("phone");
+						String imageURL = jsonObject.getString("imageURL");
 
+						imageURL = "http://10.0.2.2:8080" + imageURL;
 
 						etUsername.setText(username);
 						etEmail.setText(email);
@@ -258,6 +289,10 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 						if (!phone.equals("0")) {
 							etTlf.setText(phone);
 						}
+
+						Glide.with(MiPerfilActivity.this)
+								.load(imageURL)
+								.into(ivPerfil);
 
 					} catch (IOException | JSONException e) {
 						e.printStackTrace();

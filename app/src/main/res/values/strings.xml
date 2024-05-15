@@ -52,4 +52,5 @@
     <string name="contra_actualizada">Contraseña actualizada correctamente.</string>
     <string name="datos_actualizados">Datos actualizados correctamente.</string>
     <string name="usuario_existente">El nombre de usuario ya existe.</string>
+    <string name="err_imagen_servidor">No se ha podido subir la imagen</string>
 </resources>

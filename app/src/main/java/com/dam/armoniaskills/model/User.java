@@ -5,25 +5,34 @@ import java.util.UUID;
 public class User {
 
 	private UUID id;
-
 	private String fullName;
 	private String username;
 	private String email;
 	private int phone;
 	private String password;
 	private String role;
+	private String imageURL;
+
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
 
 	public User(String email, String password) {
 		this.email = email;
 		this.password = password;
 	}
 
-	public User(String fullName, String username, String email, int phone, String password) {
+	public User(String fullName, String username, String email, int phone, String password, String imageURL) {
 		this.fullName = fullName;
 		this.username = username;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
+		this.imageURL = imageURL;
 	}
 
 	public User() {
