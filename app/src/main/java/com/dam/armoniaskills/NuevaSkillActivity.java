@@ -27,6 +27,7 @@ import com.dam.armoniaskills.recyclerutils.AdapterImagenes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -137,25 +138,39 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 					}
 				}
 
+				CountDownLatch latch = new CountDownLatch(listaImagenes.size());
+
+
 				for (Uri uri : listaImagenes) {
 					imageUpload.subirImagen(uri, getContentResolver(), new UploadCallback() {
 						@Override
 						public void onSuccess(String result) {
 							imageList.add(result);
+							latch.countDown();
+
 						}
 
 						@Override
 						public void onError(Throwable throwable) {
 							Toast.makeText(NuevaSkillActivity.this, "Error al subir imagen", Toast.LENGTH_SHORT).show();
+							latch.countDown();
+
 						}
 					});
 				}
 
 				// Crear Skill y guardarla en la BBDD
-				if (imageList.size() == listaImagenes.size()) {
-					Skill skill = new Skill(titulo, descripcion, precio, ciudad, categoria.getTitulo(), imageList);
-					crearSkill(skill);
-				}
+				new Thread(() -> {
+					try {
+						latch.await();
+						runOnUiThread(() -> {
+							Skill skill = new Skill(titulo, descripcion, categoria.getTitulo(), precio, ciudad, imageList);
+							crearSkill(skill);
+						});
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}).start();
 
 			}
 		} else if (v.getId() == R.id.btnCancelarNuevaSkill) {
