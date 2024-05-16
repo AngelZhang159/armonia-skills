@@ -1,9 +1,14 @@
 package com.dam.armoniaskills.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.util.List;
 import java.util.UUID;
 
-public class Skill {
+public class Skill implements Parcelable {
 
     private String title;
     private String description;
@@ -20,6 +25,42 @@ public class Skill {
         this.price = price;
         this.location = location;
         this.imageList = imageList;
+    }
+
+    protected Skill(Parcel in) {
+        title = in.readString();
+        description = in.readString();
+        category = in.readString();
+        price = in.readString();
+        location = in.readString();
+        imageList = in.createStringArrayList();
+    }
+
+    public static final Creator<Skill> CREATOR = new Creator<Skill>() {
+        @Override
+        public Skill createFromParcel(Parcel in) {
+            return new Skill(in);
+        }
+
+        @Override
+        public Skill[] newArray(int size) {
+            return new Skill[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(category);
+        dest.writeString(price);
+        dest.writeString(location);
+        dest.writeStringList(imageList);
     }
 
     public List<String> getImageList() {
