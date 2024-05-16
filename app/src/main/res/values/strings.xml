@@ -77,4 +77,7 @@
     <string name="err_imagen_servidor">No se ha podido subir la imagen</string>
     <string name="skill_creada">Skill creada con exito</string>
     <string name="error_creacion_skill">Error al crear la Skill</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="config">Configuración de la Skill</string>
 </resources>
