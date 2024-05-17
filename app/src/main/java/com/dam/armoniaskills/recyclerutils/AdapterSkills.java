@@ -65,8 +65,9 @@ public class AdapterSkills extends RecyclerView.Adapter<AdapterSkills.SkillsVH> 
         }
 
         public void bindSkill(Skill skill) {
-            Glide.with(itemView).load(skill.getImageList().get(0)).into(iv);
-            tvPrecio.setText(skill.getPrice());
+            iv.setImageResource(R.drawable.images);
+            //Glide.with(itemView).load(skill.getImageList().get(0)).into(iv);
+            tvPrecio.setText(String.format(itemView.getContext().getString(R.string.tv_precio_inicio), skill.getPrice()));
             tvTitulo.setText(skill.getTitle());
         }
     }

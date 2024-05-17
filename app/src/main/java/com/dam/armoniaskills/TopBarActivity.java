@@ -13,7 +13,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.dam.armoniaskills.fragments.DepositarFragment;
 import com.dam.armoniaskills.fragments.InicioFragment;
+import com.dam.armoniaskills.fragments.RetirarFragment;
 import com.dam.armoniaskills.fragments.SkillFragment;
 import com.dam.armoniaskills.model.Skill;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -41,6 +43,10 @@ public class TopBarActivity extends AppCompatActivity {
 
         if (i.equals("fragmentoHome")) {
             cargarSkill();
+        } else if (i.equals("fragmentoBalanceDepositar")) {
+            cargarDepositar();
+        } else if (i.equals("fragmentoBalanceRetirar")) {
+            cargarRetirar();
         }
     }
 
@@ -56,5 +62,23 @@ public class TopBarActivity extends AppCompatActivity {
         transaction.commit();
 
         toolbar.inflateMenu(R.menu.topbar_menu);
+    }
+
+    private void cargarRetirar() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        RetirarFragment retirarFragment = new RetirarFragment();
+        fragmentTransaction.replace(R.id.flTopBar, retirarFragment);
+
+        fragmentTransaction.commit();
+    }
+
+    private void cargarDepositar() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        DepositarFragment depositoFragment = new DepositarFragment();
+        fragmentTransaction.replace(R.id.flTopBar, depositoFragment);
+
+        fragmentTransaction.commit();
     }
 }

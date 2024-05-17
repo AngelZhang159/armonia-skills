@@ -1,39 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/margen">
+    android:layout_margin="@dimen/margen"
+    app:cardCornerRadius="@dimen/margen"
+    app:cardElevation="@dimen/margen">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerHorizontal="true">
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <ImageView
             android:id="@+id/ivSkill"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearance="@style/custom"/>
-
-        <TextView
-            android:id="@+id/tvPrecioSkill"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="20 €"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:textSize="23sp"/>
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/tvTituloSkill"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Limpio cacas de mono en mierdas puñetas"
-            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="@dimen/margen"
+            android:layout_marginEnd="@dimen/margen"
+            android:ellipsize="end"
+            android:textSize="20sp"
             android:lines="1"/>
+
+        <TextView
+            android:id="@+id/tvPrecioSkill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="@dimen/margen"
+            android:layout_marginStart="@dimen/margen"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:text="@string/tv_precio_inicio"
+            android:textAlignment="textEnd"/>
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

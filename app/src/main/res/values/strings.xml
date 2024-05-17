@@ -77,7 +77,16 @@
     <string name="err_imagen_servidor">No se ha podido subir la imagen</string>
     <string name="skill_creada">Skill creada con exito</string>
     <string name="error_creacion_skill">Error al crear la Skill</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="historial_retiro">Has retirado %1$.2f€</string>
+    <string name="historial_ingreso">Has ingresado %1$.2f€</string>
+    <string name="historial_pagado">Has pagado %1$.2f€</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="config">Configuración de la Skill</string>
+    <string name="tv_precio_inicio">%1$s €</string>
+    <string name="tv_retirar">¿Cuanto dinero quiere retirar?</string>
+    <string name="euro">€</string>
+    <string name="hint_et_cantidad">Cantidad</string>
+    <string name="cantidad_disponible">Cantidad disponible: %1$.2f€</string>
+    <string name="cantidad_obligatoria">Debes introducir una cantidad</string>
+    <string name="tv_deposito">¿Cuanto dinero quiere depositar?</string>
 </resources>

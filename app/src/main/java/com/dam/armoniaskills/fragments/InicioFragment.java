@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dam.armoniaskills.R;
@@ -53,7 +54,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 		//Recuperar skills backend
 		List<String> lista = new ArrayList<>();
 		lista.add("https://drive.google.com/file/d/16iffsZ_y3m-I8S-Ic-aF6AOJQ1-s8e3r/view?usp=sharing");
-		listaSkills.add(new Skill("hola", "", "", "20", "", lista));
+		listaSkills.add(new Skill("fugsgfjibvjksrbvjvnjksfbvbejvbdbfjvbjdafbjbgjgbebvjb aj vjhdfb vjbejb vdabbgjsegjkBFBAJFBA", "", "", "20", "", lista));
 		listaSkills.add(new Skill("hola", "", "", "20", "", lista));
 		configurarRV();
 	}
@@ -71,7 +72,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
 	private void configurarRV() {
 		adapter = new AdapterSkills(listaSkills, this);
-		rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
+		rv.setLayoutManager(new LinearLayoutManager(getContext()));
 		rv.setAdapter(adapter);
 	}
 }
