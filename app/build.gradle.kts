@@ -36,7 +36,6 @@ dependencies {
     implementation(libs.java.websocket)
     implementation(libs.gson)
 
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -48,6 +47,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.glide)
-
+    implementation (libs.imageslideshow)
 
 }
