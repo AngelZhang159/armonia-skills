@@ -136,6 +136,13 @@
                     android:textSize="22sp"
                     android:textStyle="bold"/>
 
+                <Button
+                    android:id="@+id/btnAniadirValoracion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margen"
+                    android:text="Añadir Valoración" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvValDetalle"
                     android:layout_width="match_parent"
