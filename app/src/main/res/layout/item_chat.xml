@@ -8,51 +8,59 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:padding="@dimen/margen">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivFotoPerfilUsuarioHistorial"
+                android:id="@+id/ivFotoPerfilChat"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/margen"/>
+                android:layout_marginEnd="@dimen/margen"
+                android:src="@drawable/user" />
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/nomUsuario"
+                        android:id="@+id/tvUsuarioChat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="6"/>
+                        android:layout_weight="6"
+                        android:text="Usuario"
+                        android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/horaUltimoTexto"
+                        android:id="@+id/tvFechaChat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:gravity="top|end"
+                        android:text="10:10" />
 
                 </LinearLayout>
 
 
                 <TextView
-                    android:id="@+id/nomServicio"
+                    android:id="@+id/tvServicioChat"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="Servicio"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/nomUltimoTexto"
+                    android:id="@+id/tvMensajeChat"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="Ultimo texto mandado" />
 
             </LinearLayout>
 

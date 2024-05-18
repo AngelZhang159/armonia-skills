@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.model.Skill;
+import com.dam.armoniaskills.model.User;
+import com.dam.armoniaskills.network.RetrofitClient;
+import com.dam.armoniaskills.network.UserCallback;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SkillFragment extends Fragment {
 
@@ -75,15 +85,55 @@ public class SkillFragment extends Fragment {
 
     private void cargarSkill() {
         List<SlideModel> listaSlide = new ArrayList<>();
+        String urlLocal = "http://10.0.2.2:8080";
 
         for (String url : skill.getImageList()) {
-            listaSlide.add(new SlideModel(url, ScaleTypes.CENTER_CROP));
+            url = urlLocal + url;
+            listaSlide.add(new SlideModel(url, ScaleTypes.CENTER_INSIDE));
         }
+
+        getUser(skill.getUserID(), new UserCallback() {
+            @Override
+            public void onUserLoaded(User user) {
+                Glide.with(getContext()).load(urlLocal + user.getImageURL()).into(imvUser);
+                tvUsername.setText(user.getUsername());
+            }
+
+            @Override
+            public void onError() {
+                Log.e("AdapterSkills", "Error al cargar el usuario");
+            }
+        });
 
         slider.setImageList(listaSlide);
 
         tvPrecio.setText(skill.getPrice());
         tvTitulo.setText(skill.getTitle());
         tvDescripcion.setText(skill.getDescription());
+    }
+
+    private void getUser(UUID userID, final UserCallback callback) {
+        Call<User> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .getUserDataFromUUID(userID);
+
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onUserLoaded(response.body());
+                } else {
+                    callback.onError();
+                    Log.e("AdapterSkills", "Error al cargar el usuario" + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("AdapterSkills", "Error al cargar el usuario" + t.getMessage());
+                callback.onError();
+            }
+        });
     }
 }

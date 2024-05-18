@@ -1,5 +1,6 @@
 package com.dam.armoniaskills.model;
 
+import java.util.List;
 import java.util.UUID;
 
 public class User {
@@ -12,6 +13,16 @@ public class User {
 	private String password;
 	private String role;
 	private String imageURL;
+	private List<ChatRoom> chatRooms;
+	private double balance;
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
 
 	public String getImageURL() {
 		return imageURL;
@@ -26,13 +37,14 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String fullName, String username, String email, int phone, String password, String imageURL) {
+	public User(String fullName, String username, String email, int phone, String password, String imageURL, double balance) {
 		this.fullName = fullName;
 		this.username = username;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
 		this.imageURL = imageURL;
+		this.balance = balance;
 	}
 
 	public User() {

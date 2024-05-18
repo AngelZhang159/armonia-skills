@@ -27,13 +27,32 @@
                 android:orientation="vertical"
                 android:padding="@dimen/margen">
 
-                <TextView
-                    android:id="@+id/tvPrecioDetalle"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tv_precio_inicio"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_weight="6"
+                        android:id="@+id/tvPrecioDetalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_precio_inicio"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:layout_weight="1"
+                        android:id="@+id/btnContratar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contratar Skill"
+                        android:textSize="12sp"
+                        android:layout_alignParentBottom="true"
+                        />
+
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/tvTituloDetalle"
@@ -126,13 +145,7 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnContratar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Contratar Skill"
-                android:textSize="18sp"
-                android:layout_alignParentBottom="true"/>
+
 
         </RelativeLayout>
 

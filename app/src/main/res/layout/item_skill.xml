@@ -13,35 +13,69 @@
         android:orientation="vertical"
         android:layout_centerHorizontal="true">
 
-        <ImageView
-            android:id="@+id/ivSkill"
+<!--        <ImageView-->
+<!--            android:id="@+id/ivSkill"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:scaleType="centerCrop"/>-->
+
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/sliderSkill"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"/>
+            android:layout_height="250dp"/>
 
         <TextView
+            android:textStyle="bold"
             android:id="@+id/tvTituloSkill"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginStart="@dimen/margen"
             android:layout_marginEnd="@dimen/margen"
             android:ellipsize="end"
-            android:textSize="20sp"
+            android:textSize="22sp"
+            android:text="Titulo"
             android:lines="1"/>
 
-        <TextView
-            android:id="@+id/tvPrecioSkill"
+        <LinearLayout
+            android:layout_marginBottom="@dimen/margen"
+            android:layout_marginHorizontal="@dimen/margen"
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="@dimen/margen"
-            android:layout_marginStart="@dimen/margen"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:text="@string/tv_precio_inicio"
-            android:textAlignment="textEnd"/>
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_gravity="center"
+                android:id="@+id/ivUser"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/user"/>
+
+            <TextView
+                android:id="@+id/tvUser"
+                android:layout_gravity="center"
+                android:layout_weight="6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textSize="18sp"
+                android:text="Usuario"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/tvPrecioSkill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margen"
+                android:layout_marginStart="@dimen/margen"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:text="@string/tv_precio_inicio"
+                android:textAlignment="textEnd"/>
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

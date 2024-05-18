@@ -39,51 +39,51 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, messages);
         messageListView.setAdapter(adapter);
 
-        try {
-            URI uri = new URI("ws://10.0.2.2:8080/ws");
-            webSocketClient = new WebSocketClient(uri) {
-                @Override
-                public void onOpen(ServerHandshake handshakedata) {
-                    runOnUiThread(() -> messages.add("Connected"));
-                }
-
-                @Override
-                public void onMessage(String message) {
-                    runOnUiThread(() -> {
-                        messages.add(message);
-                        adapter.notifyDataSetChanged();
-                    });
-                }
-
-                @Override
-                public void onClose(int code, String reason, boolean remote) {
-                    runOnUiThread(() -> messages.add("Disconnected: " + reason));
-                }
-
-                @Override
-                public void onError(Exception ex) {
-                    runOnUiThread(() -> messages.add("Error: " + ex.getMessage()));
-                }
-            };
-            webSocketClient.connect();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-        sendButton.setOnClickListener(v -> {
-            String message = messageInput.getText().toString();
-            if (!message.isEmpty()) {
-                webSocketClient.send(message);
-                messageInput.setText("");
-            }
-        });
+//        try {
+//            URI uri = new URI("ws://10.0.2.2:8080/ws");
+//            webSocketClient = new WebSocketClient(uri) {
+//                @Override
+//                public void onOpen(ServerHandshake handshakedata) {
+//                    runOnUiThread(() -> messages.add("Connected"));
+//                }
+//
+//                @Override
+//                public void onMessage(String message) {
+//                    runOnUiThread(() -> {
+//                        messages.add(message);
+//                        adapter.notifyDataSetChanged();
+//                    });
+//                }
+//
+//                @Override
+//                public void onClose(int code, String reason, boolean remote) {
+//                    runOnUiThread(() -> messages.add("Disconnected: " + reason));
+//                }
+//
+//                @Override
+//                public void onError(Exception ex) {
+//                    runOnUiThread(() -> messages.add("Error: " + ex.getMessage()));
+//                }
+//            };
+//            webSocketClient.connect();
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+//
+//        sendButton.setOnClickListener(v -> {
+//            String message = messageInput.getText().toString();
+//            if (!message.isEmpty()) {
+//                webSocketClient.send(message);
+//                messageInput.setText("");
+//            }
+//        });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (webSocketClient != null) {
-            webSocketClient.close();
-        }
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        if (webSocketClient != null) {
+//            webSocketClient.close();
+//        }
+//    }
 }

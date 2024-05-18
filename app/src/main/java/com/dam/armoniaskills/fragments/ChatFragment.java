@@ -1,48 +1,39 @@
 package com.dam.armoniaskills.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.dam.armoniaskills.ChatActivity;
 import com.dam.armoniaskills.R;
+import com.dam.armoniaskills.authentication.SharedPrefManager;
+import com.dam.armoniaskills.model.ChatRoom;
+import com.dam.armoniaskills.network.RetrofitClient;
+import com.dam.armoniaskills.recyclerutils.AdapterChat;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChatFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ChatFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	private static final String ARG_PARAM1 = "param1";
-	private static final String ARG_PARAM2 = "param2";
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-	// TODO: Rename and change types of parameters
-	private String mParam1;
-	private String mParam2;
+public class ChatFragment extends Fragment implements View.OnClickListener {
 
-	public ChatFragment() {
-		// Required empty public constructor
-	}
+	RecyclerView rv;
+	AdapterChat adapter;
+	ArrayList<ChatRoom> chatRooms;
 
-	/**
-	 * Use this factory method to create a new instance of
-	 * this fragment using the provided parameters.
-	 *
-	 * @param param1 Parameter 1.
-	 * @param param2 Parameter 2.
-	 * @return A new instance of fragment ChatFragment.
-	 */
-	// TODO: Rename and change types and number of parameters
 	public static ChatFragment newInstance(String param1, String param2) {
 		ChatFragment fragment = new ChatFragment();
 		Bundle args = new Bundle();
-		args.putString(ARG_PARAM1, param1);
-		args.putString(ARG_PARAM2, param2);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -50,16 +41,57 @@ public class ChatFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			mParam1 = getArguments().getString(ARG_PARAM1);
-			mParam2 = getArguments().getString(ARG_PARAM2);
-		}
+
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+		String token = sharedPrefManager.fetchJwt();
+
+		Call<List<ChatRoom>> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.getChats(token);
+
+		call.enqueue(new Callback<List<ChatRoom>>() {
+			@Override
+			public void onResponse(@NonNull Call<List<ChatRoom>> call, @NonNull Response<List<ChatRoom>> response) {
+				chatRooms = (ArrayList<ChatRoom>) response.body();
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<List<ChatRoom>> call, @NonNull Throwable throwable) {
+
+			}
+		});
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_chat, container, false);
+
+		View v = inflater.inflate(R.layout.fragment_chat, container, false);
+
+		rv = v.findViewById(R.id.rvChat);
+
+		configurarRV();
+
+		return v;
+	}
+
+	private void configurarRV() {
+		adapter = new AdapterChat(chatRooms, this);
+
+		rv.setLayoutManager(new LinearLayoutManager(getContext()));
+		rv.setAdapter(adapter);
+		rv.setHasFixedSize(true);
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		int pos = rv.getChildAdapterPosition(v);
+		ChatRoom chatRoom = chatRooms.get(pos);
+
+		Intent i = new Intent(getContext(), ChatActivity.class);
+		i.putExtra("chatId", chatRoom.getId());
+		startActivity(i);
 	}
 }

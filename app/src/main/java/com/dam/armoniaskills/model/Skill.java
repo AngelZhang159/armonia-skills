@@ -18,13 +18,14 @@ public class Skill implements Parcelable {
     private UUID userID;
     private List<String> imageList;
 
-    public Skill(String title, String description, String category, String price, String location, List<String> imageList) {
+    public Skill(String title, String description, String category, String price, String location, UUID userID, List<String> imageList) {
         this.title = title;
         this.description = description;
         this.category = category;
         this.price = price;
         this.location = location;
         this.imageList = imageList;
+        this.userID = userID;
     }
 
     protected Skill(Parcel in) {
@@ -34,6 +35,7 @@ public class Skill implements Parcelable {
         price = in.readString();
         location = in.readString();
         imageList = in.createStringArrayList();
+        userID = UUID.fromString(in.readString());
     }
 
     public static final Creator<Skill> CREATOR = new Creator<Skill>() {
@@ -61,6 +63,15 @@ public class Skill implements Parcelable {
         dest.writeString(price);
         dest.writeString(location);
         dest.writeStringList(imageList);
+        dest.writeString(userID.toString());
+    }
+
+    public UUID getUserID() {
+        return userID;
+    }
+
+    public void setUserID(UUID userID) {
+        this.userID = userID;
     }
 
     public List<String> getImageList() {
