@@ -16,12 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.TopBarActivity;
+import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.model.HistorialBalance;
+import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterBalance;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import retrofit2.Call;
 
 public class BalanceFragment extends Fragment implements View.OnClickListener {
 
@@ -68,7 +72,30 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
 	}
 
 	private void rellenarDinero() {
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+		String token = sharedPrefManager.fetchJwt();
 
+		Call<Double> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.getBalance(token);
+
+		call.enqueue(new retrofit2.Callback<Double>() {
+			@Override
+			public void onResponse(@NonNull Call<Double> call, @NonNull retrofit2.Response<Double> response) {
+				if (response.isSuccessful()) {
+					Double dinero = response.body();
+					tvDinero.setText(String.format("%s€", String.valueOf(dinero)));
+				} else {
+					Toast.makeText(getContext(), "Error al obtener el balance", Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<Double> call, @NonNull Throwable t) {
+				Toast.makeText(getContext(), "Error al obtener el balance", Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 	@Override

@@ -54,5 +54,15 @@ public interface Api {
 	@GET("api/v1/chat")
 	Call<List<ChatRoom>> getChats(@Header("Authorization") String jwt);
 
+	@GET("api/v1/chat/messages")
 	Call<List<ChatMessage>> getMessages(UUID id);
+
+	@GET("api/v1/balance")
+	Call<Double> getBalance(@Header("Authorization") String jwt);
+
+	@PATCH("api/v1/balance/deposit")
+	Call<ResponseBody> depositarDinero(@Header("Authorization") String token, @Body double cantidadFormateada);
+
+	@PATCH("api/v1/balance/withdraw")
+	Call<ResponseBody> retirarDinero(@Header("Authorization") String token, @Body double cantidadFormateada);
 }
