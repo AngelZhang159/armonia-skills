@@ -82,21 +82,26 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 	}
 
 	private void createUser() {
-		ImageUpload imageUpload = new ImageUpload();
-		imageUpload.subirImagen(imageUri, getContentResolver(), new UploadCallback() {
-			@Override
-			public void onSuccess(String result) {
-				imageURL = result;
-				registerUser();
-			}
 
-			@Override
-			public void onError(Throwable throwable) {
-				imageURL = null;
-				Log.e("Error imagen: ", throwable.toString());
-				Toast.makeText(RegistroActivity.this, R.string.err_imagen_servidor, Toast.LENGTH_SHORT).show();
-			}
-		});
+		ImageUpload imageUpload = new ImageUpload();
+		if (imageUri != null) {
+			imageUpload.subirImagen(imageUri, getContentResolver(), new UploadCallback() {
+				@Override
+				public void onSuccess(String result) {
+					imageURL = result;
+					registerUser();
+				}
+
+				@Override
+				public void onError(Throwable throwable) {
+					imageURL = null;
+					Log.e("Error imagen: ", throwable.toString());
+					Toast.makeText(RegistroActivity.this, R.string.err_imagen_servidor, Toast.LENGTH_SHORT).show();
+				}
+			});
+		} else {
+			registerUser();
+		}
 	}
 
 	private void registerUser() {

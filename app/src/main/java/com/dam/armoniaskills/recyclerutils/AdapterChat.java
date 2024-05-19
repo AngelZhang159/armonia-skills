@@ -8,23 +8,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.dam.armoniaskills.R;
-import com.dam.armoniaskills.model.ChatMessage;
+import com.dam.armoniaskills.model.ChatDTO;
 import com.dam.armoniaskills.model.ChatRoom;
-import com.dam.armoniaskills.network.RetrofitClient;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
 
 public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implements View.OnClickListener {
 	View.OnClickListener listener;
-	ArrayList<ChatRoom> chatRooms;
+	ArrayList<ChatDTO> chatDTOList;
 
-	public AdapterChat(ArrayList<ChatRoom> chatRooms, View.OnClickListener listener) {
+	public AdapterChat(ArrayList<ChatDTO> chatDTOList, View.OnClickListener listener) {
 		this.listener = listener;
-		this.chatRooms = chatRooms;
+		this.chatDTOList = chatDTOList;
 	}
 
 	@NonNull
@@ -32,6 +29,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implem
 	public AdapterChat.ChatVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View v = View.inflate(parent.getContext(), R.layout.item_chat, null);
 
+		v.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		v.setOnClickListener(this);
 
 		return new ChatVH(v);
@@ -39,12 +37,13 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implem
 
 	@Override
 	public void onBindViewHolder(@NonNull AdapterChat.ChatVH holder, int position) {
-		holder.bindChat(chatRooms.get(position));
+		holder.bindChat(chatDTOList.get(position));
+
 	}
 
 	@Override
 	public int getItemCount() {
-		return chatRooms.size();
+		return chatDTOList.size();
 	}
 
 	@Override
@@ -66,12 +65,27 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implem
 			tvFecha = itemView.findViewById(R.id.tvFechaChat);
 		}
 
-		public void bindChat(ChatRoom chatRoom) {
-			Call call = RetrofitClient
-					.getInstance()
-					.getApi()
-					.getUserDataFromUUID(chatRoom.getReceiverId());
+		public void bindChat(ChatDTO chatDTO) {
+			tvUsuario.setText(chatDTO.getNombreUsuario());
+			tvServicio.setText(chatDTO.getNombreSkill());
 
+
+			if (chatDTO.getUltimoMensaje() != null) {
+				tvMensaje.setText(chatDTO.getUltimoMensaje());
+			}
+
+			if (chatDTO.getUltimaHora() != null) {
+				// Use a method to format the Date object to a String
+				tvFecha.setText(chatDTO.getUltimaHora().getHours());
+			}
+
+			if (chatDTO.getFotoPerfil() != null) {
+				String url = "http://10.0.2.2:8080" + chatDTO.getFotoPerfil();
+
+				Glide.with(itemView).load(url).into(iv);
+			}
 		}
 	}
+
+
 }

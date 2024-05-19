@@ -3,10 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +40,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="top|end"
-                        android:text="10:10" />
+                        android:text="" />
 
                 </LinearLayout>
 
@@ -60,13 +56,10 @@
                     android:id="@+id/tvMensajeChat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ultimo texto mandado" />
+                    android:text="Nuevo chat" />
 
             </LinearLayout>
 
         </LinearLayout>
-
-
-    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -1,5 +1,6 @@
 package com.dam.armoniaskills.network;
 
+import com.dam.armoniaskills.model.ChatDTO;
 import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.model.ChatRoom;
 import com.dam.armoniaskills.model.Review;
@@ -57,7 +58,7 @@ public interface Api {
 	Call<List<Skill>> getSkills();
 
 	@GET("api/v1/chat")
-	Call<List<ChatRoom>> getChats(@Header("Authorization") String jwt);
+	Call<List<ChatDTO>> getChats(@Header("Authorization") String jwt);
 
 	@GET("api/v1/chat/messages")
 	Call<List<ChatMessage>> getMessages(UUID id);

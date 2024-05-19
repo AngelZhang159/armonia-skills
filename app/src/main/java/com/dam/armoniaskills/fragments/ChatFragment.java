@@ -2,6 +2,7 @@ package com.dam.armoniaskills.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dam.armoniaskills.ChatActivity;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.authentication.SharedPrefManager;
+import com.dam.armoniaskills.model.ChatDTO;
 import com.dam.armoniaskills.model.ChatRoom;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterChat;
@@ -29,7 +31,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
 	RecyclerView rv;
 	AdapterChat adapter;
-	ArrayList<ChatRoom> chatRooms;
+	ArrayList<ChatDTO> chatDTOList;
 
 	public static ChatFragment newInstance(String param1, String param2) {
 		ChatFragment fragment = new ChatFragment();
@@ -42,25 +44,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
-		String token = sharedPrefManager.fetchJwt();
 
-		Call<List<ChatRoom>> call = RetrofitClient
-				.getInstance()
-				.getApi()
-				.getChats(token);
-
-		call.enqueue(new Callback<List<ChatRoom>>() {
-			@Override
-			public void onResponse(@NonNull Call<List<ChatRoom>> call, @NonNull Response<List<ChatRoom>> response) {
-				chatRooms = (ArrayList<ChatRoom>) response.body();
-			}
-
-			@Override
-			public void onFailure(@NonNull Call<List<ChatRoom>> call, @NonNull Throwable throwable) {
-
-			}
-		});
 	}
 
 	@Override
@@ -71,13 +55,35 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
 		rv = v.findViewById(R.id.rvChat);
 
-		configurarRV();
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+		String token = sharedPrefManager.fetchJwt();
+
+		Call<List<ChatDTO>> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.getChats(token);
+
+		call.enqueue(new Callback<List<ChatDTO>>() {
+			@Override
+			public void onResponse(@NonNull Call<List<ChatDTO>> call, @NonNull Response<List<ChatDTO>> response) {
+				if (response.isSuccessful()) {
+					chatDTOList = new ArrayList<>(response.body());
+					configurarRV();
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<List<ChatDTO>> call, @NonNull Throwable t) {
+				Log.e("CHAT", "Error al obtener los chats");
+			}
+		});
+
 
 		return v;
 	}
 
 	private void configurarRV() {
-		adapter = new AdapterChat(chatRooms, this);
+		adapter = new AdapterChat(chatDTOList, this);
 
 		rv.setLayoutManager(new LinearLayoutManager(getContext()));
 		rv.setAdapter(adapter);
@@ -88,10 +94,10 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 	@Override
 	public void onClick(View v) {
 		int pos = rv.getChildAdapterPosition(v);
-		ChatRoom chatRoom = chatRooms.get(pos);
+		ChatDTO chatDTO = chatDTOList.get(pos);
 
 		Intent i = new Intent(getContext(), ChatActivity.class);
-		i.putExtra("chatId", chatRoom.getId());
+		i.putExtra("chatId", chatDTO.getChatId());
 		startActivity(i);
 	}
 }
