@@ -8,23 +8,7 @@ public class ChatRoom {
 	private UUID chatId;
 	private UUID senderId;
 	private UUID receiverId;
-	private String skillName;
-
-	public ChatRoom(UUID id, UUID chatId, UUID senderId, UUID receiverId, String skillName) {
-		this.id = id;
-		this.chatId = chatId;
-		this.senderId = senderId;
-		this.receiverId = receiverId;
-		this.skillName = skillName;
-	}
-
-	public String getSkillName() {
-		return skillName;
-	}
-
-	public void setSkillName(String skillName) {
-		this.skillName = skillName;
-	}
+	private UUID skillId;
 
 	public UUID getId() {
 		return id;
@@ -58,4 +42,11 @@ public class ChatRoom {
 		this.receiverId = receiverId;
 	}
 
+	public UUID getSkillId() {
+		return skillId;
+	}
+
+	public void setSkillId(UUID skillId) {
+		this.skillId = skillId;
+	}
 }

@@ -18,6 +18,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface Api {
@@ -43,7 +44,6 @@ public interface Api {
 	@POST("api/v1/file/upload")
 	Call<ResponseBody> uploadImage(@Part MultipartBody.Part file);
 
-
 	//Crear nueva Skill
 	@POST("api/v1/skill")
 	Call<ResponseBody> postSkill(@Header("Authorization") String jwt, @Body Skill skill);
@@ -65,4 +65,7 @@ public interface Api {
 
 	@PATCH("api/v1/balance/withdraw")
 	Call<ResponseBody> retirarDinero(@Header("Authorization") String token, @Body double cantidadFormateada);
+
+	@GET("api/v1/chat/new/{id}/{skillId}")
+	Call<ChatRoom> createChat(@Header("Authorization") String token, @Path("id") UUID receiverId, @Path("skillId") UUID skillId);
 }

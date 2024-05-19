@@ -164,7 +164,7 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 					try {
 						latch.await();
 						runOnUiThread(() -> {
-							Skill skill = new Skill(titulo, descripcion, categoria.getTitulo(), precio, ciudad, null, imageList);
+							Skill skill = new Skill(null, titulo, descripcion, categoria.getTitulo(), precio, ciudad, null, imageList);
 							crearSkill(skill);
 						});
 					} catch (InterruptedException e) {

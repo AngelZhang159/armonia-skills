@@ -1,10 +1,6 @@
 package com.dam.armoniaskills.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +9,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.dam.armoniaskills.R;
+import com.dam.armoniaskills.authentication.SharedPrefManager;
+import com.dam.armoniaskills.model.ChatRoom;
 import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.model.User;
+import com.dam.armoniaskills.network.ChatCallback;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.network.UserCallback;
 import com.denzcoskun.imageslider.ImageSlider;
@@ -33,107 +36,150 @@ import retrofit2.Response;
 
 public class SkillFragment extends Fragment {
 
-    private static final String ARG_SKILL = "skill";
+	private static final String ARG_SKILL = "skill";
 
-    ImageSlider slider;
-    TextView tvPrecio, tvTitulo, tvDescripcion, tvUsername, tvValoracion;
-    ImageView imvUser;
-    RecyclerView rv;
-    Button btnChat, btnContratar;
+	ImageSlider slider;
+	TextView tvPrecio, tvTitulo, tvDescripcion, tvUsername, tvValoracion;
+	ImageView imvUser;
+	RecyclerView rv;
+	Button btnChat, btnContratar;
 
-    private Skill skill;
+	private Skill skill;
 
-    public SkillFragment() {
-    }
+	public SkillFragment() {
+	}
 
-    public static SkillFragment newInstance(Skill skill) {
-        SkillFragment fragment = new SkillFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(ARG_SKILL, skill);
-        fragment.setArguments(args);
-        return fragment;
-    }
+	public static SkillFragment newInstance(Skill skill) {
+		SkillFragment fragment = new SkillFragment();
+		Bundle args = new Bundle();
+		args.putParcelable(ARG_SKILL, skill);
+		fragment.setArguments(args);
+		return fragment;
+	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            skill = getArguments().getParcelable(ARG_SKILL);
-        }
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (getArguments() != null) {
+			skill = getArguments().getParcelable(ARG_SKILL);
+		}
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_skill, container, false);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.fragment_skill, container, false);
 
-        slider = v.findViewById(R.id.slider);
-        tvPrecio = v.findViewById(R.id.tvPrecioDetalle);
-        tvTitulo = v.findViewById(R.id.tvTituloDetalle);
-        tvDescripcion = v.findViewById(R.id.tvDescDetalle);
-        tvUsername = v.findViewById(R.id.tvUser);
-        tvValoracion = v.findViewById(R.id.tvValUser);
-        imvUser = v.findViewById(R.id.imvUser);
-        rv = v.findViewById(R.id.rvValDetalle);
-        btnChat = v.findViewById(R.id.btnChat);
-        btnContratar = v.findViewById(R.id.btnContratar);
+		slider = v.findViewById(R.id.slider);
+		tvPrecio = v.findViewById(R.id.tvPrecioDetalle);
+		tvTitulo = v.findViewById(R.id.tvTituloDetalle);
+		tvDescripcion = v.findViewById(R.id.tvDescDetalle);
+		tvUsername = v.findViewById(R.id.tvUser);
+		tvValoracion = v.findViewById(R.id.tvValUser);
+		imvUser = v.findViewById(R.id.imvUser);
+		rv = v.findViewById(R.id.rvValDetalle);
+		btnChat = v.findViewById(R.id.btnChatSkill);
+		btnContratar = v.findViewById(R.id.btnContratar);
 
-        cargarSkill();
+		btnChat.setOnClickListener(v1 -> {
+			nuevoChat(new ChatCallback() {
+				@Override
+				public void onChatCreated(ChatRoom chatRoom) {
+					Log.d("SkillFragment", "Chat creado " + chatRoom.getId() + chatRoom.getSkillId() + chatRoom.getSenderId() + chatRoom.getReceiverId());
+				}
 
-        return v;
-    }
+				@Override
+				public void onError() {
+					Log.e("SkillFragment", "Error al crear el chat");
+				}
+			});
+		});
 
-    private void cargarSkill() {
-        List<SlideModel> listaSlide = new ArrayList<>();
-        String urlLocal = "http://10.0.2.2:8080";
+		cargarSkill();
 
-        for (String url : skill.getImageList()) {
-            url = urlLocal + url;
-            listaSlide.add(new SlideModel(url, ScaleTypes.CENTER_INSIDE));
-        }
+		return v;
+	}
 
-        getUser(skill.getUserID(), new UserCallback() {
-            @Override
-            public void onUserLoaded(User user) {
-                Glide.with(getContext()).load(urlLocal + user.getImageURL()).into(imvUser);
-                tvUsername.setText(user.getUsername());
-            }
+	private void nuevoChat(ChatCallback chatCallback) {
 
-            @Override
-            public void onError() {
-                Log.e("AdapterSkills", "Error al cargar el usuario");
-            }
-        });
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+		String token = sharedPrefManager.fetchJwt();
 
-        slider.setImageList(listaSlide);
+		Call<ChatRoom> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.createChat(token, skill.getUserID(), skill.getId());
 
-        tvPrecio.setText(skill.getPrice());
-        tvTitulo.setText(skill.getTitle());
-        tvDescripcion.setText(skill.getDescription());
-    }
+		call.enqueue(new Callback<ChatRoom>() {
+			@Override
+			public void onResponse(@NonNull Call<ChatRoom> call, @NonNull Response<ChatRoom> response) {
+				if (response.isSuccessful() && response.body() != null) {
+					chatCallback.onChatCreated(response.body());
+				} else {
+					chatCallback.onError();
+					Log.e("SkillFragment", "Error al crear el chat response " + response.message());
+				}
+			}
 
-    private void getUser(UUID userID, final UserCallback callback) {
-        Call<User> call = RetrofitClient
-                .getInstance()
-                .getApi()
-                .getUserDataFromUUID(userID);
+			@Override
+			public void onFailure(@NonNull Call<ChatRoom> call, @NonNull Throwable t) {
+				Log.e("SkillFragment", "Error al crear el chat failure " + t.getMessage());
+				chatCallback.onError();
+			}
+		});
+	}
 
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    callback.onUserLoaded(response.body());
-                } else {
-                    callback.onError();
-                    Log.e("AdapterSkills", "Error al cargar el usuario" + response.message());
-                }
-            }
+	private void cargarSkill() {
+		List<SlideModel> listaSlide = new ArrayList<>();
+		String urlLocal = "http://10.0.2.2:8080";
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.e("AdapterSkills", "Error al cargar el usuario" + t.getMessage());
-                callback.onError();
-            }
-        });
-    }
+		for (String url : skill.getImageList()) {
+			url = urlLocal + url;
+			listaSlide.add(new SlideModel(url, ScaleTypes.CENTER_INSIDE));
+		}
+
+		getUser(skill.getUserID(), new UserCallback() {
+			@Override
+			public void onUserLoaded(User user) {
+				Glide.with(getContext()).load(urlLocal + user.getImageURL()).into(imvUser);
+				tvUsername.setText(user.getUsername());
+			}
+
+			@Override
+			public void onError() {
+				Log.e("AdapterSkills", "Error al cargar el usuario");
+			}
+		});
+
+		slider.setImageList(listaSlide);
+
+		tvPrecio.setText(skill.getPrice());
+		tvTitulo.setText(skill.getTitle());
+		tvDescripcion.setText(skill.getDescription());
+	}
+
+	private void getUser(UUID userID, final UserCallback callback) {
+		Call<User> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.getUserDataFromUUID(userID);
+
+		call.enqueue(new Callback<User>() {
+			@Override
+			public void onResponse(Call<User> call, Response<User> response) {
+				if (response.isSuccessful() && response.body() != null) {
+					callback.onUserLoaded(response.body());
+				} else {
+					callback.onError();
+					Log.e("AdapterSkills", "Error al cargar el usuario" + response.message());
+				}
+			}
+
+			@Override
+			public void onFailure(Call<User> call, Throwable t) {
+				Log.e("AdapterSkills", "Error al cargar el usuario" + t.getMessage());
+				callback.onError();
+			}
+		});
+	}
 }

@@ -115,7 +115,7 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/btnChat"
+                        android:id="@+id/btnChatSkill"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/btn_chat"
