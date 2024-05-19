@@ -16,7 +16,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.dam.armoniaskills.fragments.DepositarFragment;
 import com.dam.armoniaskills.fragments.InicioFragment;
 import com.dam.armoniaskills.fragments.RetirarFragment;
+import com.dam.armoniaskills.fragments.ReviewFragment;
 import com.dam.armoniaskills.fragments.SkillFragment;
+import com.dam.armoniaskills.model.Review;
 import com.dam.armoniaskills.model.Skill;
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -47,7 +49,23 @@ public class TopBarActivity extends AppCompatActivity {
             cargarDepositar();
         } else if (i.equals("fragmentoBalanceRetirar")) {
             cargarRetirar();
+        } else if (i.equals("fragmentoAniadirReview")){
+            cargarAniadirReview();
         }
+    }
+
+    private void cargarAniadirReview() {
+
+        skill = getIntent().getParcelableExtra("review");
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        ReviewFragment grupoFragment = ReviewFragment.newInstance(skill);
+        transaction.replace(R.id.flTopBar, grupoFragment);
+
+        transaction.commit();
+
     }
 
     private void cargarSkill() {

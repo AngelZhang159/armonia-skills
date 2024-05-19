@@ -14,22 +14,10 @@ public class User {
 	private String role;
 	private String imageURL;
 	private List<ChatRoom> chatRooms;
+	private List<Review> reviewList;
 	private double balance;
 
-	public double getBalance() {
-		return balance;
-	}
-
-	public void setBalance(double balance) {
-		this.balance = balance;
-	}
-
-	public String getImageURL() {
-		return imageURL;
-	}
-
-	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
+	public User() {
 	}
 
 	public User(String email, String password) {
@@ -37,7 +25,21 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String fullName, String username, String email, int phone, String password, String imageURL, double balance) {
+	public User(UUID id, String fullName, String username, String email, int phone, String password, String role, String imageURL, List<ChatRoom> chatRooms, List<Review> reviewList, double balance) {
+		this.id = id;
+		this.fullName = fullName;
+		this.username = username;
+		this.email = email;
+		this.phone = phone;
+		this.password = password;
+		this.role = role;
+		this.imageURL = imageURL;
+		this.chatRooms = chatRooms;
+		this.reviewList = reviewList;
+		this.balance = balance;
+	}
+
+	public User(String fullName, String username, String email, int phone, String password, String imageURL, Double balance) {
 		this.fullName = fullName;
 		this.username = username;
 		this.email = email;
@@ -45,9 +47,6 @@ public class User {
 		this.password = password;
 		this.imageURL = imageURL;
 		this.balance = balance;
-	}
-
-	public User() {
 	}
 
 	public UUID getId() {
@@ -104,5 +103,37 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+
+	public List<ChatRoom> getChatRooms() {
+		return chatRooms;
+	}
+
+	public void setChatRooms(List<ChatRoom> chatRooms) {
+		this.chatRooms = chatRooms;
+	}
+
+	public List<Review> getReviewList() {
+		return reviewList;
+	}
+
+	public void setReviewList(List<Review> reviewList) {
+		this.reviewList = reviewList;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 }

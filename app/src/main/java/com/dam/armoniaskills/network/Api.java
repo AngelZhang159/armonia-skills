@@ -2,6 +2,7 @@ package com.dam.armoniaskills.network;
 
 import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.model.ChatRoom;
+import com.dam.armoniaskills.model.Review;
 import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.model.User;
 
@@ -43,6 +44,10 @@ public interface Api {
 	@Multipart
 	@POST("api/v1/file/upload")
 	Call<ResponseBody> uploadImage(@Part MultipartBody.Part file);
+
+    @PATCH("api/v1/user/addReview")
+    Call<ResponseBody> addReview(@Header("Authorization") String jwt, @Body Review review);
+
 
 	//Crear nueva Skill
 	@POST("api/v1/skill")

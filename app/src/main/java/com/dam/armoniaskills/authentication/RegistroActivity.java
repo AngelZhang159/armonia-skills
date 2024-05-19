@@ -114,7 +114,7 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 		if (username.isEmpty() || name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
 			Toast.makeText(RegistroActivity.this, R.string.campos_obligatorios, Toast.LENGTH_SHORT).show();
 		} else {
-			User user = new User(name + " " + surname, username, email, phone, password, imageURL, 0);
+			User user = new User(name + " " + surname, username, email, phone, password, imageURL, 0.0);
 			register(user);
 		}
 	}
