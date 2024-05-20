@@ -289,5 +289,6 @@
     <color name="md_theme_surfaceContainer_highContrast_dark">#1C211D</color>
     <color name="md_theme_surfaceContainerHigh_highContrast_dark">#262B27</color>
     <color name="md_theme_surfaceContainerHighest_highContrast_dark">#313631</color>
+    <color name="amarillo">#FFEB3B</color>
 
 </resources>

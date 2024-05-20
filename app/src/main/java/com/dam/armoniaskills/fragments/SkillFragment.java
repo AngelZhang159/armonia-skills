@@ -1,5 +1,6 @@
 package com.dam.armoniaskills.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,17 +12,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dam.armoniaskills.R;
+import com.dam.armoniaskills.TopBarActivity;
 import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.model.ChatRoom;
+import com.dam.armoniaskills.model.Review;
 import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.model.User;
 import com.dam.armoniaskills.network.ChatCallback;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.network.UserCallback;
+import com.dam.armoniaskills.recyclerutils.AdapterReviews;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -34,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SkillFragment extends Fragment {
+public class SkillFragment extends Fragment{
 
 	private static final String ARG_SKILL = "skill";
 
@@ -42,8 +47,8 @@ public class SkillFragment extends Fragment {
 	TextView tvPrecio, tvTitulo, tvDescripcion, tvUsername, tvValoracion;
 	ImageView imvUser;
 	RecyclerView rv;
-	Button btnChat, btnContratar;
-
+	Button btnChat, btnContratar, btnAniadirValoracion;
+	AdapterReviews adapter;
 	private Skill skill;
 
 	public SkillFragment() {
@@ -80,6 +85,18 @@ public class SkillFragment extends Fragment {
 		rv = v.findViewById(R.id.rvValDetalle);
 		btnChat = v.findViewById(R.id.btnChatSkill);
 		btnContratar = v.findViewById(R.id.btnContratar);
+		btnAniadirValoracion = v.findViewById(R.id.btnAniadirValoracion);
+
+		btnAniadirValoracion.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				Intent i = new Intent(getContext(), TopBarActivity.class);
+				i.putExtra("rellenar", "fragmentoAniadirReview");
+				i.putExtra("review", skill);
+				startActivity(i);
+			}
+		});
 
 		btnChat.setOnClickListener(v1 -> {
 			nuevoChat(new ChatCallback() {
@@ -97,7 +114,18 @@ public class SkillFragment extends Fragment {
 
 		cargarSkill();
 
+
 		return v;
+	}
+
+	private void cargarReviews(User user) {
+
+		List<Review> listaReviews = user.getReviewList();
+		Log.i("culoss", String.valueOf(listaReviews.get(0).getContent()));
+		adapter = new AdapterReviews(listaReviews);
+		rv.setLayoutManager(new LinearLayoutManager(getContext()));
+		rv.setAdapter(adapter);
+
 	}
 
 	private void nuevoChat(ChatCallback chatCallback) {
@@ -141,8 +169,11 @@ public class SkillFragment extends Fragment {
 		getUser(skill.getUserID(), new UserCallback() {
 			@Override
 			public void onUserLoaded(User user) {
+
 				Glide.with(getContext()).load(urlLocal + user.getImageURL()).into(imvUser);
 				tvUsername.setText(user.getUsername());
+
+				cargarReviews(user);
 			}
 
 			@Override
@@ -182,4 +213,6 @@ public class SkillFragment extends Fragment {
 			}
 		});
 	}
+
+
 }

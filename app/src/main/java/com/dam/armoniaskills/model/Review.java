@@ -13,37 +13,35 @@ public class Review implements Parcelable {
 
     private int stars;
 
-    private UUID skillID;
+    private UUID skillId;
 
-    private UUID sellerID;
+    private UUID sellerId;
 
-    private UUID buyerID;
+    private UUID buyerId;
 
-    public Review(String content, int stars, UUID skillID, UUID sellerID, UUID buyerID) {
+    private String imageUrl;
+
+    private String username;
+
+    public Review(String content, int stars, UUID skillId, UUID sellerId, UUID buyerId, String imageUrl, String username) {
         this.content = content;
         this.stars = stars;
-        this.skillID = skillID;
-        this.sellerID = sellerID;
-        this.buyerID = buyerID;
+        this.skillId = skillId;
+        this.sellerId = sellerId;
+        this.buyerId = buyerId;
+        this.imageUrl = imageUrl;
+        this.username = username;
     }
+
 
     protected Review(Parcel in) {
         content = in.readString();
         stars = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(content);
-        dest.writeInt(stars);
-        dest.writeString(String.valueOf(skillID));
-        dest.writeString(String.valueOf(sellerID));
-        dest.writeString(String.valueOf(buyerID));
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        imageUrl = in.readString();
+        username = in.readString();
+        skillId = UUID.fromString(in.readString());
+        sellerId = UUID.fromString(in.readString());
+        buyerId = UUID.fromString(in.readString());
     }
 
     public static final Creator<Review> CREATOR = new Creator<Review>() {
@@ -57,6 +55,22 @@ public class Review implements Parcelable {
             return new Review[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(content);
+        dest.writeInt(stars);
+        dest.writeString(imageUrl);
+        dest.writeString(username);
+        dest.writeString(skillId.toString());
+        dest.writeString(sellerId.toString());
+        dest.writeString(buyerId.toString());
+    }
 
     public String getContent() {
         return content;
@@ -74,38 +88,43 @@ public class Review implements Parcelable {
         this.stars = stars;
     }
 
-    public UUID getSkillID() {
-        return skillID;
+    public UUID getSkillId() {
+        return skillId;
     }
 
-    public void setSkillID(UUID skillID) {
-        this.skillID = skillID;
+    public void setSkillId(UUID skillId) {
+        this.skillId = skillId;
     }
 
-    public UUID getSellerID() {
-        return sellerID;
+    public UUID getSellerId() {
+        return sellerId;
     }
 
-    public void setSellerID(UUID sellerID) {
-        this.sellerID = sellerID;
+    public void setSellerId(UUID sellerId) {
+        this.sellerId = sellerId;
     }
 
-    public UUID getBuyerID() {
-        return buyerID;
+    public UUID getBuyerId() {
+        return buyerId;
     }
 
-    public void setBuyerID(UUID buyerID) {
-        this.buyerID = buyerID;
+    public void setBuyerId(UUID buyerId) {
+        this.buyerId = buyerId;
     }
 
-    @Override
-    public String toString() {
-        return "Review{" +
-                "content='" + content + '\'' +
-                ", stars=" + stars +
-                ", skillID=" + skillID +
-                ", sellerID=" + sellerID +
-                ", buyerID=" + buyerID +
-                '}';
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

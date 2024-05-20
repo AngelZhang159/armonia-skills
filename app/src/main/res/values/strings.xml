@@ -95,4 +95,5 @@
     <string name="tituloAniadir_nueva_review">Añanir Valoración</string>
     <string name="ok_retirar">Dinero retirado con éxito.</string>
     <string name="err_retirar">Error al retirar el dinero.</string>
+    <string name="tv_estrellas">%1$d / 5</string>
 </resources>

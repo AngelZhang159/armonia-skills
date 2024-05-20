@@ -3,6 +3,8 @@ package com.dam.armoniaskills.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -90,7 +92,7 @@ public class ReviewFragment extends Fragment {
         String content = String.valueOf(etContenido.getText());
         int stars = Integer.parseInt(etValoracion.getText().toString());
 
-        Review review = new Review(content, stars, null, skill.getUserID(), null);
+        Review review = new Review(content, stars, null, skill.getUserID(), null, null, null);
 
         Log.i("cacaa", review.toString());
         SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
@@ -106,6 +108,15 @@ public class ReviewFragment extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(getContext(), "¡Valoración Añadida con Exito!", Toast.LENGTH_SHORT).show();
+
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                    SkillFragment grupoFragment = SkillFragment.newInstance(skill);
+                    transaction.replace(R.id.flTopBar, grupoFragment);
+
+                    transaction.commit();
+
                 } else {
                     Log.e("Review", "Error al añadir review al usuario: " + skill.getUserID() + ". Mensaje de error: " + response.message());
                 }
