@@ -48,5 +48,6 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.glide)
     implementation (libs.imageslideshow)
+    implementation(libs.okhttp)
 
 }
