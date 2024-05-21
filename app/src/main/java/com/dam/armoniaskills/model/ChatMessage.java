@@ -1,6 +1,7 @@
 package com.dam.armoniaskills.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 public class ChatMessage {
@@ -8,9 +9,9 @@ public class ChatMessage {
 	private UUID sender;
 	private UUID receiver;
 	private String content;
-	private Date date;
+	private Timestamp date;
 
-	public ChatMessage(String content, Date date) {
+	public ChatMessage(String content, Timestamp date) {
 		this.content = content;
 		this.date = date;
 	}
@@ -47,11 +48,11 @@ public class ChatMessage {
 		this.content = content;
 	}
 
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 }

@@ -60,9 +60,6 @@ public interface Api {
 	@GET("api/v1/chat")
 	Call<List<ChatDTO>> getChats(@Header("Authorization") String jwt);
 
-	@GET("api/v1/chat/messages")
-	Call<List<ChatMessage>> getMessages(UUID id);
-
 	@GET("api/v1/balance")
 	Call<Double> getBalance(@Header("Authorization") String jwt);
 
@@ -74,4 +71,10 @@ public interface Api {
 
 	@GET("api/v1/chat/new/{id}/{skillId}")
 	Call<ChatRoom> createChat(@Header("Authorization") String token, @Path("id") UUID receiverId, @Path("skillId") UUID skillId);
+
+	@GET("api/v1/messages/{chatId}")
+	Call<List<ChatMessage>> getMessages(@Header("Authorization") String token, @Path("chatId") UUID chatId);
+
+	@GET("api/v1/user/id")
+	Call<UUID> getUserId(@Header("Authorization") String token);
 }

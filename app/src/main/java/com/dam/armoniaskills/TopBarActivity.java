@@ -1,102 +1,116 @@
 package com.dam.armoniaskills;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.dam.armoniaskills.fragments.ChatFragment;
 import com.dam.armoniaskills.fragments.DepositarFragment;
 import com.dam.armoniaskills.fragments.InicioFragment;
 import com.dam.armoniaskills.fragments.RetirarFragment;
 import com.dam.armoniaskills.fragments.ReviewFragment;
 import com.dam.armoniaskills.fragments.SkillFragment;
-import com.dam.armoniaskills.model.Review;
 import com.dam.armoniaskills.model.Skill;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class TopBarActivity extends AppCompatActivity {
 
-    MaterialToolbar toolbar;
-    Skill skill;
+	MaterialToolbar toolbar;
+	Skill skill;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_top_bar);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_top_bar);
 
-        toolbar = findViewById(R.id.topAppBar);
+		toolbar = findViewById(R.id.topAppBar);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 
-        String i = getIntent().getStringExtra("rellenar");
+		String i = getIntent().getStringExtra("rellenar");
 
-        if (i.equals("fragmentoHome")) {
-            cargarSkill();
-        } else if (i.equals("fragmentoBalanceDepositar")) {
-            cargarDepositar();
-        } else if (i.equals("fragmentoBalanceRetirar")) {
-            cargarRetirar();
-        } else if (i.equals("fragmentoAniadirReview")){
-            cargarAniadirReview();
-        }
-    }
+		if (i.equals("fragmentoHome")) {
+			cargarSkill();
+		} else if (i.equals("fragmentoBalanceDepositar")) {
+			cargarDepositar();
+		} else if (i.equals("fragmentoBalanceRetirar")) {
+			cargarRetirar();
+		} else if (i.equals("fragmentoAniadirReview")) {
+			cargarAniadirReview();
+		} else if (i.equals("fragmentoChat")) {
+			cargarChat();
+		}
+	}
 
-    private void cargarAniadirReview() {
+	private void cargarChat() {
+		String chatId = getIntent().getStringExtra("chatId");
 
-        skill = getIntent().getParcelableExtra("review");
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+		ChatFragment chatFragment = new ChatFragment();
 
-        ReviewFragment grupoFragment = ReviewFragment.newInstance(skill);
-        transaction.replace(R.id.flTopBar, grupoFragment);
+		Bundle args = new Bundle();
 
-        transaction.commit();
+		args.putString("chatId", chatId);
 
-    }
+		chatFragment.setArguments(args);
 
-    private void cargarSkill() {
-        skill = getIntent().getParcelableExtra(InicioFragment.SKILL);
+		fragmentTransaction.replace(R.id.flTopBar, chatFragment);
+		fragmentTransaction.commit();
+	}
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+	private void cargarAniadirReview() {
 
-        SkillFragment grupoFragment = SkillFragment.newInstance(skill);
-        transaction.replace(R.id.flTopBar, grupoFragment);
+		skill = getIntent().getParcelableExtra("review");
 
-        transaction.commit();
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        toolbar.inflateMenu(R.menu.topbar_menu);
-    }
+		ReviewFragment grupoFragment = ReviewFragment.newInstance(skill);
+		transaction.replace(R.id.flTopBar, grupoFragment);
 
-    private void cargarRetirar() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        RetirarFragment retirarFragment = new RetirarFragment();
-        fragmentTransaction.replace(R.id.flTopBar, retirarFragment);
+		transaction.commit();
 
-        fragmentTransaction.commit();
-    }
+	}
 
-    private void cargarDepositar() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        DepositarFragment depositoFragment = new DepositarFragment();
-        fragmentTransaction.replace(R.id.flTopBar, depositoFragment);
+	private void cargarSkill() {
+		skill = getIntent().getParcelableExtra(InicioFragment.SKILL);
 
-        fragmentTransaction.commit();
-    }
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+		SkillFragment grupoFragment = SkillFragment.newInstance(skill);
+		transaction.replace(R.id.flTopBar, grupoFragment);
+
+		transaction.commit();
+
+		toolbar.inflateMenu(R.menu.topbar_menu);
+	}
+
+	private void cargarRetirar() {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		RetirarFragment retirarFragment = new RetirarFragment();
+		fragmentTransaction.replace(R.id.flTopBar, retirarFragment);
+
+		fragmentTransaction.commit();
+	}
+
+	private void cargarDepositar() {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		DepositarFragment depositoFragment = new DepositarFragment();
+		fragmentTransaction.replace(R.id.flTopBar, depositoFragment);
+
+		fragmentTransaction.commit();
+	}
 }

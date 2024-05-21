@@ -1,179 +1,135 @@
 package com.dam.armoniaskills.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dam.armoniaskills.ChatActivity;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.authentication.SharedPrefManager;
-import com.dam.armoniaskills.model.ChatDTO;
+import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.network.RetrofitClient;
-import com.dam.armoniaskills.recyclerutils.AdapterChat;
+import com.dam.armoniaskills.recyclerutils.AdapterMensajes;
 import com.dam.armoniaskills.webSocket.WebSocketSingleton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.UUID;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
-import okio.ByteString;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChatFragment extends Fragment implements View.OnClickListener {
+public class ChatFragment extends Fragment {
 
-	RecyclerView rv;
-	AdapterChat adapter;
-	ArrayList<ChatDTO> chatDTOList;
-	private WebSocket webSocket;
-
-	public static ChatFragment newInstance(String param1, String param2) {
-		ChatFragment fragment = new ChatFragment();
-		Bundle args = new Bundle();
-		fragment.setArguments(args);
-		return fragment;
-	}
+	private EditText messageInput;
+	private AdapterMensajes adapter;
+	private ArrayList<ChatMessage> chatMessages;
+	private RecyclerView rv;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
+		Bundle args = getArguments();
 
+		String chatId = args != null ? args.getString("chatId") : null;
+
+		messageInput = view.findViewById(R.id.message_input);
+		Button sendButton = view.findViewById(R.id.send_button);
+		rv = view.findViewById(R.id.rvMensajes);
+		chatMessages = new ArrayList<>();
+
+		cargarMensajes(chatId);
+
+		WebSocket webSocket = WebSocketSingleton.getInstance().getWebSocket();
+
+		sendButton.setOnClickListener(v -> {
+			String message = messageInput.getText().toString();
+
+			if (!message.isEmpty()) {
+				JSONObject jsonObject = new JSONObject();
+				try {
+					jsonObject.put("message", message);
+					jsonObject.put("chatId", chatId);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				// Send the JSON object as a string
+				webSocket.send(jsonObject.toString());
+
+				messageInput.setText(""); // Clear the input field
+			}
+		});
+
+		return view;
 	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState) {
+	private void cargarMensajes(String chatId) {
 
-		View v = inflater.inflate(R.layout.fragment_chat, container, false);
-
-		rv = v.findViewById(R.id.rvChat);
-
-		chatDTOList = new ArrayList<>();
-		configurarRV();
-
-		mostrarChats();
-
-		configurarWebSocket();
-
-
-		return v;
-	}
-
-	private void mostrarChats() {
 		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
 		String token = sharedPrefManager.fetchJwt();
 
-		Call<List<ChatDTO>> call = RetrofitClient
+		Call<List<ChatMessage>> call = RetrofitClient
 				.getInstance()
 				.getApi()
-				.getChats(token);
+				.getMessages(token, UUID.fromString(chatId));
 
-		call.enqueue(new Callback<List<ChatDTO>>() {
+		call.enqueue(new retrofit2.Callback<List<ChatMessage>>() {
 			@Override
-			public void onResponse(@NonNull Call<List<ChatDTO>> call, @NonNull Response<List<ChatDTO>> response) {
+			public void onResponse(@NonNull Call<List<ChatMessage>> call, @NonNull Response<List<ChatMessage>> response) {
 				if (response.isSuccessful()) {
-					chatDTOList.clear();
-					chatDTOList.addAll(response.body());
+					chatMessages.addAll(response.body());
 					configurarRV();
 				}
 			}
 
 			@Override
-			public void onFailure(@NonNull Call<List<ChatDTO>> call, @NonNull Throwable t) {
-				Log.e("CHAT", "Error al obtener los chats");
-			}
-		});
-	}
-
-	private void configurarWebSocket() {
-
-		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
-		String token = sharedPrefManager.fetchJwt();
-
-		OkHttpClient client = new OkHttpClient.Builder()
-				.readTimeout(0,  TimeUnit.MILLISECONDS)
-				.build();
-
-		Request request = new Request.Builder()
-				.url("ws://10.0.2.2:8080/ws")
-				.addHeader("Authorization", token)
-				.build();
-
-		webSocket = client.newWebSocket(request, new WebSocketListener() {
-			@Override
-			public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
-				super.onClosed(webSocket, code, reason);
-			}
-
-			@Override
-			public void onClosing(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
-				super.onClosing(webSocket, code, reason);
-			}
-
-			@Override
-			public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, @Nullable okhttp3.Response response) {
-				super.onFailure(webSocket, t, response);
-			}
-
-			@Override
-			public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
-				super.onMessage(webSocket, text);
-			}
-
-			@Override
-			public void onMessage(@NonNull WebSocket webSocket, @NonNull ByteString bytes) {
-				super.onMessage(webSocket, bytes);
-			}
-
-			@Override
-			public void onOpen(@NonNull WebSocket webSocket, @NonNull okhttp3.Response response) {
-				super.onOpen(webSocket, response);
+			public void onFailure(@NonNull Call<List<ChatMessage>> call, @NonNull Throwable t) {
+				t.printStackTrace();
 			}
 		});
 
-		WebSocketSingleton.getInstance().setWebSocket(webSocket);
 	}
 
 	private void configurarRV() {
-		adapter = new AdapterChat(chatDTOList, this);
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
 
-		rv.setLayoutManager(new LinearLayoutManager(getContext()));
-		rv.setAdapter(adapter);
-		rv.setHasFixedSize(true);
+		Call<UUID> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.getUserId(sharedPrefManager.fetchJwt());
+
+		call.enqueue(new retrofit2.Callback<UUID>() {
+			@Override
+			public void onResponse(@NonNull Call<UUID> call, @NonNull Response<UUID> response) {
+				if (response.isSuccessful()) {
+					adapter = new AdapterMensajes(chatMessages, response);
+
+					rv.setLayoutManager(new LinearLayoutManager(getContext()));
+					rv.setAdapter(adapter);
+					rv.setHasFixedSize(true);
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<UUID> call, @NonNull Throwable t) {
+				t.printStackTrace();
+			}
+		});
 
 	}
 
-	@Override
-	public void onClick(View v) {
-		int pos = rv.getChildAdapterPosition(v);
-		ChatDTO chatDTO = chatDTOList.get(pos);
 
-		Intent i = new Intent(getContext(), ChatActivity.class);
-		i.putExtra("chatId", chatDTO.getChatId().toString());
-		startActivity(i);
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		if (webSocket != null) {
-			webSocket.close(1000, "Chat View destroyed");
-		}
-	}
 }

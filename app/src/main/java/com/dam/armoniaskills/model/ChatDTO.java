@@ -1,6 +1,6 @@
 package com.dam.armoniaskills.model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 public class ChatDTO {
@@ -8,11 +8,11 @@ public class ChatDTO {
 	private UUID chatId;
 	private String nombreUsuario;
 	private String ultimoMensaje;
-	private Date ultimaHora;
+	private Timestamp ultimaHora;
 	private String fotoPerfil;
 	private String nombreSkill;
 
-	public ChatDTO(UUID chatId, String nombreUsuario, String ultimoMensaje, Date ultimaHora, String fotoPerfil, String nombreSkill) {
+	public ChatDTO(UUID chatId, String nombreUsuario, String ultimoMensaje, Timestamp ultimaHora, String fotoPerfil, String nombreSkill) {
 		this.chatId = chatId;
 		this.nombreUsuario = nombreUsuario;
 		this.ultimoMensaje = ultimoMensaje;
@@ -45,11 +45,11 @@ public class ChatDTO {
 		this.ultimoMensaje = ultimoMensaje;
 	}
 
-	public Date getUltimaHora() {
+	public Timestamp getUltimaHora() {
 		return ultimaHora;
 	}
 
-	public void setUltimaHora(Date ultimaHora) {
+	public void setUltimaHora(Timestamp ultimaHora) {
 		this.ultimaHora = ultimaHora;
 	}
 
