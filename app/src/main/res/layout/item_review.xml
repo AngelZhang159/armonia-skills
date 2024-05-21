@@ -1,73 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margen"
-    app:cardCornerRadius="@dimen/margen"
-    app:cardElevation="@dimen/margen">
-
-    <LinearLayout
-        android:layout_marginBottom="@dimen/margen"
-        android:layout_marginHorizontal="@dimen/margen"
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:padding="10dp">
 
         <LinearLayout
-            android:layout_marginBottom="@dimen/margen"
-            android:layout_marginHorizontal="@dimen/margen"
-            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivUserReview"
                 android:layout_gravity="center"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/user"/>
 
             <TextView
                 android:id="@+id/tvUserReview"
                 android:layout_gravity="center"
-                android:layout_weight="6"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textSize="18sp"
-                android:text="Usuario"/>
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/margen"/>
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/star"
+                android:layout_marginEnd="6dp"/>
 
             <TextView
-                android:layout_weight="1"
                 android:id="@+id/tvEstrellas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margen"
-                android:layout_marginStart="@dimen/margen"
                 android:textStyle="bold"
-                android:textColor="@color/amarillo"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:text="@string/tv_estrellas"
-                android:textAlignment="textEnd"/>
-
+                android:gravity="end" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvValoracion"
-            android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tvValoracion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:textSize="18sp" />
+
+    <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margen"
-            android:layout_marginStart="@dimen/margen"
-            android:textSize="22sp"/>
-
-    </LinearLayout>
-
-
-
-</androidx.cardview.widget.CardView>
+            android:layout_marginTop="@dimen/margen"/>
+</LinearLayout>

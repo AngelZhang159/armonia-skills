@@ -46,7 +46,6 @@ public class AdapterReviews extends RecyclerView.Adapter<AdapterReviews.ReviewVH
         ImageView ivUser;
         TextView tvUser, tvEstrellas, tvValoracion;
 
-
         public ReviewVH(@NonNull View itemView) {
             super(itemView);
 
@@ -54,19 +53,20 @@ public class AdapterReviews extends RecyclerView.Adapter<AdapterReviews.ReviewVH
             tvUser = itemView.findViewById(R.id.tvUserReview);
             tvEstrellas = itemView.findViewById(R.id.tvEstrellas);
             tvValoracion = itemView.findViewById(R.id.tvValoracion);
-
-
         }
 
         public void bindReview(Review review) {
             String urlLocal = "http://10.0.2.2:8080";
 
-            //imagen
             Glide.with(itemView).load(urlLocal + review.getImageUrl()).into(ivUser);
             tvUser.setText(review.getUsername());
             tvEstrellas.setText(String.format(itemView.getContext().getString(R.string.tv_estrellas), review.getStars()));
-            tvValoracion.setText(review.getContent());
 
+            if (review.getContent().isEmpty()) {
+                tvValoracion.setVisibility(View.GONE);
+            } else {
+                tvValoracion.setText(review.getContent());
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.dam.armoniaskills.R;
@@ -30,11 +31,13 @@ public class ReviewFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "skill";
 
-    private EditText etValoracion, etContenido;
+    RatingBar rating;
+    EditText etContenido;
 
-    private Button btnConfirmarNuevaReview;
+    Button btnConfirmarNuevaReview;
 
     private Skill skill;
+    int valoracion;
 
     public ReviewFragment() {
     }
@@ -60,39 +63,33 @@ public class ReviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_review, container, false);
 
-        etValoracion = v.findViewById(R.id.etValoracion);
+        rating = v.findViewById(R.id.ratingBar);
         etContenido = v.findViewById(R.id.etContenido);
         btnConfirmarNuevaReview = v.findViewById(R.id.btnConfirmarNuevaReview);
+
+        valoracion = (int) rating.getRating();
+
+        rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                valoracion = (int) rating;
+            }
+        });
 
         btnConfirmarNuevaReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(etValoracion.getText().toString().isEmpty()){
-                    Toast.makeText(getContext(), "Debes añadir uan valoracion del 1 al 5", Toast.LENGTH_SHORT).show();
-                } else if(Integer.parseInt(etValoracion.getText().toString()) > 5 || Integer.parseInt(etValoracion.getText().toString()) < 1){
-                    Toast.makeText(getContext(), "La valoración debe estar entre 1 y 5", Toast.LENGTH_SHORT).show();
-                } else {
-
-                    guardarReview();
-                }
-
-
+                guardarReview();
             }
         });
-
-
 
         return v;
     }
 
     private void guardarReview() {
-
-
         String content = String.valueOf(etContenido.getText());
-        int stars = Integer.parseInt(etValoracion.getText().toString());
 
-        Review review = new Review(content, stars, null, skill.getUserID(), null, null, null);
+        Review review = new Review(content, valoracion, null, skill.getUserID(), null, null, null);
 
         Log.i("cacaa", review.toString());
         SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
@@ -107,7 +104,7 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(getContext(), "¡Valoración Añadida con Exito!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "¡Gracias por valorar su experiencia!", Toast.LENGTH_SHORT).show();
 
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction transaction = fragmentManager.beginTransaction();

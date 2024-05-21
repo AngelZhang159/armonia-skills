@@ -92,8 +92,10 @@
     <string name="btn_chat">Chat</string>
     <string name="ok_deposito">Dinero depositado con éxito.</string>
     <string name="err_deposito">Error al depositar dinero.</string>
-    <string name="tituloAniadir_nueva_review">Añanir Valoración</string>
     <string name="ok_retirar">Dinero retirado con éxito.</string>
     <string name="err_retirar">Error al retirar el dinero.</string>
-    <string name="tv_estrellas">%1$d / 5</string>
+    <string name="tvAniadirVal">Envía tu valoración</string>
+    <string name="tv_estrellas">%1$d</string>
+    <string name="tv_media_reviews">%1$,.2f (%2$d)</string>
+    <string name="tit_valoraciones">Valoraciones de %1$s</string>
 </resources>

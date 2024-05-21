@@ -39,12 +39,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SkillFragment extends Fragment{
+public class SkillFragment extends Fragment implements View.OnClickListener {
 
 	private static final String ARG_SKILL = "skill";
 
 	ImageSlider slider;
-	TextView tvPrecio, tvTitulo, tvDescripcion, tvUsername, tvValoracion;
+	TextView tvPrecio, tvTitulo, tvDescripcion, tvUsername, tvValoracion, tvTitVal;
 	ImageView imvUser;
 	RecyclerView rv;
 	Button btnChat, btnContratar, btnAniadirValoracion;
@@ -81,22 +81,12 @@ public class SkillFragment extends Fragment{
 		tvDescripcion = v.findViewById(R.id.tvDescDetalle);
 		tvUsername = v.findViewById(R.id.tvUser);
 		tvValoracion = v.findViewById(R.id.tvValUser);
+		tvTitVal = v.findViewById(R.id.tvValDetalle);
 		imvUser = v.findViewById(R.id.imvUser);
 		rv = v.findViewById(R.id.rvValDetalle);
 		btnChat = v.findViewById(R.id.btnChatSkill);
 		btnContratar = v.findViewById(R.id.btnContratar);
 		btnAniadirValoracion = v.findViewById(R.id.btnAniadirValoracion);
-
-		btnAniadirValoracion.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-				Intent i = new Intent(getContext(), TopBarActivity.class);
-				i.putExtra("rellenar", "fragmentoAniadirReview");
-				i.putExtra("review", skill);
-				startActivity(i);
-			}
-		});
 
 		btnChat.setOnClickListener(v1 -> {
 			nuevoChat(new ChatCallback() {
@@ -114,18 +104,26 @@ public class SkillFragment extends Fragment{
 
 		cargarSkill();
 
-
 		return v;
 	}
 
 	private void cargarReviews(User user) {
-
 		List<Review> listaReviews = user.getReviewList();
-		Log.i("culoss", String.valueOf(listaReviews.get(0).getContent()));
-		adapter = new AdapterReviews(listaReviews);
-		rv.setLayoutManager(new LinearLayoutManager(getContext()));
-		rv.setAdapter(adapter);
 
+		if (!listaReviews.isEmpty()) {
+			double media = 0;
+			for (Review review : listaReviews) {
+				media += review.getStars();
+
+			}
+			media /= listaReviews.size();
+
+			tvValoracion.setText(String.format(getString(R.string.tv_media_reviews), media, listaReviews.size()));
+
+			adapter = new AdapterReviews(listaReviews);
+			rv.setLayoutManager(new LinearLayoutManager(getContext()));
+			rv.setAdapter(adapter);
+		}
 	}
 
 	private void nuevoChat(ChatCallback chatCallback) {
@@ -169,9 +167,9 @@ public class SkillFragment extends Fragment{
 		getUser(skill.getUserID(), new UserCallback() {
 			@Override
 			public void onUserLoaded(User user) {
-
 				Glide.with(getContext()).load(urlLocal + user.getImageURL()).into(imvUser);
 				tvUsername.setText(user.getUsername());
+				tvTitVal.setText(String.format(getString(R.string.tit_valoraciones), user.getFullName()));
 
 				cargarReviews(user);
 			}
@@ -184,7 +182,7 @@ public class SkillFragment extends Fragment{
 
 		slider.setImageList(listaSlide);
 
-		tvPrecio.setText(skill.getPrice());
+		tvPrecio.setText(String.format(getString(R.string.tv_precio_inicio), skill.getPrice()));
 		tvTitulo.setText(skill.getTitle());
 		tvDescripcion.setText(skill.getDescription());
 	}
@@ -214,5 +212,15 @@ public class SkillFragment extends Fragment{
 		});
 	}
 
+	@Override
+	public void onClick(View v) {
+		if (v.getId() == R.id.btnContratar) {
 
+		} else if (v.getId() == R.id.btnAniadirValoracion) {
+			Intent i = new Intent(getContext(), TopBarActivity.class);
+			i.putExtra("rellenar", "fragmentoAniadirReview");
+			i.putExtra("review", skill);
+			startActivity(i);
+		}
+	}
 }

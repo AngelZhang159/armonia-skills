@@ -47,9 +47,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Contratar Skill"
-                        android:textSize="12sp"
-                        android:layout_alignParentBottom="true"
-                        />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -99,7 +97,6 @@
                             android:id="@+id/tvUser"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Daniel Culogordo"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -108,7 +105,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="4.8 (20)"
+                            android:text="@string/tv_media_reviews"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -132,7 +129,7 @@
                     android:id="@+id/tvValDetalle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Valoraciones de Daniel Culogordo"
+                    android:text="@string/tit_valoraciones"
                     android:textSize="22sp"
                     android:textStyle="bold"/>
 
