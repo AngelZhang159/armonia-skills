@@ -68,9 +68,6 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 
 		mostrarChats();
 
-		configurarWebSocket();
-
-
 		return v;
 	}
 
@@ -100,54 +97,6 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 		});
 	}
 
-	private void configurarWebSocket() {
-
-		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
-		String token = sharedPrefManager.fetchJwt();
-
-		OkHttpClient client = new OkHttpClient.Builder()
-				.readTimeout(0,  TimeUnit.MILLISECONDS)
-				.build();
-
-		Request request = new Request.Builder()
-				.url("ws://10.0.2.2:8080/ws")
-				.addHeader("Authorization", token)
-				.build();
-
-		webSocket = client.newWebSocket(request, new WebSocketListener() {
-			@Override
-			public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
-				super.onClosed(webSocket, code, reason);
-			}
-
-			@Override
-			public void onClosing(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
-				super.onClosing(webSocket, code, reason);
-			}
-
-			@Override
-			public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, @Nullable okhttp3.Response response) {
-				super.onFailure(webSocket, t, response);
-			}
-
-			@Override
-			public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
-				super.onMessage(webSocket, text);
-			}
-
-			@Override
-			public void onMessage(@NonNull WebSocket webSocket, @NonNull ByteString bytes) {
-				super.onMessage(webSocket, bytes);
-			}
-
-			@Override
-			public void onOpen(@NonNull WebSocket webSocket, @NonNull okhttp3.Response response) {
-				super.onOpen(webSocket, response);
-			}
-		});
-
-		WebSocketSingleton.getInstance().setWebSocket(webSocket);
-	}
 
 	private void configurarRV() {
 		adapter = new AdapterChat(chatDTOList, this);

@@ -1,6 +1,7 @@
 package com.dam.armoniaskills.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,17 +19,25 @@ import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterMensajes;
-import com.dam.armoniaskills.webSocket.WebSocketSingleton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
+import okio.ByteString;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChatFragment extends Fragment {
@@ -36,6 +46,8 @@ public class ChatFragment extends Fragment {
 	private AdapterMensajes adapter;
 	private ArrayList<ChatMessage> chatMessages;
 	private RecyclerView rv;
+
+	private WebSocket webSocket;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +64,7 @@ public class ChatFragment extends Fragment {
 
 		cargarMensajes(chatId);
 
-		WebSocket webSocket = WebSocketSingleton.getInstance().getWebSocket();
+		configurarWebSocket();
 
 		sendButton.setOnClickListener(v -> {
 			String message = messageInput.getText().toString();
@@ -86,7 +98,7 @@ public class ChatFragment extends Fragment {
 				.getApi()
 				.getMessages(token, UUID.fromString(chatId));
 
-		call.enqueue(new retrofit2.Callback<List<ChatMessage>>() {
+		call.enqueue(new Callback<List<ChatMessage>>() {
 			@Override
 			public void onResponse(@NonNull Call<List<ChatMessage>> call, @NonNull Response<List<ChatMessage>> response) {
 				if (response.isSuccessful()) {
@@ -111,7 +123,7 @@ public class ChatFragment extends Fragment {
 				.getApi()
 				.getUserId(sharedPrefManager.fetchJwt());
 
-		call.enqueue(new retrofit2.Callback<UUID>() {
+		call.enqueue(new Callback<UUID>() {
 			@Override
 			public void onResponse(@NonNull Call<UUID> call, @NonNull Response<UUID> response) {
 				if (response.isSuccessful()) {
@@ -131,5 +143,80 @@ public class ChatFragment extends Fragment {
 
 	}
 
+	private void configurarWebSocket() {
+
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+		String token = sharedPrefManager.fetchJwt();
+
+		OkHttpClient client = new OkHttpClient.Builder()
+				.readTimeout(0, TimeUnit.MILLISECONDS)
+				.build();
+
+		Request request = new Request.Builder()
+				.url("ws://10.0.2.2:8080/ws")
+				.addHeader("Authorization", token)
+				.build();
+
+		webSocket = client.newWebSocket(request, new WebSocketListener() {
+			@Override
+			public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
+				super.onClosed(webSocket, code, reason);
+			}
+
+			@Override
+			public void onClosing(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
+				super.onClosing(webSocket, code, reason);
+			}
+
+			@Override
+			public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, @Nullable okhttp3.Response response) {
+				super.onFailure(webSocket, t, response);
+			}
+
+			@Override
+			public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
+				super.onMessage(webSocket, text);
+
+				Log.e("ONMESSAGE", "onMessage: " + text);
+
+				try {
+					JSONObject jsonObject = new JSONObject(text);
+
+					String chatId = jsonObject.getString("chatId");
+					String sender = jsonObject.getString("sender");
+					String receiver = jsonObject.getString("receiver");
+					String content = jsonObject.getString("content");
+					long dateMillis = jsonObject.getLong("date");
+
+					ChatMessage chatMessage = new ChatMessage();
+					chatMessage.setChatId(UUID.fromString(chatId));
+					chatMessage.setSender(UUID.fromString(sender));
+					chatMessage.setReceiver(UUID.fromString(receiver));
+					chatMessage.setContent(content);
+					chatMessage.setDate(new Timestamp(dateMillis));
+
+					chatMessages.add(chatMessage);
+
+					// Notify the adapter that the data set has changed
+					getActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				// Add the new message to the list
+			}
+
+			@Override
+			public void onMessage(@NonNull WebSocket webSocket, @NonNull ByteString bytes) {
+				super.onMessage(webSocket, bytes);
+			}
+
+			@Override
+			public void onOpen(@NonNull WebSocket webSocket, @NonNull okhttp3.Response response) {
+				super.onOpen(webSocket, response);
+			}
+		});
+
+	}
 
 }

@@ -11,6 +11,9 @@ public class ChatMessage {
 	private String content;
 	private Timestamp date;
 
+	public ChatMessage() {
+	}
+
 	public ChatMessage(String content, Timestamp date) {
 		this.content = content;
 		this.date = date;
