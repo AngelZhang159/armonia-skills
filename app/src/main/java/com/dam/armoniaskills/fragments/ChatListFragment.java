@@ -114,6 +114,8 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 
 		Intent i = new Intent(getContext(), TopBarActivity.class);
 		i.putExtra("rellenar", "fragmentoChat");
+		i.putExtra("userImage", chatDTO.getFotoPerfil());
+		i.putExtra("userName", chatDTO.getNombreUsuario());
 		i.putExtra("chatId", chatDTO.getChatId().toString());
 
 		startActivity(i);

@@ -1,47 +1,48 @@
 package com.dam.armoniaskills;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
+import com.dam.armoniaskills.fragments.ChatFragment;
 import com.dam.armoniaskills.fragments.DepositarFragment;
 import com.dam.armoniaskills.fragments.InicioFragment;
 import com.dam.armoniaskills.fragments.RetirarFragment;
 import com.dam.armoniaskills.fragments.ReviewFragment;
 import com.dam.armoniaskills.fragments.SkillFragment;
-import com.dam.armoniaskills.model.Review;
 import com.dam.armoniaskills.model.Skill;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class TopBarActivity extends AppCompatActivity {
 
-    MaterialToolbar toolbar;
-    Skill skill;
+	MaterialToolbar toolbar;
+    ImageView userImage;
+    TextView userName;
+	Skill skill;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_top_bar);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_top_bar);
 
-        toolbar = findViewById(R.id.topAppBar);
+		toolbar = findViewById(R.id.topAppBar);
+		userImage = findViewById(R.id.ivUserChat);
+		userName = findViewById(R.id.tvUserChat);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 
-        String i = getIntent().getStringExtra("rellenar");
+		String i = getIntent().getStringExtra("rellenar");
 
         if (i.equals("fragmentoHome")) {
             cargarSkill();
@@ -51,7 +52,43 @@ public class TopBarActivity extends AppCompatActivity {
             cargarRetirar();
         } else if (i.equals("fragmentoAniadirReview")){
             cargarAniadirReview();
+        } else if (i.equals("fragmentoChat")) {
+            cargarChat();
         }
+    }
+
+    private void cargarChat() {
+
+		String nombre = getIntent().getStringExtra("userName");
+		String foto = getIntent().getStringExtra("userImage");
+
+
+		if (foto != null) {
+			String url = "http://10.0.2.2:8080" + foto;
+			Glide.with(this).load(url).into(userImage);
+		} else {
+			userImage.setImageResource(R.drawable.user);
+		}
+		userName.setText(nombre);
+
+		userName.setVisibility(View.VISIBLE);
+		userImage.setVisibility(View.VISIBLE);
+
+        String chatId = getIntent().getStringExtra("chatId");
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        ChatFragment chatFragment = new ChatFragment();
+
+        Bundle args = new Bundle();
+
+        args.putString("chatId", chatId);
+
+        chatFragment.setArguments(args);
+
+        fragmentTransaction.replace(R.id.flTopBar, chatFragment);
+        fragmentTransaction.commit();
     }
 
     private void cargarAniadirReview() {
