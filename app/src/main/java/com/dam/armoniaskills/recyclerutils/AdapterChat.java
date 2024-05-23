@@ -1,5 +1,6 @@
 package com.dam.armoniaskills.recyclerutils;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.model.ChatDTO;
-import com.dam.armoniaskills.model.ChatRoom;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implements View.OnClickListener {
 	View.OnClickListener listener;
@@ -27,9 +29,8 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implem
 	@NonNull
 	@Override
 	public AdapterChat.ChatVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		View v = View.inflate(parent.getContext(), R.layout.item_chat, null);
+		View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat, parent, false);
 
-		v.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		v.setOnClickListener(this);
 
 		return new ChatVH(v);
@@ -75,8 +76,9 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implem
 			}
 
 			if (chatDTO.getUltimaHora() != null) {
-				// Use a method to format the Date object to a String
-				tvFecha.setText(chatDTO.getUltimaHora().getHours());
+				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault()); // Use "hh" for 12-hour format
+				String hour = sdf.format(chatDTO.getUltimaHora());
+				tvFecha.setText(hour);
 			}
 
 			if (chatDTO.getFotoPerfil() != null) {

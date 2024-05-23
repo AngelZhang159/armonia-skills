@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.dam.armoniaskills.fragments.BalanceFragment;
-import com.dam.armoniaskills.fragments.ChatFragment;
+import com.dam.armoniaskills.fragments.ChatListFragment;
 import com.dam.armoniaskills.fragments.InicioFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 		} else if (menuItem.getItemId() == R.id.botNavVarChat) {
 //			Intent i = new Intent(this, ChatActivity.class);
 //			startActivity(i);
-			ChatFragment chatFragment = new ChatFragment();
-			transaction.replace(R.id.flPrincipal, chatFragment);
+			ChatListFragment chatListFragment = new ChatListFragment();
+			transaction.replace(R.id.flPrincipal, chatListFragment);
 		} else if (menuItem.getItemId() == R.id.botNavVarBalance) {
 			BalanceFragment balanceFragment = new BalanceFragment();
 			transaction.replace(R.id.flPrincipal, balanceFragment);
