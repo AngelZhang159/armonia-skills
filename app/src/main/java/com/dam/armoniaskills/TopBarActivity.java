@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.dam.armoniaskills.fragments.ConfiguracionFragment;
 import com.dam.armoniaskills.fragments.DepositarFragment;
 import com.dam.armoniaskills.fragments.InicioFragment;
 import com.dam.armoniaskills.fragments.RetirarFragment;
@@ -41,6 +42,17 @@ public class TopBarActivity extends AppCompatActivity {
             }
         });
 
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.item_config) {
+                    cargarConfigGrupo();
+                }
+
+                return false;
+            }
+        });
+
         String i = getIntent().getStringExtra("rellenar");
 
         if (i.equals("fragmentoHome")) {
@@ -52,6 +64,16 @@ public class TopBarActivity extends AppCompatActivity {
         } else if (i.equals("fragmentoAniadirReview")){
             cargarAniadirReview();
         }
+    }
+
+    private void cargarConfigGrupo() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        ConfiguracionFragment configuracionFragment = ConfiguracionFragment.newInstance(skill);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.flTopBar, configuracionFragment);
+
+        fragmentTransaction.commit();
     }
 
     private void cargarAniadirReview() {

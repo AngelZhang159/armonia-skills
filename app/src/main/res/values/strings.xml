@@ -98,4 +98,10 @@
     <string name="tv_estrellas">%1$d</string>
     <string name="tv_media_reviews">%1$,.2f (%2$d)</string>
     <string name="tit_valoraciones">Valoraciones de %1$s</string>
+    <string name="editar_skill">Editar Skill</string>
+    <string name="hint_et_descripcion">Descripción</string>
+    <string name="hint_et_precio">Precio*</string>
+    <string name="btn_eliminar">Eliminar skill</string>
+    <string name="dialog_msg_eliminar">¿Desea eliminar la skill definitivamente?</string>
+    <string name="btn_eliminar_d">Eliminar</string>
 </resources>

@@ -127,8 +127,6 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 			} else if (precio.isEmpty()) {
 				Toast.makeText(this, "Debe introducir un precio", Toast.LENGTH_SHORT).show();
 			} else {
-
-
 				List<String> imageList = new ArrayList<>();
 				ImageUpload imageUpload = new ImageUpload();
 
@@ -139,7 +137,6 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 				}
 
 				CountDownLatch latch = new CountDownLatch(listaImagenes.size());
-
 
 				for (Uri uri : listaImagenes) {
 					imageUpload.subirImagen(uri, getContentResolver(), new UploadCallback() {
@@ -171,7 +168,6 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 						e.printStackTrace();
 					}
 				}).start();
-
 			}
 		} else if (v.getId() == R.id.btnCancelarNuevaSkill) {
 			Intent i = new Intent(this, MainActivity.class);
@@ -192,7 +188,6 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 	}
 
 	private void crearSkill(Skill skill) {
-
 		SharedPrefManager sharedPrefManager = new SharedPrefManager(getApplicationContext());
 
 		Call<ResponseBody> call = RetrofitClient
@@ -214,8 +209,6 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 
 			}
 		});
-
-
 	}
 
 	private void configurarRV() {
