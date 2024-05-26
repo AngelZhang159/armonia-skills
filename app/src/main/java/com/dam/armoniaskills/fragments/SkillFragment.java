@@ -93,6 +93,10 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 				@Override
 				public void onChatCreated(ChatRoom chatRoom) {
 					Log.d("SkillFragment", "Chat creado " + chatRoom.getId() + chatRoom.getSkillId() + chatRoom.getSenderId() + chatRoom.getReceiverId());
+					Intent i = new Intent(getContext(), TopBarActivity.class);
+					i.putExtra("rellenar", "fragmentoChat");
+					i.putExtra("chatId", chatRoom.getId().toString());
+					startActivity(i);
 				}
 
 				@Override
@@ -195,7 +199,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 
 		call.enqueue(new Callback<User>() {
 			@Override
-			public void onResponse(Call<User> call, Response<User> response) {
+			public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
 				if (response.isSuccessful() && response.body() != null) {
 					callback.onUserLoaded(response.body());
 				} else {
@@ -205,7 +209,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 			}
 
 			@Override
-			public void onFailure(Call<User> call, Throwable t) {
+			public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
 				Log.e("AdapterSkills", "Error al cargar el usuario" + t.getMessage());
 				callback.onError();
 			}

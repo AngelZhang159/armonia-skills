@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class CategoriaAdapter extends ArrayAdapter<Categoria> {
 
     public CategoriaAdapter(@NonNull Context context, ArrayList<Categoria> listaCategorias) {
-        super(context, R.layout.categoria_item, listaCategorias);
+        super(context, R.layout.item_categoria, listaCategorias);
     }
 
     @NonNull
@@ -27,7 +27,7 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria> {
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
         Categoria categoria = getItem(position);
 
-        view = LayoutInflater.from(getContext()).inflate(R.layout.categoria_item, parent, false);
+        view = LayoutInflater.from(getContext()).inflate(R.layout.item_categoria, parent, false);
 
         ImageView img = view.findViewById(R.id.imgCategoria);
         TextView tv = view.findViewById(R.id.tvCategoria);

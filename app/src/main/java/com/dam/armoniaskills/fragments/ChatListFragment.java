@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,20 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.TopBarActivity;
 import com.dam.armoniaskills.authentication.SharedPrefManager;
-import com.dam.armoniaskills.model.ChatDTO;
+import com.dam.armoniaskills.dto.ChatDTO;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterChat;
-import com.dam.armoniaskills.webSocket.WebSocketSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
-import okio.ByteString;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

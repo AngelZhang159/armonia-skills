@@ -1,4 +1,4 @@
-package com.dam.armoniaskills.model;
+package com.dam.armoniaskills.dto;
 
 import java.sql.Timestamp;
 import java.util.UUID;

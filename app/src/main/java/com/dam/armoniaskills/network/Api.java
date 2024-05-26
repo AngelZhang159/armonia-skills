@@ -1,6 +1,6 @@
 package com.dam.armoniaskills.network;
 
-import com.dam.armoniaskills.model.ChatDTO;
+import com.dam.armoniaskills.dto.ChatDTO;
 import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.model.ChatRoom;
 import com.dam.armoniaskills.model.Review;

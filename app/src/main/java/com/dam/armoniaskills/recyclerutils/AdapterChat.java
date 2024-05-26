@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dam.armoniaskills.R;
-import com.dam.armoniaskills.model.ChatDTO;
+import com.dam.armoniaskills.dto.ChatDTO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
