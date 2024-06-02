@@ -18,23 +18,23 @@ import java.util.ArrayList;
 
 public class CategoriaAdapter extends ArrayAdapter<Categoria> {
 
-    public CategoriaAdapter(@NonNull Context context, ArrayList<Categoria> listaCategorias) {
-        super(context, R.layout.item_categoria, listaCategorias);
-    }
+	public CategoriaAdapter(@NonNull Context context, ArrayList<Categoria> listaCategorias) {
+		super(context, R.layout.item_categoria, listaCategorias);
+	}
 
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        Categoria categoria = getItem(position);
+	@NonNull
+	@Override
+	public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
+		Categoria categoria = getItem(position);
 
-        view = LayoutInflater.from(getContext()).inflate(R.layout.item_categoria, parent, false);
+		view = LayoutInflater.from(getContext()).inflate(R.layout.item_categoria, parent, false);
 
-        ImageView img = view.findViewById(R.id.imgCategoria);
-        TextView tv = view.findViewById(R.id.tvCategoria);
+		ImageView img = view.findViewById(R.id.imgCategoria);
+		TextView tv = view.findViewById(R.id.tvCategoria);
 
-        img.setImageResource(categoria.getImagen());
-        tv.setText(categoria.getTitulo());
+		img.setImageResource(categoria.getImagen());
+		tv.setText(categoria.getTitulo());
 
-        return view;
-    }
+		return view;
+	}
 }

@@ -17,56 +17,56 @@ import java.util.List;
 
 public class AdapterReviews extends RecyclerView.Adapter<AdapterReviews.ReviewVH> {
 
-    List<Review> listaReviews;
+	List<Review> listaReviews;
 
-    public AdapterReviews(List<Review> listaReviews) {
-        this.listaReviews = listaReviews;
-    }
+	public AdapterReviews(List<Review> listaReviews) {
+		this.listaReviews = listaReviews;
+	}
 
-    @NonNull
-    @Override
-    public ReviewVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review, parent, false);
+	@NonNull
+	@Override
+	public ReviewVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+		View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review, parent, false);
 
-        return new ReviewVH(v);
-    }
+		return new ReviewVH(v);
+	}
 
-    @Override
-    public void onBindViewHolder(@NonNull ReviewVH holder, int position) {
-        holder.bindReview(listaReviews.get(position));
-    }
+	@Override
+	public void onBindViewHolder(@NonNull ReviewVH holder, int position) {
+		holder.bindReview(listaReviews.get(position));
+	}
 
-    @Override
-    public int getItemCount() {
-        return listaReviews.size();
-    }
+	@Override
+	public int getItemCount() {
+		return listaReviews.size();
+	}
 
-    public class ReviewVH extends RecyclerView.ViewHolder{
+	public class ReviewVH extends RecyclerView.ViewHolder {
 
-        ImageView ivUser;
-        TextView tvUser, tvEstrellas, tvValoracion;
+		ImageView ivUser;
+		TextView tvUser, tvEstrellas, tvValoracion;
 
-        public ReviewVH(@NonNull View itemView) {
-            super(itemView);
+		public ReviewVH(@NonNull View itemView) {
+			super(itemView);
 
-            ivUser = itemView.findViewById(R.id.ivUserReview);
-            tvUser = itemView.findViewById(R.id.tvUserReview);
-            tvEstrellas = itemView.findViewById(R.id.tvEstrellas);
-            tvValoracion = itemView.findViewById(R.id.tvValoracion);
-        }
+			ivUser = itemView.findViewById(R.id.ivUserReview);
+			tvUser = itemView.findViewById(R.id.tvUserReview);
+			tvEstrellas = itemView.findViewById(R.id.tvEstrellas);
+			tvValoracion = itemView.findViewById(R.id.tvValoracion);
+		}
 
-        public void bindReview(Review review) {
-            String urlLocal = "http://10.0.2.2:8080";
+		public void bindReview(Review review) {
+			String urlLocal = "http://10.0.2.2:8080";
 
-            Glide.with(itemView).load(urlLocal + review.getImageUrl()).into(ivUser);
-            tvUser.setText(review.getUsername());
-            tvEstrellas.setText(String.format(itemView.getContext().getString(R.string.tv_estrellas), review.getStars()));
+			Glide.with(itemView).load(urlLocal + review.getImageUrl()).into(ivUser);
+			tvUser.setText(review.getUsername());
+			tvEstrellas.setText(String.format(itemView.getContext().getString(R.string.tv_estrellas), review.getStars()));
 
-            if (review.getContent().isEmpty()) {
-                tvValoracion.setVisibility(View.GONE);
-            } else {
-                tvValoracion.setText(review.getContent());
-            }
-        }
-    }
+			if (review.getContent().isEmpty()) {
+				tvValoracion.setVisibility(View.GONE);
+			} else {
+				tvValoracion.setText(review.getContent());
+			}
+		}
+	}
 }

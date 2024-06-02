@@ -10,46 +10,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvAniadir"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/textos"
-            android:textSize="40sp"
-            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tvAniadirVal"
             android:textAlignment="center"
-            android:text="@string/tvAniadirVal" />
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margen"
             android:text="Valora tu experiencia"
-            android:layout_marginTop="@dimen/margen"
-            android:textSize="20sp"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pulsa en las estrellas para dejar tu valoración. A más estrellas, mejor experiencia"
             android:layout_marginTop="@dimen/margen"
+            android:text="Pulsa en las estrellas para dejar tu valoración. A más estrellas, mejor experiencia"
+            android:textAlignment="center"
             android:textColor="@color/grey_font"
-            android:textSize="18sp"
-            android:textAlignment="center"/>
+            android:textSize="18sp" />
 
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margen"
-            android:progressTint="@color/amarillo"
-            android:secondaryProgressTint="@color/amarillo"
             android:numStars="5"
+            android:progressTint="@color/amarillo"
             android:rating="1"
-            android:stepSize="1"/>
+            android:secondaryProgressTint="@color/amarillo"
+            android:stepSize="1" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:textSize="18sp"
-        android:text="Enviar valoración" />
+        android:text="Enviar valoración"
+        android:textSize="18sp" />
 
 </RelativeLayout>

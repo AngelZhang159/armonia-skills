@@ -15,17 +15,17 @@
 
 
         <TextView
+            style="@style/textos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tv_perfil"
-            style="@style/textos"
             android:textAlignment="center"
             android:textSize="25sp"
             android:textStyle="bold" />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -46,12 +46,12 @@
                     android:src="@drawable/user" />
 
                 <TextView
-                    android:text="@string/cambiar_datos"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
                     style="@style/textos"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/cambiar_datos"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etNombreP"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -122,16 +122,16 @@
 
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
-                    android:layout_marginVertical="@dimen/margen"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margen" />
 
                 <TextView
-                    android:text="@string/btn_cambiar_contrasenia"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
                     style="@style/textos"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_cambiar_contrasenia"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -144,22 +144,22 @@
                         android:id="@+id/etPasswordP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"/>
+                        android:inputType="textPassword" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:padding="@dimen/padding_perfil"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_et_repcontra"
+                    android:padding="@dimen/padding_perfil"
                     app:endIconMode="clear_text">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etRepPasswordP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"/>
+                        android:inputType="textPassword" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -172,16 +172,15 @@
 
                 <Button
                     android:id="@+id/btnCerrarSesion"
-                    android:layout_marginTop="@dimen/margen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margen"
                     android:text="@string/btn_cerrar_sesion" />
 
 
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
 
 
 </RelativeLayout>

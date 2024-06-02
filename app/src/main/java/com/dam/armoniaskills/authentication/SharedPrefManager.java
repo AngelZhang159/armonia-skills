@@ -5,24 +5,24 @@ import android.content.SharedPreferences;
 
 public class SharedPrefManager {
 
-    private static final String PREFS_NAME = "MyPrefs";
-    private static final String KEY_JWT = "jwt_token";
+	private static final String PREFS_NAME = "MyPrefs";
+	private static final String KEY_JWT = "jwt_token";
 
-    private final SharedPreferences sharedPreferences;
+	private final SharedPreferences sharedPreferences;
 
-    public SharedPrefManager(Context context) {
-        sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-    }
+	public SharedPrefManager(Context context) {
+		sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+	}
 
-    public void saveJwt(String jwt) {
-        sharedPreferences.edit().putString(KEY_JWT, jwt).apply();
-    }
+	public void saveJwt(String jwt) {
+		sharedPreferences.edit().putString(KEY_JWT, jwt).apply();
+	}
 
-    public String fetchJwt() {
-        return sharedPreferences.getString(KEY_JWT, null);
-    }
+	public String fetchJwt() {
+		return sharedPreferences.getString(KEY_JWT, null);
+	}
 
-    public void clearJwt() {
-        sharedPreferences.edit().remove(KEY_JWT).apply();
-    }
+	public void clearJwt() {
+		sharedPreferences.edit().remove(KEY_JWT).apply();
+	}
 }

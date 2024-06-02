@@ -47,8 +47,8 @@ public interface Api {
 	@POST("api/v1/file/upload")
 	Call<ResponseBody> uploadImage(@Part MultipartBody.Part file);
 
-    @PATCH("api/v1/user/addReview")
-    Call<ResponseBody> addReview(@Header("Authorization") String jwt, @Body Review review);
+	@PATCH("api/v1/user/addReview")
+	Call<ResponseBody> addReview(@Header("Authorization") String jwt, @Body Review review);
 
 
 	//Crear nueva Skill

@@ -13,18 +13,18 @@
         android:padding="@dimen/margen">
 
         <TextView
+            style="@style/textos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Información básica"
-            style="@style/textos"
             android:textSize="25sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvImagenes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margen"/>
+            android:layout_marginTop="@dimen/margen" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -76,46 +76,46 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            style="@style/textos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Categoría"
-            style="@style/textos"
             android:layout_marginTop="@dimen/margen"
+            android:text="Categoría"
             android:textSize="25sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imgCategoriaNuevaSkill"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_weight="5"
+                android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:layout_marginTop="12dp"/>
+                android:layout_weight="5" />
 
             <TextView
                 android:id="@+id/tvCategoriaNuevaSkill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
+            style="@style/textos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ubicación"
-            style="@style/textos"
             android:layout_marginTop="@dimen/margen"
+            android:text="Ubicación"
             android:textSize="25sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -136,8 +136,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/margen">
+            android:layout_marginTop="@dimen/margen"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnConfirmarNuevaSkill"

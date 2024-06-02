@@ -14,24 +14,24 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/textos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/editar_skill"
             android:textSize="25sp"
-            style="@style/textos"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvImagenesConfig"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margen"/>
+            android:layout_marginTop="@dimen/margen" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_et_titulo"
             android:layout_margin="@dimen/margen"
+            android:hint="@string/hint_et_titulo"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText

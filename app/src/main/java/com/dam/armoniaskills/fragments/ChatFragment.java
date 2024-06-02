@@ -19,8 +19,6 @@ import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterMensajes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;

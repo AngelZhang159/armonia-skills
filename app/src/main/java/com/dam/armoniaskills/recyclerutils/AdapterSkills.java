@@ -63,6 +63,31 @@ public class AdapterSkills extends RecyclerView.Adapter<AdapterSkills.SkillsVH> 
 		listener.onClick(v);
 	}
 
+	private void getUser(UUID userID, final UserCallback callback) {
+		Call<User> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.getUserDataFromUUID(userID);
+
+		call.enqueue(new Callback<User>() {
+			@Override
+			public void onResponse(Call<User> call, Response<User> response) {
+				if (response.isSuccessful() && response.body() != null) {
+					callback.onUserLoaded(response.body());
+				} else {
+					callback.onError();
+					Log.e("AdapterSkills", "Error al cargar el usuario" + response.message());
+				}
+			}
+
+			@Override
+			public void onFailure(Call<User> call, Throwable t) {
+				Log.e("AdapterSkills", "Error al cargar el usuario" + t.getMessage());
+				callback.onError();
+			}
+		});
+	}
+
 	public class SkillsVH extends RecyclerView.ViewHolder {
 
 		ImageView ivUser;
@@ -116,30 +141,5 @@ public class AdapterSkills extends RecyclerView.Adapter<AdapterSkills.SkillsVH> 
 			tvPrecio.setText(String.format(itemView.getContext().getString(R.string.tv_precio_inicio), skill.getPrice()));
 			tvTitulo.setText(skill.getTitle());
 		}
-	}
-
-	private void getUser(UUID userID, final UserCallback callback) {
-		Call<User> call = RetrofitClient
-				.getInstance()
-				.getApi()
-				.getUserDataFromUUID(userID);
-
-		call.enqueue(new Callback<User>() {
-			@Override
-			public void onResponse(Call<User> call, Response<User> response) {
-				if (response.isSuccessful() && response.body() != null) {
-					callback.onUserLoaded(response.body());
-				} else {
-					callback.onError();
-					Log.e("AdapterSkills", "Error al cargar el usuario" + response.message());
-				}
-			}
-
-			@Override
-			public void onFailure(Call<User> call, Throwable t) {
-				Log.e("AdapterSkills", "Error al cargar el usuario" + t.getMessage());
-				callback.onError();
-			}
-		});
 	}
 }

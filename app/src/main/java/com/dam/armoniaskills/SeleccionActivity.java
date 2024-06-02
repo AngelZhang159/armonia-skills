@@ -45,10 +45,10 @@ public class SeleccionActivity extends AppCompatActivity implements AdapterView.
 
 	private void rellenarLista() {
 		String[] nombres = {getString(R.string.categoria1), getString(R.string.categoria2), getString(R.string.categoria3), getString(R.string.categoria4)
-		, getString(R.string.categoria5), getString(R.string.categoria6), getString(R.string.categoria7), getString(R.string.categoria8),
-		getString(R.string.categoria9), getString(R.string.categoria10), getString(R.string.categoria11), getString(R.string.categoria12),
-		getString(R.string.categoria13), getString(R.string.categoria14), getString(R.string.categoria15), getString(R.string.categoria16),
-		getString(R.string.categoria17), getString(R.string.categoria18), getString(R.string.categoria19), getString(R.string.categoria20)};
+				, getString(R.string.categoria5), getString(R.string.categoria6), getString(R.string.categoria7), getString(R.string.categoria8),
+				getString(R.string.categoria9), getString(R.string.categoria10), getString(R.string.categoria11), getString(R.string.categoria12),
+				getString(R.string.categoria13), getString(R.string.categoria14), getString(R.string.categoria15), getString(R.string.categoria16),
+				getString(R.string.categoria17), getString(R.string.categoria18), getString(R.string.categoria19), getString(R.string.categoria20)};
 
 		int[] imagenes = {R.drawable.design, R.drawable.digitalmarketing, R.drawable.videoediting,
 				R.drawable.musicalnote, R.drawable.webprogramming, R.drawable.cooperation,

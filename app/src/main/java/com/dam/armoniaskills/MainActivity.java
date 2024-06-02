@@ -20,8 +20,8 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
-	private int itemMenuSeleccionado = R.id.botNavVarHome;
 	NavigationBarView navBarView;
+	private int itemMenuSeleccionado = R.id.botNavVarHome;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 	protected void onResume() {
 		super.onResume();
 
-		if(itemMenuSeleccionado == R.id.botNavVarPerfil || itemMenuSeleccionado == R.id.botNavVarAdd){
+		if (itemMenuSeleccionado == R.id.botNavVarPerfil || itemMenuSeleccionado == R.id.botNavVarAdd) {
 			navBarView.setSelectedItemId(R.id.botNavVarHome);
 		} else {
 			navBarView.setSelectedItemId(itemMenuSeleccionado);

@@ -39,8 +39,8 @@
                     android:focusable="false"
                     android:foreground="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:paddingStart="8dp"
-                    android:paddingVertical="@dimen/margen">
+                    android:paddingVertical="@dimen/margen"
+                    android:paddingStart="8dp">
 
                     <TextView
                         android:id="@+id/tvUserChat"

@@ -36,6 +36,13 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 	private CircleImageView imageView;
 	private Button btnRegistrar;
 	private Uri imageUri;
+	ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(
+			new ActivityResultContracts.PickVisualMedia(), uri -> {
+				if (uri != null) {
+					imageUri = uri;
+					imageView.setImageURI(imageUri);
+				}
+			});
 	private String imageURL;
 
 	@Override
@@ -154,12 +161,4 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 			Toast.makeText(RegistroActivity.this, "otro error no 409", Toast.LENGTH_SHORT).show();
 		}
 	}
-
-	ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(
-			new ActivityResultContracts.PickVisualMedia(), uri -> {
-				if (uri != null) {
-					imageUri = uri;
-					imageView.setImageURI(imageUri);
-				}
-			});
 }

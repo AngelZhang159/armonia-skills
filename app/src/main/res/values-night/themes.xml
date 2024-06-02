@@ -35,7 +35,8 @@
         <item name="colorSecondaryFixed">@color/md_theme_secondaryFixed_dark</item>
         <item name="colorOnSecondaryFixed">@color/md_theme_onSecondaryFixed_dark</item>
         <item name="colorSecondaryFixedDim">@color/md_theme_secondaryFixedDim_dark</item>
-        <item name="colorOnSecondaryFixedVariant">@color/md_theme_onSecondaryFixedVariant_dark</item>
+        <item name="colorOnSecondaryFixedVariant">@color/md_theme_onSecondaryFixedVariant_dark
+        </item>
         <item name="colorTertiaryFixed">@color/md_theme_tertiaryFixed_dark</item>
         <item name="colorOnTertiaryFixed">@color/md_theme_onTertiaryFixed_dark</item>
         <item name="colorTertiaryFixedDim">@color/md_theme_tertiaryFixedDim_dark</item>
@@ -46,7 +47,8 @@
         <item name="colorSurfaceContainerLow">@color/md_theme_surfaceContainerLow_dark</item>
         <item name="colorSurfaceContainer">@color/md_theme_surfaceContainer_dark</item>
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh_dark</item>
-        <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest_dark</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest_dark
+        </item>
     </style>
 
     <style name="textos">

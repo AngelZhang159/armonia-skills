@@ -37,14 +37,13 @@ public class UsuarioFragment extends Fragment implements View.OnClickListener {
 
 	public static final String SKILL = "SKILL";
 	private static final String ARG_SKILL = "userId";
-	private String userId;
-
 	ImageView imvUser;
-	TextView tvUsername , tvNumReviews;
+	TextView tvUsername, tvNumReviews;
 	RatingBar ratingBar;
 	RecyclerView rv;
 	PerfilDTO perfilDTO;
 	TabLayout tabLayout;
+	private String userId;
 
 	public UsuarioFragment() {
 		// Required empty public constructor
