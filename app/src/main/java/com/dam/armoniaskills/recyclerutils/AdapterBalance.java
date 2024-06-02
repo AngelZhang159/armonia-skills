@@ -62,7 +62,7 @@ public class AdapterBalance extends RecyclerView.Adapter<AdapterBalance.BalanceV
                 tvInformacion.setText(String.format(itemView.getContext().getString(R.string.historial_ingreso), historial.getCantidad()));
             } else if (historial.getAccion().equals("pagado")) {
                 iv.setImageResource(R.drawable.baseline_payments_24);
-                iv.setColorFilter(itemView.getContext().getColor(R.color.azul));
+                iv.setColorFilter(itemView.getContext().getColor(R.color.verde));
                 tvInformacion.setText(String.format(itemView.getContext().getString(R.string.historial_pagado), historial.getCantidad()));
             }
         }
