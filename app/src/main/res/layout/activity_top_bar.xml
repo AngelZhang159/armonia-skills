@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".TopBarActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,27 +19,38 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/topAppBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="#7CD3FFF1"
                 android:minHeight="?attr/actionBarSize"
                 app:navigationIcon="@drawable/baseline_arrow_back_24">
-
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivUserChat"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginEnd="12dp"
-                    android:src="@drawable/user"
-                    android:visibility="gone"/>
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/user" />
 
-                <TextView
-                    android:id="@+id/tvUserChat"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/llTopBar"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="user"
-                    android:visibility="gone"/>
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:paddingStart="8dp"
+                    android:paddingVertical="@dimen/margen">
+
+                    <TextView
+                        android:id="@+id/tvUserChat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="user"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
 
             </com.google.android.material.appbar.MaterialToolbar>

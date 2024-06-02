@@ -16,9 +16,6 @@
         android:theme="@style/Base.Theme.ArmoniaSkills"
         tools:targetApi="31">
         <activity
-            android:name=".ChatActivity"
-            android:exported="false" />
-        <activity
             android:name=".TopBarActivity"
             android:exported="false" />
         <activity

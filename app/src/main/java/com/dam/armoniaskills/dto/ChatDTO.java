@@ -11,14 +11,16 @@ public class ChatDTO {
 	private Timestamp ultimaHora;
 	private String fotoPerfil;
 	private String nombreSkill;
+	private UUID otroUsuarioId;
 
-	public ChatDTO(UUID chatId, String nombreUsuario, String ultimoMensaje, Timestamp ultimaHora, String fotoPerfil, String nombreSkill) {
+	public ChatDTO(UUID chatId, String nombreUsuario, String ultimoMensaje, Timestamp ultimaHora, String fotoPerfil, String nombreSkill, UUID otroUsuarioId) {
 		this.chatId = chatId;
 		this.nombreUsuario = nombreUsuario;
 		this.ultimoMensaje = ultimoMensaje;
 		this.ultimaHora = ultimaHora;
 		this.fotoPerfil = fotoPerfil;
 		this.nombreSkill = nombreSkill;
+		this.otroUsuarioId = otroUsuarioId;
 	}
 
 	public UUID getChatId() {
@@ -67,5 +69,13 @@ public class ChatDTO {
 
 	public void setNombreSkill(String nombreSkill) {
 		this.nombreSkill = nombreSkill;
+	}
+
+	public UUID getOtroUsuarioId() {
+		return otroUsuarioId;
+	}
+
+	public void setOtroUsuarioId(UUID otroUsuarioId) {
+		this.otroUsuarioId = otroUsuarioId;
 	}
 }

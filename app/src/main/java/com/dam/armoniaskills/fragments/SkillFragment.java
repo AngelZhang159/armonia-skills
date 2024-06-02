@@ -8,10 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +53,10 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 	RecyclerView rv;
 	Button btnChat, btnContratar, btnAniadirValoracion;
 	AdapterReviews adapter;
+	RatingBar ratingBar;
+	LinearLayout llUserDetalle;
 	private Skill skill;
+
 
 	public SkillFragment() {
 	}
@@ -87,6 +94,20 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 		btnChat = v.findViewById(R.id.btnChatSkill);
 		btnContratar = v.findViewById(R.id.btnContratar);
 		btnAniadirValoracion = v.findViewById(R.id.btnAniadirValoracion);
+		ratingBar = v.findViewById(R.id.ratingBarSkill);
+		llUserDetalle = v.findViewById(R.id.llUserDetalle);
+
+		btnAniadirValoracion.setOnClickListener(this);
+		btnContratar.setOnClickListener(this);
+
+		llUserDetalle.setOnClickListener(v1 -> {
+			FragmentManager fragmentManager = getParentFragmentManager();
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			UsuarioFragment usuarioFragment = UsuarioFragment.newInstance(skill.getUserID().toString());
+			fragmentTransaction.replace(R.id.flTopBar, usuarioFragment);
+			fragmentTransaction.addToBackStack(null);
+			fragmentTransaction.commit();
+		});
 
 		btnChat.setOnClickListener(v1 -> {
 			nuevoChat(new ChatCallback() {
@@ -96,6 +117,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 					Intent i = new Intent(getContext(), TopBarActivity.class);
 					i.putExtra("rellenar", "fragmentoChat");
 					i.putExtra("chatId", chatRoom.getId().toString());
+					i.putExtra("otroUsuarioId", chatRoom.getReceiverId().toString());
 					startActivity(i);
 				}
 
@@ -121,12 +143,16 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 
 			}
 			media /= listaReviews.size();
+			ratingBar.setRating((float) media);
 
-			tvValoracion.setText(String.format(getString(R.string.tv_media_reviews), media, listaReviews.size()));
+			tvValoracion.setText(String.format(getString(R.string.tv_media_reviews), listaReviews.size()));
 
 			adapter = new AdapterReviews(listaReviews);
 			rv.setLayoutManager(new LinearLayoutManager(getContext()));
 			rv.setAdapter(adapter);
+		} else {
+			ratingBar.setRating(0);
+			tvValoracion.setText(R.string.no_reviews);
 		}
 	}
 
@@ -171,7 +197,12 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 		getUser(skill.getUserID(), new UserCallback() {
 			@Override
 			public void onUserLoaded(User user) {
-				Glide.with(getContext()).load(urlLocal + user.getImageURL()).into(imvUser);
+
+				if (user.getImageURL() != null) {
+					Glide.with(getContext()).load(urlLocal + user.getImageURL()).into(imvUser);
+				} else {
+					imvUser.setImageResource(R.drawable.user);
+				}
 				tvUsername.setText(user.getUsername());
 				tvTitVal.setText(String.format(getString(R.string.tit_valoraciones), user.getFullName()));
 

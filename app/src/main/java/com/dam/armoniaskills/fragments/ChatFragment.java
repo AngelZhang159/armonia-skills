@@ -129,7 +129,9 @@ public class ChatFragment extends Fragment {
 				if (response.isSuccessful()) {
 					adapter = new AdapterMensajes(chatMessages, response);
 
-					rv.setLayoutManager(new LinearLayoutManager(getContext()));
+					LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+					layoutManager.setStackFromEnd(true);
+					rv.setLayoutManager(layoutManager);
 					rv.setAdapter(adapter);
 					rv.setHasFixedSize(true);
 				}
@@ -198,7 +200,10 @@ public class ChatFragment extends Fragment {
 					chatMessages.add(chatMessage);
 
 					// Notify the adapter that the data set has changed
-					getActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
+					getActivity().runOnUiThread(() -> {
+						adapter.notifyDataSetChanged();
+						rv.smoothScrollToPosition(chatMessages.size() - 1);
+					});
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

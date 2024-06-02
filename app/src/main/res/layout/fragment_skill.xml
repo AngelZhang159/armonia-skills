@@ -33,19 +33,19 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_weight="6"
                         android:id="@+id/tvPrecioDetalle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="6"
                         android:text="@string/tv_precio_inicio"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <Button
-                        android:layout_weight="1"
                         android:id="@+id/btnContratar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="Contratar Skill"
                         android:textSize="12sp" />
 
@@ -75,8 +75,12 @@
                     android:layout_marginVertical="@dimen/margen" />
 
                 <LinearLayout
+                    android:id="@+id/llUserDetalle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -90,8 +94,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tvUser"
@@ -100,14 +104,32 @@
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/tvValUser"
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/tv_media_reviews"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <RatingBar
+                                android:id="@+id/ratingBarSkill"
+                                style="@style/Widget.AppCompat.RatingBar.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:numStars="5"
+                                android:progressTint="@color/amarillo"
+                                android:rating="1.5"
+                                android:secondaryProgressTint="@color/amarillo"
+                                android:stepSize=".5" />
+
+                            <TextView
+                                android:id="@+id/tvValUser"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_media_reviews"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
@@ -115,8 +137,8 @@
                         android:id="@+id/btnChatSkill"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/btn_chat"
-                        android:layout_weight="2"/>
+                        android:layout_weight="2"
+                        android:text="@string/btn_chat" />
 
                 </LinearLayout>
 
@@ -131,7 +153,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/tit_valoraciones"
                     android:textSize="22sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnAniadirValoracion"
@@ -145,10 +167,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margen"
-                    android:layout_marginBottom="50dp"/>
+                    android:layout_marginBottom="50dp" />
 
             </LinearLayout>
-
 
 
         </RelativeLayout>

@@ -110,6 +110,7 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 		i.putExtra("userImage", chatDTO.getFotoPerfil());
 		i.putExtra("userName", chatDTO.getNombreUsuario());
 		i.putExtra("chatId", chatDTO.getChatId().toString());
+		i.putExtra("otroUsuarioId", chatDTO.getOtroUsuarioId().toString());
 
 		startActivity(i);
 	}

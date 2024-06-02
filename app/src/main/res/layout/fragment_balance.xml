@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.BalanceFragment">
 
     <LinearLayout
@@ -12,11 +12,11 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/textos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margen"
             android:text="@string/mi_balance"
-            style="@style/textos"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -80,17 +80,17 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.divider.MaterialDivider
-            android:layout_marginVertical="@dimen/margen"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/margen" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBorrarHistBal"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/eliminar_hist"
-            android:layout_gravity="end"/>
+            android:layout_gravity="end"
+            android:text="@string/eliminar_hist" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBalance"

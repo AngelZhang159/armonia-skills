@@ -46,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margen"
             android:progressTint="@color/amarillo"
+            android:secondaryProgressTint="@color/amarillo"
             android:numStars="5"
             android:rating="1"
             android:stepSize="1"/>

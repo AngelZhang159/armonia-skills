@@ -90,7 +90,11 @@ public class AdapterSkills extends RecyclerView.Adapter<AdapterSkills.SkillsVH> 
 			getUser(skill.getUserID(), new UserCallback() {
 				@Override
 				public void onUserLoaded(User user) {
-					Glide.with(itemView).load(urlLocal + user.getImageURL()).into(ivUser);
+					if (user.getImageURL() != null) {
+						Glide.with(itemView).load(urlLocal + user.getImageURL()).into(ivUser);
+					} else {
+						ivUser.setImageResource(R.drawable.user);
+					}
 					tvUser.setText(user.getUsername());
 				}
 

@@ -34,7 +34,6 @@
             android:layout_marginEnd="@dimen/margen"
             android:ellipsize="end"
             android:textSize="22sp"
-            android:text="Titulo"
             android:lines="1"/>
 
         <LinearLayout
@@ -49,8 +48,7 @@
                 android:layout_gravity="center"
                 android:id="@+id/ivUser"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/user"/>
+                android:layout_height="30dp"/>
 
             <TextView
                 android:id="@+id/tvUser"
@@ -59,8 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textSize="18sp"
-                android:text="Usuario"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:layout_weight="1"
@@ -71,7 +68,6 @@
                 android:layout_marginStart="@dimen/margen"
                 android:textStyle="bold"
                 android:textSize="22sp"
-                android:text="@string/tv_precio_inicio"
                 android:textAlignment="textEnd"/>
         </LinearLayout>
 

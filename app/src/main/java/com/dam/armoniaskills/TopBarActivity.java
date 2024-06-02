@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.dam.armoniaskills.fragments.InicioFragment;
 import com.dam.armoniaskills.fragments.RetirarFragment;
 import com.dam.armoniaskills.fragments.ReviewFragment;
 import com.dam.armoniaskills.fragments.SkillFragment;
+import com.dam.armoniaskills.fragments.UsuarioFragment;
 import com.dam.armoniaskills.model.Skill;
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -30,6 +32,7 @@ public class TopBarActivity extends AppCompatActivity {
 	ImageView userImage;
 	TextView userName;
 	Skill skill;
+	LinearLayout llTopBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +42,27 @@ public class TopBarActivity extends AppCompatActivity {
 		toolbar = findViewById(R.id.topAppBar);
 		userImage = findViewById(R.id.ivUserChat);
 		userName = findViewById(R.id.tvUserChat);
+		llTopBar = findViewById(R.id.llTopBar);
+		llTopBar.setClickable(false);
+		llTopBar.setFocusable(false);
+
+		userName.setVisibility(View.GONE);
+		userImage.setVisibility(View.GONE);
+
+		toolbar.setTitle("");
 
 		setSupportActionBar(toolbar);
 
-		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		toolbar.setNavigationOnClickListener(v -> {
+			FragmentManager manager = getSupportFragmentManager();
+			if (manager.getBackStackEntryCount() > 0) {
+				String fragmentTag = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 1).getName();
+				if (fragmentTag != null && fragmentTag.equals(ChatFragment.class.getSimpleName())) {
+					llTopBar.setClickable(true);
+					llTopBar.setFocusable(true);
+				}
+				getSupportFragmentManager().popBackStack();
+			} else {
 				finish();
 			}
 		});
@@ -68,7 +86,7 @@ public class TopBarActivity extends AppCompatActivity {
 
 		String nombre = getIntent().getStringExtra("userName");
 		String foto = getIntent().getStringExtra("userImage");
-
+		String otroUsuarioId = getIntent().getStringExtra("otroUsuarioId");
 
 		if (foto != null) {
 			String url = "http://10.0.2.2:8080" + foto;
@@ -77,6 +95,20 @@ public class TopBarActivity extends AppCompatActivity {
 			userImage.setImageResource(R.drawable.user);
 		}
 		userName.setText(nombre);
+		llTopBar.setClickable(true);
+		llTopBar.setFocusable(true);
+		llTopBar.setOnClickListener(v -> {
+
+			llTopBar.setClickable(false);
+			llTopBar.setFocusable(false);
+
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			UsuarioFragment usuarioFragment = UsuarioFragment.newInstance(otroUsuarioId);
+			fragmentTransaction.replace(R.id.flTopBar, usuarioFragment);
+			fragmentTransaction.addToBackStack("ChatFragment");
+			fragmentTransaction.commit();
+		});
 
 		userName.setVisibility(View.VISIBLE);
 		userImage.setVisibility(View.VISIBLE);
@@ -95,6 +127,7 @@ public class TopBarActivity extends AppCompatActivity {
 		chatFragment.setArguments(args);
 
 		fragmentTransaction.replace(R.id.flTopBar, chatFragment);
+
 		fragmentTransaction.commit();
 		invalidateOptionsMenu();
 	}
@@ -104,6 +137,7 @@ public class TopBarActivity extends AppCompatActivity {
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		ConfiguracionFragment configuracionFragment = new ConfiguracionFragment();
 		fragmentTransaction.replace(R.id.flTopBar, configuracionFragment);
+
 		fragmentTransaction.commit();
 	}
 
@@ -123,6 +157,7 @@ public class TopBarActivity extends AppCompatActivity {
 	}
 
 	private void cargarSkill() {
+
 		skill = getIntent().getParcelableExtra(InicioFragment.SKILL);
 
 		FragmentManager fragmentManager = getSupportFragmentManager();
@@ -141,6 +176,7 @@ public class TopBarActivity extends AppCompatActivity {
 		RetirarFragment retirarFragment = new RetirarFragment();
 		fragmentTransaction.replace(R.id.flTopBar, retirarFragment);
 
+
 		fragmentTransaction.commit();
 		invalidateOptionsMenu();
 	}
@@ -150,7 +186,6 @@ public class TopBarActivity extends AppCompatActivity {
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		DepositarFragment depositoFragment = new DepositarFragment();
 		fragmentTransaction.replace(R.id.flTopBar, depositoFragment);
-
 		fragmentTransaction.commit();
 		invalidateOptionsMenu();
 	}
@@ -172,10 +207,7 @@ public class TopBarActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
 		if (item.getItemId() == R.id.item_config) {
-
 			cargarConfiguracionSkill();
-
-
 			return true;
 		}
 

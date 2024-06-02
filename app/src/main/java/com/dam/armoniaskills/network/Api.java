@@ -1,6 +1,7 @@
 package com.dam.armoniaskills.network;
 
 import com.dam.armoniaskills.dto.ChatDTO;
+import com.dam.armoniaskills.dto.PerfilDTO;
 import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.model.ChatRoom;
 import com.dam.armoniaskills.model.Review;
@@ -77,4 +78,10 @@ public interface Api {
 
 	@GET("api/v1/user/id")
 	Call<UUID> getUserId(@Header("Authorization") String token);
+
+	@GET("api/v1/review/all")
+	Call<List<Review>> getReviewList(@Path("id") UUID id);
+
+	@GET("api/v1/user/perfil/{userId}")
+	Call<PerfilDTO> getPerfil(@Path("userId") String userId);
 }

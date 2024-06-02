@@ -58,10 +58,6 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
 	private void cargarSkills() {
 		//Recuperar skills backend
-//		List<String> lista = new ArrayList<>();
-//		lista.add("https://drive.google.com/file/d/16iffsZ_y3m-I8S-Ic-aF6AOJQ1-s8e3r/view?usp=sharing");
-//		listaSkills.add(new Skill("fugsgfjibvjksrbvjvnjksfbvbejvbdbfjvbjdafbjbgjgbebvjb aj vjhdfb vjbejb vdabbgjsegjkBFBAJFBA", "", "", "20", "", lista));
-//		listaSkills.add(new Skill("hola", "", "", "20", "", lista));
 
 		Call<List<Skill>> call = RetrofitClient
 				.getInstance()
