@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,8 @@ import com.dam.armoniaskills.TopBarActivity;
 import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterSkills;
+import com.google.android.material.search.SearchBar;
+import com.google.android.material.search.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,8 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 	RecyclerView rv;
 	AdapterSkills adapter;
 	ArrayList<Skill> listaSkills;
+	SearchView searchView;
+	SearchBar searchBar;
 
 	public InicioFragment() {
 	}
@@ -46,6 +51,23 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 		View v = inflater.inflate(R.layout.fragment_inicio, container, false);
 
 		rv = v.findViewById(R.id.rvSkills);
+		searchView = v.findViewById(R.id.searchView);
+		searchBar = v.findViewById(R.id.searchBar);
+
+		searchView.getEditText().setOnEditorActionListener((view, actionId, event) -> {
+			searchBar.setText(searchView.getText());
+			if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
+				if (searchView.getText().toString().isEmpty()){
+					cargarSkills();
+
+				} else {
+					cargarSkills(searchView.getText().toString());
+				}
+				searchView.hide();
+				return true;
+			}
+			return false;
+		});
 
 		listaSkills = new ArrayList<>();
 		cargarSkills();
@@ -65,9 +87,34 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 			@Override
 			public void onResponse(@NonNull Call<List<Skill>> call, @NonNull Response<List<Skill>> response) {
 				if (response.isSuccessful()) {
+					listaSkills.clear();
 					listaSkills.addAll(response.body());
-
 					configurarRV();
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<List<Skill>> call, @NonNull Throwable t) {
+				Log.e("RETROFIT", "Error al recuperar skills");
+			}
+		});
+	}
+
+	private void cargarSkills(String query) {
+		Log.e("RETROFIT", "Buscando skills con query: " + query);
+
+		Call<List<Skill>> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.getSkills(query);
+
+		call.enqueue(new retrofit2.Callback<List<Skill>>() {
+			@Override
+			public void onResponse(@NonNull Call<List<Skill>> call, @NonNull Response<List<Skill>> response) {
+				if (response.isSuccessful()) {
+					listaSkills.clear();
+					listaSkills.addAll(response.body());
+					adapter.notifyDataSetChanged();
 				}
 			}
 

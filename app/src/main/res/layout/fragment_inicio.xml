@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.InicioFragment">
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,19 +18,34 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.search.SearchBar
-                android:id="@+id/search_bar"
+                android:id="@+id/searchBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/barra_buscar" />
         </com.google.android.material.appbar.AppBarLayout>
 
+        <com.google.android.material.search.SearchView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/barra_buscar"
+            app:closeIcon="@drawable/baseline_close_24"
+            android:id="@+id/searchView"
+            app:layout_anchor="@id/searchBar">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSearchBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.search.SearchView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSkills"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-    </LinearLayout>
-
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:layout_anchor="@id/appBarLayout"
+            app:layout_anchorGravity="bottom" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>

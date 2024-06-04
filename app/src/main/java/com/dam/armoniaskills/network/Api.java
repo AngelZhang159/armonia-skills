@@ -84,4 +84,6 @@ public interface Api {
 
 	@GET("api/v1/user/perfil/{userId}")
 	Call<PerfilDTO> getPerfil(@Path("userId") String userId);
+	@GET("api/v1/skill/search/{query}")
+	Call<List<Skill>> getSkills(@Path("query") String query);
 }
