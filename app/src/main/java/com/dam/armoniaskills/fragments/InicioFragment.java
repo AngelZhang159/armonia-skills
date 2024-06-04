@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -95,7 +96,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
 			@Override
 			public void onFailure(@NonNull Call<List<Skill>> call, @NonNull Throwable t) {
-				Log.e("RETROFIT", "Error al recuperar skills");
+				Toast.makeText(getContext(), R.string.error_skills, Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
@@ -120,7 +121,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
 			@Override
 			public void onFailure(@NonNull Call<List<Skill>> call, @NonNull Throwable t) {
-				Log.e("RETROFIT", "Error al recuperar skills");
+				Toast.makeText(getContext(), R.string.error_skills, Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

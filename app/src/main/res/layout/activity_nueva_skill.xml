@@ -16,7 +16,7 @@
             style="@style/textos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Información básica"
+            android:text="@string/tv_info_basica"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margen"
-            android:hint="Título*"
+            android:hint="@string/hint_et_titulo"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margen"
-            android:hint="Descripción*"
+            android:hint="@string/hint_et_descripcion"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margen"
-            android:hint="Precio"
+            android:hint="@string/hint_et_precio"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margen"
-            android:text="Categoría"
+            android:text="@string/tit_categoria"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -108,31 +108,6 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
-            style="@style/textos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margen"
-            android:text="Ubicación"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margen"
-            android:hint="Ciudad*"
-            app:endIconMode="clear_text">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etCiudadNuevaSkill"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textSize="20sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -144,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Subir Skill" />
+                android:text="@string/btn_subir_skill" />
 
             <Button
                 android:id="@+id/btnCancelarNuevaSkill"
@@ -152,9 +127,10 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/margen"
                 android:layout_weight="2"
-                android:text="Cancelar" />
+                android:text="@string/btn_cancelar_d" />
 
         </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>

@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margen"
-            android:text="Valora tu experiencia"
+            android:text="@string/valora_tu_experiencia"
             android:textAlignment="center"
             android:textSize="20sp" />
 
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margen"
-            android:text="Pulsa en las estrellas para dejar tu valoración. A más estrellas, mejor experiencia"
+            android:text="@string/pulsa_estrellas"
             android:textAlignment="center"
             android:textColor="@color/grey_font"
             android:textSize="18sp" />
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margen"
-            android:hint="¡Deja un comentario!"
+            android:hint="@string/hint_et_comentario"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -74,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Enviar valoración"
+        android:text="@string/btn_enviar"
         android:textSize="18sp" />
 
 </RelativeLayout>

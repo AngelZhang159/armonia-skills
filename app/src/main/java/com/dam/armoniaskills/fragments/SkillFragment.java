@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -123,7 +124,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 
 				@Override
 				public void onError() {
-					Log.e("SkillFragment", "Error al crear el chat");
+					Toast.makeText(getContext(), R.string.error_crear_chat, Toast.LENGTH_SHORT).show();
 				}
 			});
 		});
@@ -157,7 +158,6 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 	}
 
 	private void nuevoChat(ChatCallback chatCallback) {
-
 		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
 		String token = sharedPrefManager.fetchJwt();
 
@@ -179,7 +179,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 
 			@Override
 			public void onFailure(@NonNull Call<ChatRoom> call, @NonNull Throwable t) {
-				Log.e("SkillFragment", "Error al crear el chat failure " + t.getMessage());
+				Toast.makeText(getContext(), R.string.error_crear_chat, Toast.LENGTH_SHORT).show();
 				chatCallback.onError();
 			}
 		});
@@ -211,7 +211,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 
 			@Override
 			public void onError() {
-				Log.e("AdapterSkills", "Error al cargar el usuario");
+				Toast.makeText(getContext(), R.string.error_usuario, Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -241,7 +241,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 
 			@Override
 			public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-				Log.e("AdapterSkills", "Error al cargar el usuario" + t.getMessage());
+				Toast.makeText(getContext(), R.string.error_usuario, Toast.LENGTH_SHORT).show();
 				callback.onError();
 			}
 		});

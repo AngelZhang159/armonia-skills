@@ -94,8 +94,6 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 			pickMedia.launch(new PickVisualMediaRequest.Builder()
 					.setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
 					.build());
-
-
 		}
 	}
 
@@ -298,8 +296,7 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 						e.printStackTrace();
 					}
 				} else {
-					Log.e("Read User", "onResponse: " + response);
-					Toast.makeText(MiPerfilActivity.this, "Failed to get user data", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MiPerfilActivity.this, R.string.error_usuario, Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -309,5 +306,4 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 			}
 		});
 	}
-
 }

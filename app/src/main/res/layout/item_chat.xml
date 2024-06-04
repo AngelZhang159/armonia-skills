@@ -35,7 +35,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
-                    android:text="Usuario"
                     android:textSize="20sp" />
 
                 <TextView
@@ -53,14 +52,12 @@
                 android:id="@+id/tvServicioChat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Servicio"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvMensajeChat"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nuevo chat" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

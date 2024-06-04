@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -107,10 +108,9 @@ public class ChatFragment extends Fragment {
 
 			@Override
 			public void onFailure(@NonNull Call<List<ChatMessage>> call, @NonNull Throwable t) {
-				t.printStackTrace();
+				Toast.makeText(getContext(), R.string.error_chat, Toast.LENGTH_SHORT).show();
 			}
 		});
-
 	}
 
 	private void configurarRV() {
@@ -137,14 +137,12 @@ public class ChatFragment extends Fragment {
 
 			@Override
 			public void onFailure(@NonNull Call<UUID> call, @NonNull Throwable t) {
-				t.printStackTrace();
+				Toast.makeText(getContext(), R.string.error_mensajes, Toast.LENGTH_SHORT).show();
 			}
 		});
-
 	}
 
 	private void configurarWebSocket() {
-
 		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
 		String token = sharedPrefManager.fetchJwt();
 
@@ -219,7 +217,5 @@ public class ChatFragment extends Fragment {
 				super.onOpen(webSocket, response);
 			}
 		});
-
 	}
-
 }

@@ -102,7 +102,7 @@ public class ReviewFragment extends Fragment {
 			@Override
 			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 				if (response.isSuccessful() && response.body() != null) {
-					Toast.makeText(getContext(), "¡Gracias por valorar su experiencia!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getContext(), R.string.valoracion, Toast.LENGTH_SHORT).show();
 
 					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 					FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -122,6 +122,5 @@ public class ReviewFragment extends Fragment {
 				Log.e("Review", "Error al añadir review al usuario: " + skill.getUserID() + ". Mensaje de error: " + throwable.getMessage());
 			}
 		});
-
 	}
 }

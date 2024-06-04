@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 			InicioFragment homeFragment = new InicioFragment();
 			transaction.replace(R.id.flPrincipal, homeFragment);
 		} else if (menuItem.getItemId() == R.id.botNavVarChat) {
-//			Intent i = new Intent(this, ChatActivity.class);
-//			startActivity(i);
 			ChatListFragment chatListFragment = new ChatListFragment();
 			transaction.replace(R.id.flPrincipal, chatListFragment);
 		} else if (menuItem.getItemId() == R.id.botNavVarBalance) {

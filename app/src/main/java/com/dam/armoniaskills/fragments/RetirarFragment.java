@@ -100,13 +100,13 @@ public class RetirarFragment extends Fragment implements View.OnClickListener {
 					Double dinero = response.body();
 					tvCantidad.setText(String.format("%s€", String.valueOf(dinero)));
 				} else {
-					Toast.makeText(getContext(), "Error al obtener el balance", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getContext(), R.string.error_balance, Toast.LENGTH_SHORT).show();
 				}
 			}
 
 			@Override
 			public void onFailure(@NonNull Call<Double> call, @NonNull Throwable t) {
-				Toast.makeText(getContext(), "Error al obtener el balance", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getContext(), R.string.error_balance, Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

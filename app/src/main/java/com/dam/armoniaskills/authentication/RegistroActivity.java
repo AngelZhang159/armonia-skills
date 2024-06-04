@@ -89,7 +89,6 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 	}
 
 	private void createUser() {
-
 		ImageUpload imageUpload = new ImageUpload();
 		if (imageUri != null) {
 			imageUpload.subirImagen(imageUri, getContentResolver(), new UploadCallback() {
@@ -149,7 +148,7 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 
 			@Override
 			public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-				Toast.makeText(RegistroActivity.this, "err server", Toast.LENGTH_SHORT).show();
+				Toast.makeText(RegistroActivity.this, R.string.err_servidor, Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
@@ -158,7 +157,7 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 		if (response.code() == 409) {
 			Toast.makeText(RegistroActivity.this, R.string.usuario_existente, Toast.LENGTH_SHORT).show();
 		} else {
-			Toast.makeText(RegistroActivity.this, "otro error no 409", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegistroActivity.this, R.string.otro_error, Toast.LENGTH_SHORT).show();
 		}
 	}
 }

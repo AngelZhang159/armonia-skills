@@ -68,7 +68,7 @@ public class SeleccionActivity extends AppCompatActivity implements AdapterView.
 		String titulo = etTitulo.getText().toString();
 
 		if (titulo.isEmpty()) {
-			Toast.makeText(this, "Debe introducir un título", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.titulo_obligatorio, Toast.LENGTH_SHORT).show();
 		} else {
 			Intent i = new Intent(this, NuevaSkillActivity.class);
 			i.putExtra(CLAVE_CAT, listaCategorias.get(position));

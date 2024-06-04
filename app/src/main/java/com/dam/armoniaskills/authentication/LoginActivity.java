@@ -48,13 +48,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 		btnLogin.setOnClickListener(this);
 		btnRegistro.setOnClickListener(this);
-
 	}
-
 
 	@Override
 	public void onClick(View v) {
-
 		if (v.getId() == R.id.btnIniciarSesionLogin) {
 			String email = etEmail.getText().toString().trim();
 			String contra = etContra.getText().toString().trim();

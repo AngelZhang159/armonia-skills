@@ -38,7 +38,7 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 
 	RecyclerView rvImagenes;
 	AdapterImagenes adapter;
-	EditText etTitulo, etDescripcion, etPrecio, etCiudad;
+	EditText etTitulo, etDescripcion, etPrecio;
 	TextView tvCategoria;
 	ImageView imvCategoria;
 	Button btnConfirmar, btnCancelar;
@@ -59,7 +59,7 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 					primera = false;
 					adapter.notifyDataSetChanged();
 				} else {
-					Toast.makeText(this, "No ha seleccionado ninguna imagen", Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, R.string.seleccionar_img, Toast.LENGTH_SHORT).show();
 				}
 			});
 
@@ -86,7 +86,6 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 		etTitulo = findViewById(R.id.etTituloNuevaSkill);
 		etDescripcion = findViewById(R.id.etDescNuevaSkill);
 		etPrecio = findViewById(R.id.etPrecioNuevaSkill);
-		etCiudad = findViewById(R.id.etCiudadNuevaSkill);
 		tvCategoria = findViewById(R.id.tvCategoriaNuevaSkill);
 		imvCategoria = findViewById(R.id.imgCategoriaNuevaSkill);
 		btnConfirmar = findViewById(R.id.btnConfirmarNuevaSkill);
@@ -116,16 +115,16 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 			String titulo = etTitulo.getText().toString();
 			String descripcion = etDescripcion.getText().toString();
 			String precio = etPrecio.getText().toString();
-			String ciudad = etCiudad.getText().toString();
+			String ciudad = "";
 
 			if (listaImagenes.isEmpty()) {
-				Toast.makeText(this, "Debe seleccionar al menos una imagen", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.img_obligatoria, Toast.LENGTH_SHORT).show();
 			} else if (titulo.isEmpty()) {
-				Toast.makeText(this, "Debe introducir un título", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.titulo_obligatorio, Toast.LENGTH_SHORT).show();
 			} else if (descripcion.isEmpty()) {
-				Toast.makeText(this, "Debe introducir una descripción", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.descripcion_obligatoria, Toast.LENGTH_SHORT).show();
 			} else if (precio.isEmpty()) {
-				Toast.makeText(this, "Debe introducir un precio", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.precio_obligatorio, Toast.LENGTH_SHORT).show();
 			} else {
 				List<String> imageList = new ArrayList<>();
 				ImageUpload imageUpload = new ImageUpload();
@@ -149,9 +148,8 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 
 						@Override
 						public void onError(Throwable throwable) {
-							Toast.makeText(NuevaSkillActivity.this, "Error al subir imagen", Toast.LENGTH_SHORT).show();
+							Toast.makeText(NuevaSkillActivity.this, R.string.err_imagen_servidor, Toast.LENGTH_SHORT).show();
 							latch.countDown();
-
 						}
 					});
 				}
