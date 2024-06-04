@@ -37,4 +37,23 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria> {
 
 		return view;
 	}
+
+	@Override
+	public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+		Categoria categoria = getItem(position);
+
+		if (convertView == null) {
+			convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_categoria, parent, false);
+		}
+
+		ImageView img = convertView.findViewById(R.id.imgCategoria);
+		TextView tv = convertView.findViewById(R.id.tvCategoria);
+
+		if (categoria != null) {
+			img.setImageResource(categoria.getImagen());
+			tv.setText(categoria.getTitulo());
+		}
+
+		return convertView;
+	}
 }
