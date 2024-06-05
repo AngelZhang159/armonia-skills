@@ -20,6 +20,7 @@ import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterMensajes;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -215,6 +216,7 @@ public class ChatFragment extends Fragment {
 			@Override
 			public void onOpen(@NonNull WebSocket webSocket, @NonNull okhttp3.Response response) {
 				super.onOpen(webSocket, response);
+
 			}
 		});
 	}

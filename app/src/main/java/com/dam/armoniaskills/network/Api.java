@@ -89,4 +89,7 @@ public interface Api {
 
 	@GET("api/v1/skill/category/{category}")
 	Call<List<Skill>> getSkillsByCategory(@Path("category") String category);
+
+	@PATCH("api/v1/user/updateFCMToken")
+	Call<String> registrarTokenFCM(@Header("Authorization") String token, @Body String FCMToken);
 }

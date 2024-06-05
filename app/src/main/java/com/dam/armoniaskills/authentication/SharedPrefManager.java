@@ -25,4 +25,16 @@ public class SharedPrefManager {
 	public void clearJwt() {
 		sharedPreferences.edit().remove(KEY_JWT).apply();
 	}
+
+	public void saveFCMToken(String token) {
+		sharedPreferences.edit().putString("fcm_token", token).apply();
+	}
+
+	public String fetchFCMToken() {
+		return sharedPreferences.getString("fcm_token", null);
+	}
+
+	public void clearFCMToken() {
+		sharedPreferences.edit().remove("fcm_token").apply();
+	}
 }

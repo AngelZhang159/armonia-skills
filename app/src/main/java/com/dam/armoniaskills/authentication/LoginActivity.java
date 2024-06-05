@@ -19,6 +19,7 @@ import com.dam.armoniaskills.MainActivity;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.model.User;
 import com.dam.armoniaskills.network.RetrofitClient;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -86,6 +87,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 					SharedPrefManager sharedPrefManager = new SharedPrefManager(getApplicationContext());
 					sharedPrefManager.saveJwt(jwtToken);
+
+					FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+						if (!task.isSuccessful()) {
+							Log.e("FCM Token", "Fetching FCM registration token failed", task.getException());
+							return;
+						}
+
+						String token = task.getResult();
+						sharedPrefManager.saveFCMToken(token);
+						Log.i("FCM Token", "TOKEN REGISTRADO: " + token);
+					});
 
 					Toast.makeText(LoginActivity.this, R.string.ok_login, Toast.LENGTH_SHORT).show();
 					Intent intent = new Intent(LoginActivity.this, MainActivity.class);

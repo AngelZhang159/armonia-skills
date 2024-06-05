@@ -89,7 +89,7 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 		} else if (v.getId() == R.id.btnUpdate) {
 			updateData();
 		} else if (v.getId() == R.id.btnCerrarSesion) {
-			mostrarDialog();
+			mostrarDialogCerrarSesion();
 		} else if (v.getId() == R.id.imvPerfilP) {
 			pickMedia.launch(new PickVisualMediaRequest.Builder()
 					.setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
@@ -97,7 +97,7 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 		}
 	}
 
-	private void mostrarDialog() {
+	private void mostrarDialogCerrarSesion() {
 		MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
 
 		builder.setTitle(R.string.btn_cerrar_sesion)
@@ -111,6 +111,7 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 						SharedPrefManager sharedPrefManager = new SharedPrefManager(getApplicationContext());
 
 						sharedPrefManager.clearJwt();
+						sharedPrefManager.clearFCMToken();
 
 						Intent i = new Intent(MiPerfilActivity.this, LoginActivity.class);
 						startActivity(i);
@@ -279,7 +280,6 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 						String phone = jsonObject.getString("phone");
 						String imageURL = jsonObject.getString("imageURL");
 
-						imageURL = "http://10.0.2.2:8080" + imageURL;
 
 						etUsername.setText(username);
 						etEmail.setText(email);
@@ -288,9 +288,14 @@ public class MiPerfilActivity extends AppCompatActivity implements View.OnClickL
 							etTlf.setText(phone);
 						}
 
-						Glide.with(MiPerfilActivity.this)
-								.load(imageURL)
-								.into(ivPerfil);
+						if (!imageURL.isEmpty() && !imageURL.equals("null")){
+							imageURL = "http://10.0.2.2:8080" + imageURL;
+							Glide.with(MiPerfilActivity.this)
+									.load(imageURL)
+									.into(ivPerfil);
+						} else {
+							ivPerfil.setImageResource(R.drawable.user);
+						}
 
 					} catch (IOException | JSONException e) {
 						e.printStackTrace();

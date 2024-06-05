@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "781967870473",
+    "project_id": "armoniaskills",
+    "storage_bucket": "armoniaskills.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781967870473:android:3536399588ea3bdeee86d8",
+        "android_client_info": {
+          "package_name": "com.dam.armoniaskills"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcTqcWNdN_zeQ6Km5fcQNCEkbWzv3NQdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
