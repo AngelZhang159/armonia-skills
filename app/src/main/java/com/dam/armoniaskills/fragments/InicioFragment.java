@@ -26,6 +26,7 @@ import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterSkills;
 import com.dam.armoniaskills.utils.CategoriaUtil;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
 
@@ -45,6 +46,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 	SearchView searchView;
 	SearchBar searchBar;
 	Spinner spinner;
+	LinearProgressIndicator progressBar;
 
 	public InicioFragment() {
 	}
@@ -63,6 +65,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 		searchView = v.findViewById(R.id.searchView);
 		searchBar = v.findViewById(R.id.searchBar);
 		spinner = v.findViewById(R.id.spinner);
+		progressBar = v.findViewById(R.id.progressBarInicio);
 
 		ArrayList<Categoria> listaCategorias = CategoriaUtil.rellenarLista(getContext());
 		CategoriaAdapter adapter = new CategoriaAdapter(getContext(), listaCategorias);
@@ -123,6 +126,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 					listaSkills.clear();
 					listaSkills.addAll(response.body());
 					configurarRV();
+					progressBar.hide();
 				}
 			}
 

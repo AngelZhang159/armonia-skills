@@ -34,14 +34,30 @@
                 android:orientation="vertical"
                 android:paddingVertical="@dimen/margen">
 
-                <TextView
-                    android:id="@+id/tvDinero"
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margen"
-                    android:textAlignment="textEnd"
-                    android:textSize="50sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:showAnimationBehavior="outward"
+                        android:indeterminate="true"
+                        android:id="@+id/progressBarBalance"/>
+
+                    <TextView
+                        android:id="@+id/tvDinero"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textSize="50sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"

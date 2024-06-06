@@ -19,16 +19,15 @@
 
 
             <com.google.android.material.search.SearchBar
-                    android:id="@+id/searchBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/barra_buscar" />
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/barra_buscar" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/margen">
+                android:orientation="horizontal">
 
                 <!--
                 <TextView
@@ -40,25 +39,22 @@
                 -->
                 <Spinner
                     android:id="@+id/spinner"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-
+                    android:padding="@dimen/margen" />
 
             </LinearLayout>
-
 
 
         </com.google.android.material.appbar.AppBarLayout>
 
 
-
         <com.google.android.material.search.SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/barra_buscar"
             app:closeIcon="@drawable/baseline_close_24"
-            android:id="@+id/searchView"
             app:layout_anchor="@id/searchBar">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -68,13 +64,23 @@
 
         </com.google.android.material.search.SearchView>
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressBarInicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:showAnimationBehavior="inward"
+            app:hideAnimationBehavior="outward"
+            app:layout_anchor="@id/appBarLayout"
+            android:indeterminate="true"
+            app:layout_anchorGravity="bottom" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSkills"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:layout_anchor="@id/appBarLayout"
-            app:layout_anchorGravity="bottom" />
+            app:layout_anchorGravity="bottom"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>

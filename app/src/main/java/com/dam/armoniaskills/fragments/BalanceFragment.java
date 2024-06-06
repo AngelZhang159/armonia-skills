@@ -21,6 +21,7 @@ import com.dam.armoniaskills.model.HistorialBalance;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterBalance;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,7 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
 	ArrayList<HistorialBalance> listaHistorialBalance;
 	AdapterBalance adapterBalance;
 	MaterialButton btnElim;
+	CircularProgressIndicator progressBar;
 
 	public BalanceFragment() {
 	}
@@ -56,6 +58,7 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
 		btnRetirar.setOnClickListener(this);
 		btnElim = v.findViewById(R.id.btnBorrarHistBal);
 		btnElim.setOnClickListener(this);
+		progressBar = v.findViewById(R.id.progressBarBalance);
 
 		listaHistorialBalance = new ArrayList<>();
 		rv = v.findViewById(R.id.rvBalance);
@@ -83,6 +86,7 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
 			@Override
 			public void onResponse(@NonNull Call<Double> call, @NonNull retrofit2.Response<Double> response) {
 				if (response.isSuccessful()) {
+					progressBar.setVisibility(View.GONE);
 					Double dinero = response.body();
 					tvDinero.setText(String.format("%s€", String.valueOf(dinero)));
 				} else {

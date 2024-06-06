@@ -20,6 +20,7 @@ import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterMensajes;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
@@ -46,7 +47,7 @@ public class ChatFragment extends Fragment {
 	private AdapterMensajes adapter;
 	private ArrayList<ChatMessage> chatMessages;
 	private RecyclerView rv;
-
+	LinearProgressIndicator progressBar;
 	private WebSocket webSocket;
 
 	@Override
@@ -56,11 +57,13 @@ public class ChatFragment extends Fragment {
 		Bundle args = getArguments();
 
 		String chatId = args != null ? args.getString("chatId") : null;
+		progressBar = view.findViewById(R.id.progressBarChat);
 
 		messageInput = view.findViewById(R.id.message_input);
 		Button sendButton = view.findViewById(R.id.send_button);
 		rv = view.findViewById(R.id.rvMensajes);
 		chatMessages = new ArrayList<>();
+
 
 		cargarMensajes(chatId);
 
@@ -104,6 +107,7 @@ public class ChatFragment extends Fragment {
 				if (response.isSuccessful()) {
 					chatMessages.addAll(response.body());
 					configurarRV();
+					progressBar.hide();
 				}
 			}
 

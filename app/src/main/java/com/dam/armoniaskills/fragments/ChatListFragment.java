@@ -2,7 +2,6 @@ package com.dam.armoniaskills.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.dto.ChatDTO;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterChat;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 	RecyclerView rv;
 	AdapterChat adapter;
 	ArrayList<ChatDTO> chatDTOList;
-	private WebSocket webSocket;
+	LinearProgressIndicator progressBar;
 
 	public static ChatListFragment newInstance(String param1, String param2) {
 		ChatListFragment fragment = new ChatListFragment();
@@ -54,6 +54,7 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 		View v = inflater.inflate(R.layout.fragment_chat_list, container, false);
 
 		rv = v.findViewById(R.id.rvChat);
+		progressBar = v.findViewById(R.id.progressBarChatList);
 
 		chatDTOList = new ArrayList<>();
 		configurarRV();
@@ -79,6 +80,7 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 					chatDTOList.clear();
 					chatDTOList.addAll(response.body());
 					configurarRV();
+					progressBar.hide();
 				}
 			}
 
@@ -112,13 +114,5 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 		i.putExtra("otroUsuarioId", chatDTO.getOtroUsuarioId().toString());
 
 		startActivity(i);
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		if (webSocket != null) {
-			webSocket.close(1000, "Chat View destroyed");
-		}
 	}
 }

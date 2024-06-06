@@ -1,6 +1,7 @@
 package com.dam.armoniaskills.network;
 
 import android.Manifest;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -53,11 +54,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 			NotificationManager notificationManager = getSystemService(NotificationManager.class);
 			notificationManager.createNotificationChannel(channel);
 		}
-
+		
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
 				.setSmallIcon(R.drawable.baseline_chat_24)
 				.setContentTitle(sender)
 				.setContentText(message)
+				.setWhen(System.currentTimeMillis())
 				.setPriority(NotificationCompat.PRIORITY_MAX)
 				.setStyle(new NotificationCompat.BigTextStyle().bigText(message))  // Use BigTextStyle for heads-up
 				.setDefaults(NotificationCompat.DEFAULT_ALL)  // Ensure sound, vibration, and lights are used
