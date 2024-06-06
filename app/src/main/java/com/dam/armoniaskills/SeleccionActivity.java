@@ -37,14 +37,13 @@ public class SeleccionActivity extends AppCompatActivity implements AdapterView.
 
 		listaCategorias = new ArrayList<>();
 		listaCategorias = CategoriaUtil.rellenarLista(this);
+		listaCategorias.remove(0);
 
 		adapter = new CategoriaAdapter(this, listaCategorias);
 		lstCat.setAdapter(adapter);
 
 		lstCat.setOnItemClickListener(this);
 	}
-
-
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

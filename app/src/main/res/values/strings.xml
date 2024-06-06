@@ -128,4 +128,5 @@
     <string name="btn_contratar_skill">Contratar Skill</string>
     <string name="skills">Skills</string>
     <string name="opiniones">Opiniones</string>
+    <string name="categoria0">Todas</string>
 </resources>
