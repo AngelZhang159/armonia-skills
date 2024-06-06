@@ -1,6 +1,7 @@
 package com.dam.armoniaskills;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,7 +47,6 @@ public class TopBarActivity extends AppCompatActivity {
 	ImageView userImage;
 	TextView userName;
 	Skill skill;
-	UUID id;
 	LinearLayout llTopBar;
 
 	@Override
@@ -209,14 +209,7 @@ public class TopBarActivity extends AppCompatActivity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
 
-		Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.flTopBar);
-
-		readUsuario();
-		if (currentFragment instanceof SkillFragment) {
-			if (id == skill.getUserID()) {
-				getMenuInflater().inflate(R.menu.topbar_menu, menu);
-			}
-		}
+		readUsuario(menu);
 
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -232,7 +225,7 @@ public class TopBarActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void readUsuario() {
+	private void readUsuario(Menu menu) {
 		//Rellenar user con el usuario acutalmente logeado
 
 		SharedPrefManager sharedPrefManager = new SharedPrefManager(getApplicationContext());
@@ -251,7 +244,17 @@ public class TopBarActivity extends AppCompatActivity {
 						String jsonData = response.body().string();
 						JSONObject jsonObject = new JSONObject(jsonData);
 
-						id = UUID.fromString(jsonObject.getString("id"));
+						String id = jsonObject.getString("id");
+						Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.flTopBar);
+
+						if (currentFragment instanceof SkillFragment) {
+							Log.e("TOPBAR", "Es el mismo fragmento que skill");
+							if (id.equals(skill.getUserID().toString())) {
+								Log.e("TOPBAR", "Es el mismo usuario");
+								getMenuInflater().inflate(R.menu.topbar_menu, menu);
+							}
+						}
+						Log.e("TOPBAR", "Sale if");
 
 					} catch (IOException | JSONException e) {
 						e.printStackTrace();
