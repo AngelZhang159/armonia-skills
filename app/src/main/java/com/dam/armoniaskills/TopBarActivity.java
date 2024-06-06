@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.fragments.ChatFragment;
 import com.dam.armoniaskills.fragments.ConfiguracionFragment;
 import com.dam.armoniaskills.fragments.DepositarFragment;
@@ -24,7 +26,19 @@ import com.dam.armoniaskills.fragments.ReviewFragment;
 import com.dam.armoniaskills.fragments.SkillFragment;
 import com.dam.armoniaskills.fragments.UsuarioFragment;
 import com.dam.armoniaskills.model.Skill;
+import com.dam.armoniaskills.network.RetrofitClient;
 import com.google.android.material.appbar.MaterialToolbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.UUID;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TopBarActivity extends AppCompatActivity {
 
@@ -32,6 +46,7 @@ public class TopBarActivity extends AppCompatActivity {
 	ImageView userImage;
 	TextView userName;
 	Skill skill;
+	UUID id;
 	LinearLayout llTopBar;
 
 	@Override
@@ -135,14 +150,14 @@ public class TopBarActivity extends AppCompatActivity {
 	private void cargarConfiguracionSkill() {
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		ConfiguracionFragment configuracionFragment = new ConfiguracionFragment();
+		ConfiguracionFragment configuracionFragment = ConfiguracionFragment.newInstance(skill);
+		fragmentTransaction.addToBackStack(null);
 		fragmentTransaction.replace(R.id.flTopBar, configuracionFragment);
 
 		fragmentTransaction.commit();
 	}
 
 	private void cargarAniadirReview() {
-
 		skill = getIntent().getParcelableExtra("review");
 
 		FragmentManager fragmentManager = getSupportFragmentManager();
@@ -196,8 +211,11 @@ public class TopBarActivity extends AppCompatActivity {
 
 		Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.flTopBar);
 
+		readUsuario();
 		if (currentFragment instanceof SkillFragment) {
-			getMenuInflater().inflate(R.menu.topbar_menu, menu);
+			if (id == skill.getUserID()) {
+				getMenuInflater().inflate(R.menu.topbar_menu, menu);
+			}
 		}
 
 		return super.onPrepareOptionsMenu(menu);
@@ -212,5 +230,41 @@ public class TopBarActivity extends AppCompatActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void readUsuario() {
+		//Rellenar user con el usuario acutalmente logeado
+
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getApplicationContext());
+		String jwt = sharedPrefManager.fetchJwt();
+
+		Call<ResponseBody> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.getUserData(jwt);
+
+		call.enqueue(new Callback<ResponseBody>() {
+			@Override
+			public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+				if (response.isSuccessful()) {
+					try {
+						String jsonData = response.body().string();
+						JSONObject jsonObject = new JSONObject(jsonData);
+
+						id = UUID.fromString(jsonObject.getString("id"));
+
+					} catch (IOException | JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					Toast.makeText(getApplicationContext(), R.string.error_usuario, Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+				Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 }

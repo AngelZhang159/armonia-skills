@@ -21,7 +21,6 @@ import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterMensajes;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
