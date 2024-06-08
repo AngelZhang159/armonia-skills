@@ -74,12 +74,17 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 		searchView.getEditText().setOnEditorActionListener((view, actionId, event) -> {
 			searchBar.setText(searchView.getText());
 			if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
-				if (searchView.getText().toString().isEmpty()){
-					cargarSkills();
 
-				} else {
-					cargarSkills(searchView.getText().toString());
+				Categoria categoriaSeleccionada = (Categoria) spinner.getSelectedItem();
+				String categoria = categoriaSeleccionada.getTitulo();
+
+				if(searchView.getText().toString().isEmpty()){
+					cargarSkillsPorCategoria(categoria);
+				}else {
+					Log.i("searchBar", "categoria: " + categoria + " query: " + searchView.getText());
+					cargarSkills(categoria, searchView.getText().toString());
 				}
+
 				searchView.hide();
 				return true;
 			}
@@ -95,8 +100,18 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
 				// Título de la categoría seleccionada
 				String titulo = categoriaSeleccionada.getTitulo();
+				String query = searchBar.getText().toString();
 
-				cargarSkillsPorCategoria(titulo);
+				if(query.isEmpty()){
+					cargarSkillsPorCategoria(titulo);
+				} else{
+					Log.i("spinner", "categoria: " + titulo + " query: " + query);
+
+					cargarSkills(titulo, query);
+				}
+
+
+
 
 			}
 			@Override
@@ -137,13 +152,13 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 		});
 	}
 
-	private void cargarSkills(String query) {
-		Log.e("RETROFIT", "Buscando skills con query: " + query);
+	private void cargarSkills(String category, String query) {
 
+		Log.i("alcachofas", "categoria: " + category + " query: " + query);
 		Call<List<Skill>> call = RetrofitClient
 				.getInstance()
 				.getApi()
-				.getSkills(query);
+				.getSkills(category, query);
 
 		call.enqueue(new retrofit2.Callback<List<Skill>>() {
 			@Override
@@ -151,7 +166,11 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 				if (response.isSuccessful()) {
 					listaSkills.clear();
 					listaSkills.addAll(response.body());
-					adapter.notifyDataSetChanged();
+					if (adapter == null) {
+						configurarRV();
+					} else {
+						adapter.notifyDataSetChanged();
+					}
 				}
 			}
 

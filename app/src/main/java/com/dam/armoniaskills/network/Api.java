@@ -84,11 +84,13 @@ public interface Api {
 
 	@GET("api/v1/user/perfil/{userId}")
 	Call<PerfilDTO> getPerfil(@Path("userId") String userId);
-	@GET("api/v1/skill/search/{query}")
-	Call<List<Skill>> getSkills(@Path("query") String query);
+	@GET("api/v1/skill/category/{category}/search/{query}")
+	Call<List<Skill>> getSkills(@Path("category") String category, @Path("query") String query);
 
 	@GET("api/v1/skill/category/{category}")
 	Call<List<Skill>> getSkillsByCategory(@Path("category") String category);
+
+
 
 	@PATCH("api/v1/user/updateFCMToken")
 	Call<String> registrarTokenFCM(@Header("Authorization") String token, @Body String FCMToken);
