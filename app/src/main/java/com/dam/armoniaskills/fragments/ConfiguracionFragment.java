@@ -8,17 +8,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dam.armoniaskills.NuevaSkillActivity;
 import com.dam.armoniaskills.R;
+import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.model.Skill;
+import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterImagenes;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ConfiguracionFragment extends Fragment implements View.OnClickListener {
 
@@ -125,5 +134,27 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 	}
 
 	private void borrarSkill() {
+
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+
+		Call<ResponseBody> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.deleteSkill(sharedPrefManager.fetchJwt(), skill.getId());
+
+		call.enqueue(new Callback<ResponseBody>() {
+			@Override
+			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+				Toast.makeText(getContext(), R.string.skill_eliminada, Toast.LENGTH_SHORT).show();
+				getActivity().finish();
+			}
+
+			@Override
+			public void onFailure(Call<ResponseBody> call, Throwable t) {
+				Toast.makeText(getContext(), R.string.error_eliminar_skill, Toast.LENGTH_SHORT).show();
+
+			}
+		});
+
 	}
 }

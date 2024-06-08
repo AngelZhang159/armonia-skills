@@ -223,7 +223,9 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 				tvUsername.setText(user.getUsername());
 				tvTitVal.setText(String.format(getString(R.string.tit_valoraciones), user.getFullName()));
 
-				cargarFondoDinamico(urlLocal + skill.getImageList().get(0), user);
+				if(!skill.getImageList().isEmpty()){
+					cargarFondoDinamico(urlLocal + skill.getImageList().get(0), user);
+				}
 			}
 
 			@Override

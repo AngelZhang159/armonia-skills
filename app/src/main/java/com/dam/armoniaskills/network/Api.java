@@ -15,6 +15,7 @@ import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -90,6 +91,8 @@ public interface Api {
 	@GET("api/v1/skill/category/{category}")
 	Call<List<Skill>> getSkillsByCategory(@Path("category") String category);
 
+	@DELETE("api/v1/skill/{id}")
+	Call<ResponseBody> deleteSkill(@Header("Authorization") String jwt, @Path("id") UUID id);
 
 
 	@PATCH("api/v1/user/updateFCMToken")

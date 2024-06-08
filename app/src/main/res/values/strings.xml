@@ -131,4 +131,6 @@
     <string name="categoria0">Todas</string>
     <string name="yesterday">Ayer</string>
     <string name="weeks_ago">Hace %1$d semanas</string>
+    <string name="skill_eliminada">Skill eliminada con éxito</string>
+    <string name="error_eliminar_skill">Error al eliminar Skill</string>
 </resources>

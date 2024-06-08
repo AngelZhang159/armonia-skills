@@ -175,4 +175,5 @@ public class UsuarioFragment extends Fragment implements View.OnClickListener {
 		i.putExtra("rellenar", "fragmentoHome");
 		startActivity(i);
 	}
+
 }
