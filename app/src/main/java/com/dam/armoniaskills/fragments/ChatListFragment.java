@@ -80,6 +80,8 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 					chatDTOList.clear();
 					chatDTOList.addAll(response.body());
 
+					chatDTOList.removeIf(chat -> chat.getUltimaHora() == null);
+
 					chatDTOList.sort((chat1, chat2) -> chat2.getUltimaHora().compareTo(chat1.getUltimaHora()));
 
 					configurarRV();

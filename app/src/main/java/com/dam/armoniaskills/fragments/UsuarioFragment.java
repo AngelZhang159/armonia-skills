@@ -154,7 +154,7 @@ public class UsuarioFragment extends Fragment implements View.OnClickListener {
 	}
 
 	private void configurarRVReviews(List<Review> reviews) {
-		AdapterReviews adapter = new AdapterReviews(new ArrayList<>(reviews));
+		AdapterReviews adapter = new AdapterReviews(new ArrayList<>(reviews), R.color.md_theme_surface);
 		rv.setLayoutManager(new LinearLayoutManager(getContext()));
 		rv.setAdapter(adapter);
 	}

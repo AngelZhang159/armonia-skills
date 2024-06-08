@@ -108,7 +108,7 @@ public class MiPerfilFragment extends Fragment implements View.OnClickListener {
     }
 
     private void configurarRVReviews(List<Review> reviews) {
-        AdapterReviews adapter = new AdapterReviews(new ArrayList<>(reviews));
+        AdapterReviews adapter = new AdapterReviews(new ArrayList<>(reviews), getResources().getColor(R.color.md_theme_surface));
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(adapter);
     }
@@ -140,7 +140,6 @@ public class MiPerfilFragment extends Fragment implements View.OnClickListener {
 
                         id = jsonObject.getString("id");
 
-                        Toast.makeText(getContext(), "" + id, Toast.LENGTH_SHORT).show();
                         getPerfil(id);
 
                     } catch (IOException | JSONException e) {

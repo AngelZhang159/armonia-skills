@@ -18,9 +18,11 @@ import java.util.List;
 public class AdapterReviews extends RecyclerView.Adapter<AdapterReviews.ReviewVH> {
 
 	List<Review> listaReviews;
+	int textColor;
 
-	public AdapterReviews(List<Review> listaReviews) {
+	public AdapterReviews(List<Review> listaReviews, int textColor) {
 		this.listaReviews = listaReviews;
+		this.textColor = textColor;
 	}
 
 	@NonNull
@@ -57,6 +59,9 @@ public class AdapterReviews extends RecyclerView.Adapter<AdapterReviews.ReviewVH
 
 		public void bindReview(Review review) {
 			String urlLocal = "http://10.0.2.2:8080";
+			tvEstrellas.setTextColor(textColor);
+			tvValoracion.setTextColor(textColor);
+			tvUser.setTextColor(textColor);
 
 			Glide.with(itemView).load(urlLocal + review.getImageUrl()).into(ivUser);
 			tvUser.setText(review.getUsername());

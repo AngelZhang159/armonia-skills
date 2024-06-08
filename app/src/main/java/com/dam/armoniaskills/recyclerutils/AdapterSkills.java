@@ -1,7 +1,7 @@
 package com.dam.armoniaskills.recyclerutils;
 
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -164,12 +164,29 @@ public class AdapterSkills extends RecyclerView.Adapter<AdapterSkills.SkillsVH> 
 								if (resource != null) {
 									Palette.from(resource).generate((palette) -> {
 										if (palette != null) {
-											int color = palette.getDominantColor(itemView.getContext().getColor(R.color.md_theme_background));
+											int color = itemView.getContext().getColor(R.color.md_theme_background);
+											int currentNightMode = itemView.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+											if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+												// Get the dominant color and make it very dark
+												color = palette.getDominantColor(itemView.getContext().getColor(R.color.md_theme_background));
+												float[] hsl = new float[3];
+												ColorUtils.colorToHSL(color, hsl);
+												hsl[2] *= 0.2f; // make it very dark
+												color = ColorUtils.HSLToColor(hsl);
+											} else if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+												// Get the dominant color and make it pastel
+												color = palette.getDominantColor(itemView.getContext().getColor(R.color.md_theme_background));
+												float[] hsl = new float[3];
+												ColorUtils.colorToHSL(color, hsl);
+												hsl[1] *= 0.5f; // reduce saturation to make it pastel
+												hsl[2] = 0.9f; // increase lightness to make it pastel
+												color = ColorUtils.HSLToColor(hsl);
+											}
 											cardView.setCardBackgroundColor(color);
 											int textColor;
 
 											// Set the text color based on the background color
-											if (ColorUtils.calculateLuminance(color) >= 0.5){
+											if (ColorUtils.calculateLuminance(color) >= 0.5) {
 												textColor = (itemView.getContext().getColor(R.color.md_theme_onSurface));
 
 											} else {

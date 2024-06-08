@@ -1,5 +1,6 @@
 package com.dam.armoniaskills.recyclerutils;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implem
 			}
 
 			if (chatDTO.getUltimaHora() != null) {
-				String formattedDate = formatDate(chatDTO.getUltimaHora());
+				String formattedDate = formatDate(chatDTO.getUltimaHora(), itemView.getContext());
 				tvFecha.setText(formattedDate);
 			}
 
@@ -90,7 +91,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implem
 		}
 	}
 
-	private String formatDate(Date date) {
+	private String formatDate(Date date, Context context) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 
@@ -107,12 +108,12 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implem
 			return timeFormat.format(date);
 		} else if (calendar.get(Calendar.YEAR) == yesterday.get(Calendar.YEAR) &&
 				calendar.get(Calendar.DAY_OF_YEAR) == yesterday.get(Calendar.DAY_OF_YEAR)) {
-			return String.valueOf((R.string.yesterday));
+			return context.getString(R.string.yesterday);
 		} else if (today.get(Calendar.WEEK_OF_YEAR) - calendar.get(Calendar.WEEK_OF_YEAR) < 1) {
 			return dayFormat.format(date);
 		} else if (today.get(Calendar.MONTH) - calendar.get(Calendar.MONTH) < 1) {
 			int weeksAgo = today.get(Calendar.WEEK_OF_YEAR) - calendar.get(Calendar.WEEK_OF_YEAR);
-			return String.format(String.valueOf(R.string.weeks_ago), weeksAgo);
+			return String.format(context.getString(R.string.weeks_ago), weeksAgo);
 		} else {
 			return dateFormat.format(date);
 		}

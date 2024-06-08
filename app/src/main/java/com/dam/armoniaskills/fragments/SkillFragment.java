@@ -1,27 +1,34 @@
 package com.dam.armoniaskills.fragments;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.TopBarActivity;
 import com.dam.armoniaskills.authentication.SharedPrefManager;
@@ -62,6 +69,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 	AdapterReviews adapter;
 	RatingBar ratingBar;
 	LinearLayout llUserDetalle;
+	ScrollView scrollView;
 	private Skill skill;
 
 
@@ -103,6 +111,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 		btnAniadirValoracion = v.findViewById(R.id.btnAniadirValoracion);
 		ratingBar = v.findViewById(R.id.ratingBarSkill);
 		llUserDetalle = v.findViewById(R.id.llUserDetalle);
+		scrollView = v.findViewById(R.id.svSkillDetalle);
 
 		readUsuario();
 
@@ -142,7 +151,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 		return v;
 	}
 
-	private void cargarReviews(User user) {
+	private void cargarReviews(User user, int textColor) {
 		List<Review> listaReviews = user.getReviewList();
 
 		if (!listaReviews.isEmpty()) {
@@ -156,7 +165,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 
 			tvValoracion.setText(String.format(getString(R.string.tv_media_reviews), listaReviews.size()));
 
-			adapter = new AdapterReviews(listaReviews);
+			adapter = new AdapterReviews(listaReviews, textColor);
 			rv.setLayoutManager(new LinearLayoutManager(getContext()));
 			rv.setAdapter(adapter);
 		} else {
@@ -214,7 +223,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 				tvUsername.setText(user.getUsername());
 				tvTitVal.setText(String.format(getString(R.string.tit_valoraciones), user.getFullName()));
 
-				cargarReviews(user);
+				cargarFondoDinamico(urlLocal + skill.getImageList().get(0), user);
 			}
 
 			@Override
@@ -228,6 +237,67 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 		tvPrecio.setText(String.format(getString(R.string.tv_precio_inicio), skill.getPrice()));
 		tvTitulo.setText(skill.getTitle());
 		tvDescripcion.setText(skill.getDescription());
+
+	}
+
+	private void cargarFondoDinamico(String url, User user) {
+		Glide.with(getActivity())
+				.asBitmap()
+				.load(url)
+				.into(new CustomTarget<Bitmap>() {
+					@Override
+					public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+						if (resource != null) {
+							Palette.from(resource).generate((palette) -> {
+								if (palette != null) {
+									int color = getResources().getColor(R.color.md_theme_background);
+									int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+									if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+										// Get the dominant color and make it very dark
+										color = palette.getDominantColor(getContext().getColor(R.color.md_theme_background));
+										float[] hsl = new float[3];
+										ColorUtils.colorToHSL(color, hsl);
+										hsl[2] *= 0.2f; // make it very dark
+										color = ColorUtils.HSLToColor(hsl);
+									} else if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+										// Get the dominant color and make it pastel
+										color = palette.getDominantColor(getContext().getColor(R.color.md_theme_background));
+										float[] hsl = new float[3];
+										ColorUtils.colorToHSL(color, hsl);
+										hsl[1] *= 0.5f; // reduce saturation to make it pastel
+										hsl[2] = 0.9f; // increase lightness to make it pastel
+										color = ColorUtils.HSLToColor(hsl);
+									}
+									scrollView.setBackgroundColor(color);
+
+									int textColor;
+
+									// Set the text color based on the background color
+									if (ColorUtils.calculateLuminance(color) >= 0.5) {
+										textColor = (getResources().getColor(R.color.md_theme_onSurface));
+
+									} else {
+										textColor = (getResources().getColor(R.color.md_theme_onSurface_dark));
+									}
+
+									tvDescripcion.setTextColor(textColor);
+									tvPrecio.setTextColor(textColor);
+									tvTitulo.setTextColor(textColor);
+									tvUsername.setTextColor(textColor);
+									tvValoracion.setTextColor(textColor);
+									tvTitVal.setTextColor(textColor);
+
+									cargarReviews(user, textColor);
+								}
+							});
+						}
+					}
+
+					@Override
+					public void onLoadCleared(Drawable placeholder) {
+						// Handle placeholder if necessary
+					}
+				});
 	}
 
 	private void getUser(UUID userID, final UserCallback callback) {

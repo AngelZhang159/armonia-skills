@@ -6,6 +6,7 @@
     tools:context=".fragments.SkillFragment">
 
     <ScrollView
+        android:id="@+id/svSkillDetalle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical">
