@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -36,10 +37,15 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -97,6 +103,8 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 		btnAniadirValoracion = v.findViewById(R.id.btnAniadirValoracion);
 		ratingBar = v.findViewById(R.id.ratingBarSkill);
 		llUserDetalle = v.findViewById(R.id.llUserDetalle);
+
+		readUsuario();
 
 		btnAniadirValoracion.setOnClickListener(this);
 		btnContratar.setOnClickListener(this);
@@ -243,6 +251,48 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 			public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
 				Toast.makeText(getContext(), R.string.error_usuario, Toast.LENGTH_SHORT).show();
 				callback.onError();
+			}
+		});
+	}
+
+	private void readUsuario() {
+		//Rellenar user con el usuario acutalmente logeado
+
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+		String jwt = sharedPrefManager.fetchJwt();
+
+		Call<ResponseBody> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.getUserData(jwt);
+
+		call.enqueue(new Callback<ResponseBody>() {
+			@Override
+			public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+				if (response.isSuccessful()) {
+					try {
+						String jsonData = response.body().string();
+						JSONObject jsonObject = new JSONObject(jsonData);
+
+						String id = jsonObject.getString("id");
+
+						if (id.equals(skill.getUserID().toString())) {
+							btnChat.setVisibility(View.GONE);
+							btnContratar.setVisibility(View.GONE);
+							btnAniadirValoracion.setVisibility(View.GONE);
+						}
+
+					} catch (IOException | JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					Toast.makeText(getContext(), R.string.error_usuario, Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+				Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

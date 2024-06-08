@@ -19,9 +19,11 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.fragments.ChatFragment;
+import com.dam.armoniaskills.fragments.ConfigPerfilFragment;
 import com.dam.armoniaskills.fragments.ConfiguracionFragment;
 import com.dam.armoniaskills.fragments.DepositarFragment;
 import com.dam.armoniaskills.fragments.InicioFragment;
+import com.dam.armoniaskills.fragments.MiPerfilFragment;
 import com.dam.armoniaskills.fragments.RetirarFragment;
 import com.dam.armoniaskills.fragments.ReviewFragment;
 import com.dam.armoniaskills.fragments.SkillFragment;
@@ -94,7 +96,19 @@ public class TopBarActivity extends AppCompatActivity {
 			cargarAniadirReview();
 		} else if (i.equals("fragmentoChat")) {
 			cargarChat();
+		} else if (i.equals("fragmentoPerfil")) {
+			cargarPerfil();
 		}
+	}
+
+	private void cargarPerfil() {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		MiPerfilFragment perfilFragment = new MiPerfilFragment();
+		fragmentTransaction.replace(R.id.flTopBar, perfilFragment);
+
+		fragmentTransaction.commit();
+		invalidateOptionsMenu();
 	}
 
 	private void cargarChat() {
@@ -148,13 +162,27 @@ public class TopBarActivity extends AppCompatActivity {
 	}
 
 	private void cargarConfiguracionSkill() {
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		ConfiguracionFragment configuracionFragment = ConfiguracionFragment.newInstance(skill);
-		fragmentTransaction.addToBackStack(null);
-		fragmentTransaction.replace(R.id.flTopBar, configuracionFragment);
+		String i = getIntent().getStringExtra("rellenar");
 
-		fragmentTransaction.commit();
+		if (i.equals("fragmentoHome")) {
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			ConfiguracionFragment configuracionFragment = ConfiguracionFragment.newInstance(skill);
+			fragmentTransaction.addToBackStack(null);
+			fragmentTransaction.replace(R.id.flTopBar, configuracionFragment);
+
+			fragmentTransaction.commit();
+			invalidateOptionsMenu();
+		} else if (i.equals("fragmentoPerfil")) {
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			ConfigPerfilFragment configFragment = new ConfigPerfilFragment();
+			fragmentTransaction.addToBackStack(null);
+			fragmentTransaction.replace(R.id.flTopBar, configFragment);
+
+			fragmentTransaction.commit();
+			invalidateOptionsMenu();
+		}
 	}
 
 	private void cargarAniadirReview() {
@@ -253,6 +281,8 @@ public class TopBarActivity extends AppCompatActivity {
 								Log.e("TOPBAR", "Es el mismo usuario");
 								getMenuInflater().inflate(R.menu.topbar_menu, menu);
 							}
+						} else if (currentFragment instanceof MiPerfilFragment) {
+							getMenuInflater().inflate(R.menu.topbar_menu, menu);
 						}
 						Log.e("TOPBAR", "Sale if");
 

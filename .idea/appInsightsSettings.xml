@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.dam.armoniaskills" />
+                  <option name="mobileSdkAppId" value="1:781967870473:android:3536399588ea3bdeee86d8" />
+                  <option name="projectId" value="armoniaskills" />
+                  <option name="projectNumber" value="781967870473" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

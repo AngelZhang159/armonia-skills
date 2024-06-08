@@ -21,6 +21,7 @@ import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.fragments.BalanceFragment;
 import com.dam.armoniaskills.fragments.ChatListFragment;
 import com.dam.armoniaskills.fragments.InicioFragment;
+import com.dam.armoniaskills.fragments.MiPerfilFragment;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
@@ -120,7 +121,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 			Intent i = new Intent(this, SeleccionActivity.class);
 			startActivity(i);
 		} else if (menuItem.getItemId() == R.id.botNavVarPerfil) {
-			Intent i = new Intent(this, MiPerfilActivity.class);
+			Intent i = new Intent(MainActivity.this, TopBarActivity.class);
+			i.putExtra("rellenar", "fragmentoPerfil");
 			startActivity(i);
 		}
 		transaction.commit();
