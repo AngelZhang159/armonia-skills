@@ -1,9 +1,11 @@
 package com.dam.armoniaskills.authentication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import com.dam.armoniaskills.MainActivity;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.model.User;
 import com.dam.armoniaskills.network.RetrofitClient;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import okhttp3.ResponseBody;
@@ -30,6 +33,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 	EditText etEmail, etContra;
 	Button btnLogin, btnRegistro;
+	CircularProgressIndicator progressBar;
+	View overlay;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 		etContra = findViewById(R.id.login_password);
 		btnLogin = findViewById(R.id.btnIniciarSesionLogin);
 		btnRegistro = findViewById(R.id.btnRegistroLogin);
+		progressBar = findViewById(R.id.progressBarLogin);
+		overlay = findViewById(R.id.overlayLogin);
+
 
 		btnLogin.setOnClickListener(this);
 		btnRegistro.setOnClickListener(this);
@@ -57,11 +65,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 			String email = etEmail.getText().toString().trim();
 			String contra = etContra.getText().toString().trim();
 
+			hideKeyboard();
+
 			if (email.isEmpty() || contra.isEmpty()) {
 				Toast.makeText(this, getString(R.string.campos_obligatorios), Toast.LENGTH_SHORT).show();
 			} else {
 				User user = new User(email, contra);
 				iniciarSesion(user);
+				overlay.setVisibility(View.VISIBLE);
+				progressBar.setVisibility(View.VISIBLE);
 			}
 		} else if (v.getId() == R.id.btnRegistroLogin) {
 			Intent intent = new Intent(this, RegistroActivity.class);
@@ -90,20 +102,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 					FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
 						if (!task.isSuccessful()) {
+							Toast.makeText(LoginActivity.this, "Error al registrar token FCM", Toast.LENGTH_SHORT).show();
 							Log.e("FCM Token", "Fetching FCM registration token failed", task.getException());
+
+							progressBar.hide();
+							overlay.setVisibility(View.GONE);
+
 							return;
 						}
 
 						String token = task.getResult();
 						sharedPrefManager.saveFCMToken(token);
 						Log.i("FCM Token", "TOKEN REGISTRADO: " + token);
+						Toast.makeText(LoginActivity.this, R.string.ok_login, Toast.LENGTH_SHORT).show();
+						Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+						startActivity(intent);
+
+						progressBar.hide();
+						overlay.setVisibility(View.GONE);
+
+						finish();
 					});
 
-					Toast.makeText(LoginActivity.this, R.string.ok_login, Toast.LENGTH_SHORT).show();
-					Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-					startActivity(intent);
-					finish();
 				} else {
+
+					progressBar.hide();
+					overlay.setVisibility(View.GONE);
+
 					int statusCode = response.code();
 					switch (statusCode) {
 						case 401:
@@ -125,4 +150,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 			}
 		});
 	}
+
+	private void hideKeyboard() {
+    View view = this.getCurrentFocus();
+    if (view != null) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+}
 }

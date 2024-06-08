@@ -15,6 +15,8 @@ import com.dam.armoniaskills.dto.ChatDTO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implements View.OnClickListener {
@@ -76,9 +78,8 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implem
 			}
 
 			if (chatDTO.getUltimaHora() != null) {
-				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault()); // Use "hh" for 12-hour format
-				String hour = sdf.format(chatDTO.getUltimaHora());
-				tvFecha.setText(hour);
+				String formattedDate = formatDate(chatDTO.getUltimaHora());
+				tvFecha.setText(formattedDate);
 			}
 
 			if (chatDTO.getFotoPerfil() != null) {
@@ -89,5 +90,32 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implem
 		}
 	}
 
+	private String formatDate(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+
+		Calendar today = Calendar.getInstance();
+		Calendar yesterday = Calendar.getInstance();
+		yesterday.add(Calendar.DATE, -1);
+
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+		SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+
+		if (calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+				calendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)) {
+			return timeFormat.format(date);
+		} else if (calendar.get(Calendar.YEAR) == yesterday.get(Calendar.YEAR) &&
+				calendar.get(Calendar.DAY_OF_YEAR) == yesterday.get(Calendar.DAY_OF_YEAR)) {
+			return String.valueOf((R.string.yesterday));
+		} else if (today.get(Calendar.WEEK_OF_YEAR) - calendar.get(Calendar.WEEK_OF_YEAR) < 1) {
+			return dayFormat.format(date);
+		} else if (today.get(Calendar.MONTH) - calendar.get(Calendar.MONTH) < 1) {
+			int weeksAgo = today.get(Calendar.WEEK_OF_YEAR) - calendar.get(Calendar.WEEK_OF_YEAR);
+			return String.format(String.valueOf(R.string.weeks_ago), weeksAgo);
+		} else {
+			return dateFormat.format(date);
+		}
+	}
 
 }

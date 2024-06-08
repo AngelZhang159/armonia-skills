@@ -129,4 +129,6 @@
     <string name="skills">Skills</string>
     <string name="opiniones">Opiniones</string>
     <string name="categoria0">Todas</string>
+    <string name="yesterday">Ayer</string>
+    <string name="weeks_ago">Hace %1$d semanas</string>
 </resources>

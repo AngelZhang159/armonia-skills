@@ -21,9 +21,9 @@ import com.dam.armoniaskills.recyclerutils.AdapterChat;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import okhttp3.WebSocket;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,6 +79,9 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 				if (response.isSuccessful()) {
 					chatDTOList.clear();
 					chatDTOList.addAll(response.body());
+
+					chatDTOList.sort((chat1, chat2) -> chat2.getUltimaHora().compareTo(chat1.getUltimaHora()));
+
 					configurarRV();
 					progressBar.hide();
 				}

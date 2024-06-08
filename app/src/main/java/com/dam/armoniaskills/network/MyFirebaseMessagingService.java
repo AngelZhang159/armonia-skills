@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -14,6 +15,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.dam.armoniaskills.MainActivity;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.fragments.ChatFragment;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -35,48 +37,46 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		super.onMessageReceived(remoteMessage);
 
 		// Check if message contains a data payload.
-		if (remoteMessage.getData().size() > 0) {
+		if (!remoteMessage.getData().isEmpty()) {
 			// Handle the data payload here
-			String message = remoteMessage.getData().get("message");
-			String sender = remoteMessage.getData().get("sender");
-			showNotification(message, sender);
+			showNotification(remoteMessage);
 		}
 	}
 
-	private void showNotification(String message, String sender) {
-		// Create a notification and display it using NotificationManager
+	private void showNotification(RemoteMessage remoteMessage) {
+		// Create an Intent for the activity you want to start
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+		// Create a PendingIntent
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+
+		// Create a notification channel for Android O and above
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			CharSequence name = "Messages";
-			String description = "New messages";
-			int importance = NotificationManager.IMPORTANCE_HIGH; // Set the importance to high
-			NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-			channel.setDescription(description);
+			NotificationChannel channel = new NotificationChannel(
+					CHANNEL_ID,
+					"FCM Notifications",
+					NotificationManager.IMPORTANCE_HIGH
+			);
+			channel.setDescription("Channel for FCM notifications");
 			NotificationManager notificationManager = getSystemService(NotificationManager.class);
 			notificationManager.createNotificationChannel(channel);
 		}
-		
-		NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-				.setSmallIcon(R.drawable.baseline_chat_24)
-				.setContentTitle(sender)
-				.setContentText(message)
-				.setWhen(System.currentTimeMillis())
-				.setPriority(NotificationCompat.PRIORITY_MAX)
-				.setStyle(new NotificationCompat.BigTextStyle().bigText(message))  // Use BigTextStyle for heads-up
-				.setDefaults(NotificationCompat.DEFAULT_ALL)  // Ensure sound, vibration, and lights are used
-				.setAutoCancel(true);  // Dismiss the notification when clicked
 
-		// Ensure the heads-up notification by setting a full-screen intent
-		Intent intent = new Intent(this, ChatFragment.class);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		builder.setFullScreenIntent(pendingIntent, true);
+		// Build the notification
+		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+				.setSmallIcon(R.drawable.baseline_chat_24) // replace with your app's icon
+				.setContentTitle(remoteMessage.getNotification().getTitle())
+				.setContentText(remoteMessage.getNotification().getBody())
+				.setAutoCancel(true)
+				.setContentIntent(pendingIntent)
+				.setPriority(NotificationCompat.PRIORITY_HIGH);
 
-		NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+		// Get an instance of the NotificationManager service
+		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-		// notificationId is a unique int for each notification that you must define
-		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-			return;
-		}
-		notificationManager.notify(0, builder.build());
+		// Show the notification
+		notificationManager.notify(0, notificationBuilder.build());
 	}
 
 }

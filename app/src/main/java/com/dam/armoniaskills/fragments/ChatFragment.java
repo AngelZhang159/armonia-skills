@@ -223,4 +223,10 @@ public class ChatFragment extends Fragment {
 			}
 		});
 	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		webSocket.close(1000, "Goodbye!");
+	}
 }

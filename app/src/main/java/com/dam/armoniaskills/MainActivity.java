@@ -49,13 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 		navBarView = findViewById(R.id.botNavVar);
 		navBarView.setOnItemSelectedListener(this);
 
-//		OnBackPressedDispatcher dispatcher = getOnBackPressedDispatcher();
-//		dispatcher.addCallback(this, new OnBackPressedCallback(true) {
-//			@Override
-//			public void handleOnBackPressed() {
-//			}
-//		});
-
 		registrarTokenFCM();
 
 	}
