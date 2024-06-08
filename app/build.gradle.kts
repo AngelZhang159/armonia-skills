@@ -36,7 +36,7 @@ dependencies {
 
     implementation(libs.java.websocket)
     implementation(libs.gson)
-
+    implementation(libs.palette)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

@@ -1,5 +1,8 @@
 package com.dam.armoniaskills.recyclerutils;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.graphics.ColorUtils;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.model.User;
@@ -95,6 +103,7 @@ public class AdapterSkills extends RecyclerView.Adapter<AdapterSkills.SkillsVH> 
 		TextView tvUser;
 		TextView tvTitulo;
 		ImageSlider slider;
+		CardView cardView;
 
 
 		public SkillsVH(@NonNull View itemView) {
@@ -105,6 +114,7 @@ public class AdapterSkills extends RecyclerView.Adapter<AdapterSkills.SkillsVH> 
 			tvTitulo = itemView.findViewById(R.id.tvTituloSkill);
 			tvUser = itemView.findViewById(R.id.tvUser);
 			slider = itemView.findViewById(R.id.sliderSkill);
+			cardView = itemView.findViewById(R.id.cardViewSkill);
 
 		}
 
@@ -140,6 +150,48 @@ public class AdapterSkills extends RecyclerView.Adapter<AdapterSkills.SkillsVH> 
 
 			tvPrecio.setText(String.format(itemView.getContext().getString(R.string.tv_precio_inicio), skill.getPrice()));
 			tvTitulo.setText(skill.getTitle());
+
+			List<String> imageList = skill.getImageList();
+			if (!imageList.isEmpty()) {
+				String primaraFoto = urlLocal + imageList.get(0);
+
+				Glide.with(itemView.getContext())
+						.asBitmap()
+						.load(primaraFoto)
+						.into(new CustomTarget<Bitmap>() {
+							@Override
+							public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+								if (resource != null) {
+									Palette.from(resource).generate((palette) -> {
+										if (palette != null) {
+											int color = palette.getDominantColor(itemView.getContext().getColor(R.color.md_theme_background));
+											cardView.setCardBackgroundColor(color);
+											int textColor;
+
+											// Set the text color based on the background color
+											if (ColorUtils.calculateLuminance(color) >= 0.5){
+												textColor = (itemView.getContext().getColor(R.color.md_theme_onSurface));
+
+											} else {
+												textColor = (itemView.getContext().getColor(R.color.md_theme_onSurface_dark));
+											}
+
+											tvPrecio.setTextColor(textColor);
+											tvTitulo.setTextColor(textColor);
+											tvUser.setTextColor(textColor);
+
+										}
+									});
+								}
+							}
+
+							@Override
+							public void onLoadCleared(Drawable placeholder) {
+								// Handle placeholder if necessary
+							}
+						});
+			}
 		}
+
 	}
 }
