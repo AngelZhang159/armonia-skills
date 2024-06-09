@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,13 +38,29 @@ import retrofit2.Response;
 public class ConfiguracionFragment extends Fragment implements View.OnClickListener {
 
 	private static final String ARG_SKILL = "SKILL";
+
 	EditText etTitulo, etDescripcion, etPrecio;
 	Button btnEditar, btnEliminar;
 	RecyclerView rvImagenes;
 	AdapterImagenes adapter;
+
 	List<String> listaImagenes;
 	List<Uri> listaUris;
+	Uri imageUri;
+	int pos;
 	private Skill skill;
+
+	ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(
+			new ActivityResultContracts.PickVisualMedia(), uri -> {
+				if (uri != null) {
+					imageUri = uri;
+					listaUris.set(pos, imageUri);
+					adapter.notifyDataSetChanged();
+				} else {
+					listaImagenes.set(pos, null);
+					adapter.notifyDataSetChanged();
+				}
+			});
 
 	public ConfiguracionFragment() {
 		// Required empty public constructor
@@ -68,6 +87,8 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 							 Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_configuracion, container, false);
 
+		String urlLocal = "http://10.0.2.2:8080";
+
 		etTitulo = v.findViewById(R.id.etTituloConfig);
 		etDescripcion = v.findViewById(R.id.etDescripcionConfig);
 		etPrecio = v.findViewById(R.id.etPrecioConfig);
@@ -84,7 +105,7 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 
 		listaUris = new ArrayList<>();
 		for (String imageUrl : listaImagenes) {
-			Uri imageUri = Uri.parse(imageUrl);
+			Uri imageUri = Uri.parse(urlLocal + imageUrl);
 			listaUris.add(imageUri);
 		}
 
@@ -113,6 +134,11 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 			mostrarDialogEliminar();
 		} else if (v.getId() == R.id.btnUpdateConfig) {
 			updateSkill();
+		} else {
+			pos = rvImagenes.getChildAdapterPosition(v);
+			pickMedia.launch(new PickVisualMediaRequest.Builder()
+					.setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+					.build());
 		}
 	}
 
