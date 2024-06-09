@@ -214,17 +214,18 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 		getUser(skill.getUserID(), new UserCallback() {
 			@Override
 			public void onUserLoaded(User user) {
+				if (getActivity() != null) {
+					if (user.getImageURL() != null) {
+						Glide.with(getActivity()).load(urlLocal + user.getImageURL()).into(imvUser);
+					} else {
+						imvUser.setImageResource(R.drawable.user);
+					}
+					tvUsername.setText(user.getUsername());
+					tvTitVal.setText(String.format(getString(R.string.tit_valoraciones), user.getFullName()));
 
-				if (user.getImageURL() != null) {
-					Glide.with(getContext()).load(urlLocal + user.getImageURL()).into(imvUser);
-				} else {
-					imvUser.setImageResource(R.drawable.user);
-				}
-				tvUsername.setText(user.getUsername());
-				tvTitVal.setText(String.format(getString(R.string.tit_valoraciones), user.getFullName()));
-
-				if(!skill.getImageList().isEmpty()){
-					cargarFondoDinamico(urlLocal + skill.getImageList().get(0), user);
+					if(!skill.getImageList().isEmpty()){
+						cargarFondoDinamico(urlLocal + skill.getImageList().get(0), user);
+					}
 				}
 			}
 

@@ -24,6 +24,9 @@ import com.dam.armoniaskills.network.ImageUpload;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.network.UploadCallback;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -51,7 +54,23 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 		EdgeToEdge.enable(this);
 		setContentView(R.layout.activity_registro);
 		setupWindowInsets();
-		initializeViews();
+		initializeViews(savedInstanceState);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		// Guarda los datos introducidos en el Bundle
+		outState.putString("usuario", etUsuario.getText().toString());
+		outState.putString("nombre", etNombre.getText().toString());
+		outState.putString("apellido", etApe.getText().toString());
+		outState.putString("email", etEmail.getText().toString());
+		outState.putString("contra", etContra.getText().toString());
+		outState.putString("telefono", etTelf.getText().toString());
+		if (imageUri != null) {
+			outState.putString("imagen", imageUri.toString());
+		}
 	}
 
 	private void setupWindowInsets() {
@@ -62,7 +81,7 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 		});
 	}
 
-	private void initializeViews() {
+	private void initializeViews(Bundle savedInstanceState) {
 		etUsuario = findViewById(R.id.etUsuarioReg);
 		etNombre = findViewById(R.id.etNomReg);
 		etApe = findViewById(R.id.etApeReg);
@@ -72,6 +91,19 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 
 		imageView = findViewById(R.id.imvPerfil);
 		btnRegistrar = findViewById(R.id.btnCrearCuentaReg);
+
+		if (savedInstanceState != null) {
+			etUsuario.setText(savedInstanceState.getString("usuario"));
+			etNombre.setText(savedInstanceState.getString("nombre"));
+			etApe.setText(savedInstanceState.getString("apellido"));
+			etEmail.setText(savedInstanceState.getString("email"));
+			etContra.setText(savedInstanceState.getString("contra"));
+			etTelf.setText(savedInstanceState.getString("telefono"));
+			if (savedInstanceState.getString("imagen") != null) {
+				imageUri = Uri.parse(savedInstanceState.getString("imagen"));
+				imageView.setImageURI(imageUri);
+			}
+		}
 
 		imageView.setOnClickListener(this);
 		btnRegistrar.setOnClickListener(this);
@@ -118,12 +150,16 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 		String password = etContra.getText().toString().trim();
 
 		int phone = 0;
-		if (!etTelf.getText().toString().isEmpty()) {
+		if (!etTelf.getText().toString().isEmpty() && etTelf.getText().toString().length() != 9) {
+			Toast.makeText(RegistroActivity.this, R.string.tlf_invalido, Toast.LENGTH_SHORT).show();
+		} else if (!etTelf.getText().toString().isEmpty() && etTelf.getText().toString().length() == 9) {
 			phone = Integer.parseInt(etTelf.getText().toString().trim());
 		}
 
 		if (username.isEmpty() || name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
 			Toast.makeText(RegistroActivity.this, R.string.campos_obligatorios, Toast.LENGTH_SHORT).show();
+		} else if (!isValidEmail(email)) {
+			Toast.makeText(this, R.string.email_invalido, Toast.LENGTH_SHORT).show();
 		} else {
 			User user = new User(name + " " + surname, username, email, phone, password, imageURL, 0.0);
 			register(user);
@@ -159,5 +195,12 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
 		} else {
 			Toast.makeText(RegistroActivity.this, R.string.otro_error, Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	public boolean isValidEmail(String email) {
+		String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+		Pattern pattern = Pattern.compile(emailRegex);
+		Matcher matcher = pattern.matcher(email);
+		return matcher.matches();
 	}
 }

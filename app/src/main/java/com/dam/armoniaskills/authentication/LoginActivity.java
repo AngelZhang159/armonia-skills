@@ -54,9 +54,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 		progressBar = findViewById(R.id.progressBarLogin);
 		overlay = findViewById(R.id.overlayLogin);
 
+		if (savedInstanceState != null) {
+			etEmail.setText(savedInstanceState.getString("email"));
+			etContra.setText(savedInstanceState.getString("contra"));
+		}
 
 		btnLogin.setOnClickListener(this);
 		btnRegistro.setOnClickListener(this);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putString("email", etEmail.getText().toString());
+		outState.putString("contra", etContra.getText().toString());
 	}
 
 	@Override

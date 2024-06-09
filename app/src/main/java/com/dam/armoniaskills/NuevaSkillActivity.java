@@ -91,9 +91,15 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 		btnConfirmar = findViewById(R.id.btnConfirmarNuevaSkill);
 		btnCancelar = findViewById(R.id.btnCancelarNuevaSkill);
 
-		listaImagenes = new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
-			listaImagenes.add(null);
+		if (savedInstanceState != null) {
+			etDescripcion.setText(savedInstanceState.getString("descripcion"));
+			etPrecio.setText(savedInstanceState.getString("precio"));
+			listaImagenes = savedInstanceState.getParcelableArrayList("listaImagenes");
+		} else {
+			listaImagenes = new ArrayList<>();
+			for (int i = 0; i < 10; i++) {
+				listaImagenes.add(null);
+			}
 		}
 
 		configurarRV();
@@ -107,6 +113,15 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 
 		btnConfirmar.setOnClickListener(this);
 		btnCancelar.setOnClickListener(this);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putString("descripcion", etDescripcion.getText().toString());
+		outState.putString("precio", etPrecio.getText().toString());
+		outState.putParcelableArrayList("listaImagenes", new ArrayList<>(listaImagenes));
 	}
 
 	@Override
@@ -124,6 +139,7 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 					break;
 				}
 			}
+
 			if (!hayImagenes) {
 				Toast.makeText(this, R.string.img_obligatoria, Toast.LENGTH_SHORT).show();
 			} else if (titulo.isEmpty()) {

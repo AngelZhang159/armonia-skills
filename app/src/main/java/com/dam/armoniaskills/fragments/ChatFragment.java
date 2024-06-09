@@ -118,32 +118,34 @@ public class ChatFragment extends Fragment {
 	}
 
 	private void configurarRV() {
-		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+		if (getActivity() != null) {
+			SharedPrefManager sharedPrefManager = new SharedPrefManager(getActivity());
 
-		Call<UUID> call = RetrofitClient
-				.getInstance()
-				.getApi()
-				.getUserId(sharedPrefManager.fetchJwt());
+			Call<UUID> call = RetrofitClient
+					.getInstance()
+					.getApi()
+					.getUserId(sharedPrefManager.fetchJwt());
 
-		call.enqueue(new Callback<UUID>() {
-			@Override
-			public void onResponse(@NonNull Call<UUID> call, @NonNull Response<UUID> response) {
-				if (response.isSuccessful()) {
-					adapter = new AdapterMensajes(chatMessages, response);
+			call.enqueue(new Callback<UUID>() {
+				@Override
+				public void onResponse(@NonNull Call<UUID> call, @NonNull Response<UUID> response) {
+					if (response.isSuccessful()) {
+						adapter = new AdapterMensajes(chatMessages, response);
 
-					LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-					layoutManager.setStackFromEnd(true);
-					rv.setLayoutManager(layoutManager);
-					rv.setAdapter(adapter);
-					rv.setHasFixedSize(true);
+						LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+						layoutManager.setStackFromEnd(true);
+						rv.setLayoutManager(layoutManager);
+						rv.setAdapter(adapter);
+						rv.setHasFixedSize(true);
+					}
 				}
-			}
 
-			@Override
-			public void onFailure(@NonNull Call<UUID> call, @NonNull Throwable t) {
-				Toast.makeText(getContext(), R.string.error_mensajes, Toast.LENGTH_SHORT).show();
-			}
-		});
+				@Override
+				public void onFailure(@NonNull Call<UUID> call, @NonNull Throwable t) {
+					Toast.makeText(getContext(), R.string.error_mensajes, Toast.LENGTH_SHORT).show();
+				}
+			});
+		}
 	}
 
 	private void configurarWebSocket() {

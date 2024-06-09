@@ -2,12 +2,14 @@ package com.dam.armoniaskills;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dam.armoniaskills.listutils.CategoriaAdapter;
@@ -42,7 +44,18 @@ public class SeleccionActivity extends AppCompatActivity implements AdapterView.
 		adapter = new CategoriaAdapter(this, listaCategorias);
 		lstCat.setAdapter(adapter);
 
+		if (savedInstanceState != null) {
+			etTitulo.setText(savedInstanceState.getString("titulo"));
+		}
+
 		lstCat.setOnItemClickListener(this);
+	}
+
+	@Override
+	public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+		super.onSaveInstanceState(outState, outPersistentState);
+
+		outState.putString("titulo", etTitulo.getText().toString());
 	}
 
 	@Override

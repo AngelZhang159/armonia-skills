@@ -1,5 +1,6 @@
 package com.dam.armoniaskills.recyclerutils;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -125,12 +126,14 @@ public class AdapterSkills extends RecyclerView.Adapter<AdapterSkills.SkillsVH> 
 			getUser(skill.getUserID(), new UserCallback() {
 				@Override
 				public void onUserLoaded(User user) {
-					if (user.getImageURL() != null) {
-						Glide.with(itemView).load(urlLocal + user.getImageURL()).into(ivUser);
-					} else {
-						ivUser.setImageResource(R.drawable.user);
+					if (itemView.getContext() != null && !((Activity) itemView.getContext()).isDestroyed()) {
+						if (user.getImageURL() != null) {
+							Glide.with(itemView.getContext()).load(urlLocal + user.getImageURL()).into(ivUser);
+						} else {
+							ivUser.setImageResource(R.drawable.user);
+						}
+						tvUser.setText(user.getUsername());
 					}
-					tvUser.setText(user.getUsername());
 				}
 
 				@Override

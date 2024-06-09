@@ -166,16 +166,19 @@ public class MiPerfilFragment extends Fragment implements View.OnClickListener {
         call.enqueue(new retrofit2.Callback<PerfilDTO>() {
             @Override
             public void onResponse(Call<PerfilDTO> call, Response<PerfilDTO> response) {
-                if (response.isSuccessful()) {
+                if (isAdded() && response.isSuccessful()) {
                     perfilDTO = response.body();
                     Log.e("PerfilDTO", perfilDTO.toString());
 
-                    if (perfilDTO.getFoto() == null) {
-                        Glide.with(getContext()).load(R.drawable.user).into(imvUser);
-                    } else {
-                        String url = "http://10.0.2.2:8080" + perfilDTO.getFoto();
-                        Glide.with(getContext()).load(url).into(imvUser);
+                    if (getActivity() != null) {
+                        if (perfilDTO.getFoto() == null) {
+                            Glide.with(getActivity()).load(R.drawable.user).into(imvUser);
+                        } else {
+                            String url = "http://10.0.2.2:8080" + perfilDTO.getFoto();
+                            Glide.with(getActivity()).load(url).into(imvUser);
+                        }
                     }
+
                     tvUsername.setText(perfilDTO.getNombre());
                     List<Review> listaReviews = perfilDTO.getReviews();
                     if (!listaReviews.isEmpty()) {
