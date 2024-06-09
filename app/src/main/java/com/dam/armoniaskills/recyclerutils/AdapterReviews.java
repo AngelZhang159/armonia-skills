@@ -63,7 +63,12 @@ public class AdapterReviews extends RecyclerView.Adapter<AdapterReviews.ReviewVH
 			tvValoracion.setTextColor(textColor);
 			tvUser.setTextColor(textColor);
 
-			Glide.with(itemView).load(urlLocal + review.getImageUrl()).into(ivUser);
+			if (review.getImageUrl() == null) {
+				ivUser.setImageResource(R.drawable.user);
+			} else {
+				Glide.with(itemView).load(urlLocal + review.getImageUrl()).into(ivUser);
+			}
+
 			tvUser.setText(review.getUsername());
 			tvEstrellas.setText(String.format(itemView.getContext().getString(R.string.tv_estrellas), review.getStars()));
 

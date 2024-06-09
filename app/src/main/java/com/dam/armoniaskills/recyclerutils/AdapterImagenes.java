@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.dam.armoniaskills.R;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public class AdapterImagenes extends RecyclerView.Adapter<AdapterImagenes.Imagen
 			if (uri == null) {
 				imv.setImageResource(R.drawable.image);
 			} else {
-				imv.setImageURI(uri);
+				Glide.with(itemView.getContext()).load(uri).into(imv);
 			}
 		}
 	}

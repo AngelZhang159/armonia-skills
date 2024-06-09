@@ -117,7 +117,14 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 			String precio = etPrecio.getText().toString();
 			String ciudad = "";
 
-			if (listaImagenes.isEmpty()) {
+			boolean hayImagenes = false;
+			for (Uri uri : listaImagenes) {
+				if (uri != null) {
+					hayImagenes = true;
+					break;
+				}
+			}
+			if (!hayImagenes) {
 				Toast.makeText(this, R.string.img_obligatoria, Toast.LENGTH_SHORT).show();
 			} else if (titulo.isEmpty()) {
 				Toast.makeText(this, R.string.titulo_obligatorio, Toast.LENGTH_SHORT).show();
@@ -197,7 +204,8 @@ public class NuevaSkillActivity extends AppCompatActivity implements View.OnClic
 			@Override
 			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 				Toast.makeText(NuevaSkillActivity.this, R.string.skill_creada, Toast.LENGTH_SHORT).show();
-				finish();
+				Intent i = new Intent(NuevaSkillActivity.this, MainActivity.class);
+				startActivity(i);
 				finish();
 			}
 

@@ -1,6 +1,7 @@
 package com.dam.armoniaskills.fragments;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,10 +12,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dam.armoniaskills.NuevaSkillActivity;
 import com.dam.armoniaskills.R;
+import com.dam.armoniaskills.TopBarActivity;
 import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.network.RetrofitClient;
@@ -79,8 +82,14 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 		listaImagenes = new ArrayList<>();
 		listaImagenes = skill.getImageList();
 
-		listaUris = new ArrayList<>(10);
-		for (int i = 0; i < (listaUris.size() - listaImagenes.size()); i++) {
+		listaUris = new ArrayList<>();
+		for (String imageUrl : listaImagenes) {
+			Uri imageUri = Uri.parse(imageUrl);
+			listaUris.add(imageUri);
+		}
+
+		int desiredSize = 10;
+		while (listaUris.size() < desiredSize) {
 			listaUris.add(null);
 		}
 
@@ -93,9 +102,9 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 	}
 
 	private void configurarRv() {
-//        adapter = new AdapterImagenes(listaImagenes, this);
-//        rvImagenes.setLayoutManager(new GridLayoutManager(getContext(), 5));
-//        rvImagenes.setAdapter(adapter);
+        adapter = new AdapterImagenes(listaUris, this);
+        rvImagenes.setLayoutManager(new GridLayoutManager(getContext(), 5));
+        rvImagenes.setAdapter(adapter);
 	}
 
 	@Override
@@ -146,7 +155,9 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 			@Override
 			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 				Toast.makeText(getContext(), R.string.skill_eliminada, Toast.LENGTH_SHORT).show();
-				getActivity().finish();
+				Intent intent = new Intent(getContext(), TopBarActivity.class);
+				intent.putExtra("rellenar", "fragmentoPerfil");
+				startActivity(intent);
 			}
 
 			@Override
