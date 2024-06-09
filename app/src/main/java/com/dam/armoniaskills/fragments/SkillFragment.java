@@ -223,7 +223,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 					tvUsername.setText(user.getUsername());
 					tvTitVal.setText(String.format(getString(R.string.tit_valoraciones), user.getFullName()));
 
-					if(!skill.getImageList().isEmpty()){
+					if (!skill.getImageList().isEmpty()) {
 						cargarFondoDinamico(urlLocal + skill.getImageList().get(0), user);
 					}
 				}
@@ -373,6 +373,31 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.btnContratar) {
+			SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+			String token = sharedPrefManager.fetchJwt();
+
+			Call<ResponseBody> call = RetrofitClient
+					.getInstance()
+					.getApi()
+					.comprarSkill(token, skill.getId());
+
+			call.enqueue(new Callback<ResponseBody>() {
+				@Override
+				public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+					if (response.isSuccessful()) {
+						Toast.makeText(getContext(), R.string.compra_correcta, Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(getContext(), R.string.error_compra, Toast.LENGTH_SHORT).show();
+						Log.e("SkillFragment", "Error al comprar " + response);
+					}
+				}
+
+				@Override
+				public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+					Log.e("SkillFragment", "Error al comprar " + t.getMessage());
+					Toast.makeText(getContext(), R.string.error_compra, Toast.LENGTH_SHORT).show();
+				}
+			});
 
 		} else if (v.getId() == R.id.btnAniadirValoracion) {
 			Intent i = new Intent(getContext(), TopBarActivity.class);

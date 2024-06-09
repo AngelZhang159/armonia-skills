@@ -1,6 +1,7 @@
 package com.dam.armoniaskills.network;
 
 import com.dam.armoniaskills.dto.ChatDTO;
+import com.dam.armoniaskills.dto.ComprasVentasDTO;
 import com.dam.armoniaskills.dto.PerfilDTO;
 import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.model.ChatRoom;
@@ -94,7 +95,15 @@ public interface Api {
 	@DELETE("api/v1/skill/{id}")
 	Call<ResponseBody> deleteSkill(@Header("Authorization") String jwt, @Path("id") UUID id);
 
-
 	@PATCH("api/v1/user/updateFCMToken")
 	Call<String> registrarTokenFCM(@Header("Authorization") String token, @Body String FCMToken);
+
+	@GET("api/v1/user/compras")
+	Call<List<ComprasVentasDTO>> getCompras(@Header("Authorization") String token);
+
+	@GET("api/v1/user/ventas")
+	Call<List<ComprasVentasDTO>> getVentas(@Header("Authorization") String token);
+
+	@POST("api/v1/user/comprar/{idSkill}")
+	Call<ResponseBody> comprarSkill(@Header("Authorization") String token, @Path("idSkill") UUID id);
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,6 @@ import com.dam.armoniaskills.recyclerutils.AdapterChat;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,6 +34,8 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 	AdapterChat adapter;
 	ArrayList<ChatDTO> chatDTOList;
 	LinearProgressIndicator progressBar;
+	Button btnCarrito;
+
 
 	public static ChatListFragment newInstance(String param1, String param2) {
 		ChatListFragment fragment = new ChatListFragment();
@@ -56,12 +58,25 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
 		rv = v.findViewById(R.id.rvChat);
 		progressBar = v.findViewById(R.id.progressBarChatList);
 
+		btnCarrito = v.findViewById(R.id.btnCarritoChatList);
+
+		btnCarrito.setOnClickListener(btn -> {
+
+			configurarCarrito();
+
+		});
+
 		chatDTOList = new ArrayList<>();
 		configurarRV();
 
 		mostrarChats();
 
 		return v;
+	}
+
+	private void configurarCarrito() {
+		CarritoFragment bottomSheetFragment = new CarritoFragment();
+		bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
 	}
 
 	private void mostrarChats() {

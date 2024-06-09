@@ -134,4 +134,7 @@
     <string name="skill_eliminada">Skill eliminada con éxito</string>
     <string name="error_eliminar_skill">Error al eliminar Skill</string>
     <string name="email_invalido">El email introducido no es válido</string>
+    <string name="error_carrito_vacio">Sin compras</string>
+    <string name="error_compra">Error al contratar la skill</string>
+    <string name="compra_correcta">Skill contratada</string>
 </resources>

@@ -10,25 +10,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvChatFragment"
-            style="@style/textos"
+
+        <LinearLayout
+            android:id="@+id/llChatFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margen"
-            android:text="@string/chat"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvChatFragment"
+                style="@style/textos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/margen"
+                android:text="@string/chat"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnCarritoChatList"
+                style="?attr/materialIconButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margen"
+                app:icon="@drawable/baseline_shopping_bag_24" />
+
+        </LinearLayout>
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressBarChatList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            app:showAnimationBehavior="inward"
             app:hideAnimationBehavior="outward"
-            app:layout_constraintTop_toBottomOf="@id/tvChatFragment" />
+            app:layout_constraintTop_toBottomOf="@id/llChatFragment"
+            app:showAnimationBehavior="inward" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvChat"
@@ -39,5 +58,10 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <FrameLayout
+        android:id="@+id/flCarritoChatList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
 
 </FrameLayout>

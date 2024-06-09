@@ -112,6 +112,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 					SharedPrefManager sharedPrefManager = new SharedPrefManager(getApplicationContext());
 					sharedPrefManager.saveJwt(jwtToken);
 
+					Log.e("JWT", "onResponse: " + jwtToken);
+
 					FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
 						if (!task.isSuccessful()) {
 							Toast.makeText(LoginActivity.this, "Error al registrar token FCM", Toast.LENGTH_SHORT).show();
