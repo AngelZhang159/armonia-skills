@@ -53,6 +53,14 @@ public class Skill implements Parcelable {
 		imageList = in.createStringArrayList();
 	}
 
+	public Skill(UUID id, String titulo, String descripcion, String precio, List<String> listaImagenesUpdate) {
+		this.id = id;
+		this.title = titulo;
+		this.description = descripcion;
+		this.price = precio;
+		this.imageList = listaImagenesUpdate;
+	}
+
 	public UUID getId() {
 		return id;
 	}

@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +24,16 @@ import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.TopBarActivity;
 import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.model.Skill;
+import com.dam.armoniaskills.network.ImageUpload;
 import com.dam.armoniaskills.network.RetrofitClient;
+import com.dam.armoniaskills.network.UploadCallback;
 import com.dam.armoniaskills.recyclerutils.AdapterImagenes;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -143,6 +148,73 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 	}
 
 	private void updateSkill() {
+
+		String titulo = etTitulo.getText().toString().trim();
+		String descripcion = etDescripcion.getText().toString().trim();
+		String precio = etPrecio.getText().toString().trim();
+
+		obtenerImagenes();
+
+
+		Skill skillUpdate = new Skill(skill.getId(), titulo, descripcion, precio, listaImagenes);
+
+		Log.i("SKILL", "updateSkill: " + titulo + " - " + descripcion + " - " + precio + " - " + listaImagenes);
+
+		Call<ResponseBody> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.updateSkill(skill.getId(), skillUpdate);
+		call.enqueue(new Callback<ResponseBody>() {
+			@Override
+			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+				//Toast.makeText(getContext(), R.string.skill_actualizada, Toast.LENGTH_SHORT).show();
+				//Intent intent = new Intent(getContext(), TopBarActivity.class);
+				//intent.putExtra("rellenar", "fragmentoPerfil");
+				//startActivity(intent);
+			}
+
+			@Override
+			public void onFailure(Call<ResponseBody> call, Throwable t) {
+				//Toast.makeText(getContext(), R.string.error_actualizar_skill, Toast.LENGTH_SHORT).show();
+			}
+		});
+
+
+	}
+
+	private void obtenerImagenes() {
+
+		List<String> imageList = new ArrayList<>();
+		ImageUpload imageUpload = new ImageUpload();
+
+		for (int i = listaUris.size() - 1; i >= 0; i--) {
+			if (listaUris.get(i) == null) {
+				listaUris.remove(i);
+			}
+		}
+		Log.i("IMAGENES", "obtenerImagenes: " + listaUris.size());
+		CountDownLatch latch = new CountDownLatch(listaUris.size());
+
+		for (Uri uri : listaUris) {
+			if (isAdded()) {
+				imageUpload.subirImagen(uri, getContext().getContentResolver(), new UploadCallback() {
+					@Override
+					public void onSuccess(String result) {
+						imageList.add(result);
+						latch.countDown();
+
+					}
+
+					@Override
+					public void onError(Throwable throwable) {
+						//Toast.makeText(NuevaSkillActivity.this, R.string.err_imagen_servidor, Toast.LENGTH_SHORT).show();
+						latch.countDown();
+					}
+				});
+			}
+		}
+
+		listaImagenes= imageList;
 	}
 
 	private void mostrarDialogEliminar() {

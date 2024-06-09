@@ -22,6 +22,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -86,8 +87,8 @@ public interface Api {
 
 	@GET("api/v1/user/perfil/{userId}")
 	Call<PerfilDTO> getPerfil(@Path("userId") String userId);
-	@GET("api/v1/skill/category/{category}/search/{query}")
-	Call<List<Skill>> getSkills(@Path("category") String category, @Path("query") String query);
+	@GET("api/v1/skill/category/{category}/search/{query}/price/{priceRange}")
+	Call<List<Skill>> getSkills(@Path("category") String category, @Path("query") String query, @Path("priceRange") String priceRange);
 
 	@GET("api/v1/skill/category/{category}")
 	Call<List<Skill>> getSkillsByCategory(@Path("category") String category);
@@ -95,6 +96,12 @@ public interface Api {
 	@DELETE("api/v1/skill/{id}")
 	Call<ResponseBody> deleteSkill(@Header("Authorization") String jwt, @Path("id") UUID id);
 
+	@PUT("api/v1/skill/{id}")
+	Call<ResponseBody> updateSkill(@Path("id") UUID id, @Body Skill skill);
+
+	/*@GET("api/v1/skill/price/{priceRange}")
+	Call<List<Skill>> getSkillsByPriceRange(@Path("priceRange") String priceRange);
+	*/
 	@PATCH("api/v1/user/updateFCMToken")
 	Call<String> registrarTokenFCM(@Header("Authorization") String token, @Body String FCMToken);
 

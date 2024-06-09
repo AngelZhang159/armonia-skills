@@ -73,9 +73,12 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 		CategoriaAdapter adapter = new CategoriaAdapter(getContext(), listaCategorias);
 		spinner.setAdapter(adapter);
 
-		String[] rangosPrecio = new String[]{"0-100", "100-200", "200-300", "300-400", "400-500", "500-600", "600-700", "700-800", "800-900", "900+"};
+		String[] rangosPrecio = new String[]{"Todos", "0-100", "100-200", "200-300", "300-400", "400-500", "500-600", "600-700", "700-800", "800-900", "900+"};
 		AdapterPrecios adapterPrecio = new AdapterPrecios(getContext(), rangosPrecio);
 		spinnerPrecio.setAdapter(adapterPrecio);
+
+		listaSkills = new ArrayList<>();
+		cargarSkills();
 
 		searchView.getEditText().setOnEditorActionListener((view, actionId, event) -> {
 			searchBar.setText(searchView.getText());
@@ -83,13 +86,10 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
 				Categoria categoriaSeleccionada = (Categoria) spinner.getSelectedItem();
 				String categoria = categoriaSeleccionada.getTitulo();
+				String precioSeleccionado = spinnerPrecio.getSelectedItem().toString();
 
-				if(searchView.getText().toString().isEmpty()){
-					cargarSkillsPorCategoria(categoria);
-				}else {
-					Log.i("searchBar", "categoria: " + categoria + " query: " + searchView.getText());
-					cargarSkills(categoria, searchView.getText().toString());
-				}
+
+				cargarSkills(categoria, searchBar.getText().toString(), precioSeleccionado);
 
 				searchView.hide();
 				return true;
@@ -107,17 +107,9 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 				// Título de la categoría seleccionada
 				String titulo = categoriaSeleccionada.getTitulo();
 				String query = searchBar.getText().toString();
+				String precioSeleccionado = spinnerPrecio.getSelectedItem().toString();
 
-				if(query.isEmpty()){
-					cargarSkillsPorCategoria(titulo);
-				} else{
-					Log.i("spinner", "categoria: " + titulo + " query: " + query);
-
-					cargarSkills(titulo, query);
-				}
-
-
-
+				cargarSkills(titulo, query, precioSeleccionado);
 
 			}
 			@Override
@@ -126,8 +118,25 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 			}
 		});
 
-		listaSkills = new ArrayList<>();
-		cargarSkills();
+
+		spinnerPrecio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				// Rango de precio seleccionado
+
+				Categoria categoriaSeleccionada = (Categoria) spinner.getSelectedItem();
+				String categoria = categoriaSeleccionada.getTitulo();
+				String rangoPrecio = (String) parent.getItemAtPosition(position);
+
+				cargarSkills(categoria, searchBar.getText().toString(), rangoPrecio);
+
+
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+
+			}
+		});
 
 		return v;
 	}
@@ -158,13 +167,16 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 		});
 	}
 
-	private void cargarSkills(String category, String query) {
+	private void cargarSkills(String category, String query, String rangoPrecio) {
 
-		Log.i("alcachofas", "categoria: " + category + " query: " + query);
+		if(query.isEmpty())
+			query = "default_query";
+
+		Log.i("alcachofas", "categoria: " + category + " query: " + query + " rangoPrecio: " + rangoPrecio);
 		Call<List<Skill>> call = RetrofitClient
 				.getInstance()
 				.getApi()
-				.getSkills(category, query);
+				.getSkills(category, query, rangoPrecio);
 
 		call.enqueue(new retrofit2.Callback<List<Skill>>() {
 			@Override
@@ -172,10 +184,15 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 				if (response.isSuccessful()) {
 					listaSkills.clear();
 					listaSkills.addAll(response.body());
+					Log.i("alcachofas", "onResponse: " + listaSkills.size());
 					if (adapter == null) {
+						Log.i("alcachofas", "adapter null: " + listaSkills.size());
+
 						configurarRV();
 					} else {
 						adapter.notifyDataSetChanged();
+						Log.i("alcachofas", "adapter no null: " + listaSkills.size());
+
 					}
 				}
 			}
@@ -187,7 +204,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 		});
 	}
 
-	private void cargarSkillsPorCategoria(String titulo) {
+	/*private void cargarSkillsPorCategoria(String titulo) {
 
 		Call<List<Skill>> call = RetrofitClient
 				.getInstance()
@@ -213,7 +230,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 				Toast.makeText(getContext(), R.string.error_skills, Toast.LENGTH_SHORT).show();
 			}
 		});
-	}
+	}*/
 
 	@Override
 	public void onClick(View v) {
