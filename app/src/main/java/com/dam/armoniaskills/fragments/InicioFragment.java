@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.SeleccionActivity;
 import com.dam.armoniaskills.TopBarActivity;
+import com.dam.armoniaskills.listutils.AdapterPrecios;
 import com.dam.armoniaskills.listutils.CategoriaAdapter;
 import com.dam.armoniaskills.model.Categoria;
 import com.dam.armoniaskills.model.Skill;
@@ -45,7 +46,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 	ArrayList<Skill> listaSkills;
 	SearchView searchView;
 	SearchBar searchBar;
-	Spinner spinner;
+	Spinner spinner, spinnerPrecio;
 	LinearProgressIndicator progressBar;
 
 	public InicioFragment() {
@@ -65,11 +66,16 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 		searchView = v.findViewById(R.id.searchView);
 		searchBar = v.findViewById(R.id.searchBar);
 		spinner = v.findViewById(R.id.spinner);
+		spinnerPrecio = v.findViewById(R.id.spinnerPrecio);
 		progressBar = v.findViewById(R.id.progressBarInicio);
 
 		ArrayList<Categoria> listaCategorias = CategoriaUtil.rellenarLista(getContext());
 		CategoriaAdapter adapter = new CategoriaAdapter(getContext(), listaCategorias);
 		spinner.setAdapter(adapter);
+
+		String[] rangosPrecio = new String[]{"0-100", "100-200", "200-300", "300-400", "400-500", "500-600", "600-700", "700-800", "800-900", "900+"};
+		AdapterPrecios adapterPrecio = new AdapterPrecios(getContext(), rangosPrecio);
+		spinnerPrecio.setAdapter(adapterPrecio);
 
 		searchView.getEditText().setOnEditorActionListener((view, actionId, event) -> {
 			searchBar.setText(searchView.getText());
