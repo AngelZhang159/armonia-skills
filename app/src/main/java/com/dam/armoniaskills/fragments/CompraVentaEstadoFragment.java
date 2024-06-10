@@ -1,0 +1,271 @@
+package com.dam.armoniaskills.fragments;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+
+import com.bumptech.glide.Glide;
+import com.dam.armoniaskills.R;
+import com.dam.armoniaskills.authentication.SharedPrefManager;
+import com.dam.armoniaskills.dto.ComprasVentasDTO;
+import com.dam.armoniaskills.model.StatusCompraEnum;
+import com.dam.armoniaskills.network.RetrofitClient;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+
+public class CompraVentaEstadoFragment extends BottomSheetDialogFragment {
+
+	CircleImageView ivFotoPerfil;
+	TextView tvNombreUsuario, tvFechaCompra;
+
+	TextView tvEstadoVenta1, tvEstadoVenta2, tvEstadoVenta3, tvEstadoVenta4, tvEstadoVenta5, tvEstadoVenta6, tvEstadoVenta7;
+	Button btnAceptarVenta, btnRechazarVenta, btnCompletarVenta;
+	LinearProgressIndicator progressBar;
+	CircularProgressIndicator progressBarVenta;
+
+	public CompraVentaEstadoFragment() {
+	}
+
+	public static CompraVentaEstadoFragment newInstance(ComprasVentasDTO compraVenta, boolean esVenta) {
+		CompraVentaEstadoFragment fragment = new CompraVentaEstadoFragment();
+		Bundle args = new Bundle();
+		args.putParcelable("compraVenta", compraVenta);
+		args.putBoolean("esVenta", esVenta);
+		fragment.setArguments(args);
+		return fragment;
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (getArguments() != null) {
+		}
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.fragment_compra_venta_estado, container, false);
+
+		tvEstadoVenta1 = v.findViewById(R.id.tvEstadoVenta1Contratado);
+		tvEstadoVenta2 = v.findViewById(R.id.tvEstadoVenta2Pendiente);
+		tvEstadoVenta3 = v.findViewById(R.id.tvEstadoVenta3Rechazado);
+		tvEstadoVenta4 = v.findViewById(R.id.tvEstadoVenta4Contratado);
+		tvEstadoVenta5 = v.findViewById(R.id.tvEstadoVenta5Preparando);
+		tvEstadoVenta6 = v.findViewById(R.id.tvEstadoVenta6Completado);
+		btnAceptarVenta = v.findViewById(R.id.btnAceptarVenta);
+		btnRechazarVenta = v.findViewById(R.id.btnRechazarVenta);
+		btnCompletarVenta = v.findViewById(R.id.btnVentaCompletado);
+
+		ivFotoPerfil = v.findViewById(R.id.civImagenUsuarioVenta);
+		tvNombreUsuario = v.findViewById(R.id.tvNombreUsuarioVenta);
+		tvFechaCompra = v.findViewById(R.id.tvHoraVenta);
+
+		progressBar = v.findViewById(R.id.progressBarVenta);
+		progressBarVenta = v.findViewById(R.id.circleProgressBarVenta);
+
+		Bundle args = getArguments();
+		if (args != null) {
+			ComprasVentasDTO compraVenta = args.getParcelable("compraVenta");
+			boolean esVenta = args.getBoolean("esVenta");
+
+			if (compraVenta != null) {
+				configurarDatos(compraVenta, esVenta);
+			}
+		}
+		return v;
+	}
+
+	private void configurarDatos(ComprasVentasDTO compraVenta, boolean esVenta) {
+		tvNombreUsuario.setText(compraVenta.getUsername());
+		String url = "http://10.0.2.2:8080" + compraVenta.getImageURL();
+		Glide.with(getContext()).load(url).into(ivFotoPerfil);
+		Date date = compraVenta.getDate();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", getResources().getConfiguration().getLocales().get(0));
+		String formattedDate = formatter.format(date);
+		tvFechaCompra.setText(formattedDate);
+
+		switch (compraVenta.getStatus()) {
+			case PENDIENTE:
+				progressBar.setProgress(33, true);
+				tvEstadoVenta1.setVisibility(View.VISIBLE);
+				tvEstadoVenta2.setVisibility(View.VISIBLE);
+				tvEstadoVenta3.setVisibility(View.GONE);
+				tvEstadoVenta4.setVisibility(View.GONE);
+				tvEstadoVenta5.setVisibility(View.GONE);
+				tvEstadoVenta6.setVisibility(View.GONE);
+				btnAceptarVenta.setVisibility(View.GONE);
+				btnRechazarVenta.setVisibility(View.GONE);
+				btnCompletarVenta.setVisibility(View.GONE);
+
+				if (esVenta) {
+					btnAceptarVenta.setVisibility(View.VISIBLE);
+					btnRechazarVenta.setVisibility(View.VISIBLE);
+
+					btnAceptarVenta.setOnClickListener(v1 -> aceptarVenta(compraVenta.getId()));
+					btnRechazarVenta.setOnClickListener(v1 -> rechazarVenta(compraVenta.getId()));
+				}
+
+				break;
+			case ACEPTADO:
+				progressBar.setProgress(66, true);
+				tvEstadoVenta1.setVisibility(View.VISIBLE);
+				tvEstadoVenta2.setVisibility(View.VISIBLE);
+				tvEstadoVenta3.setVisibility(View.GONE);
+				tvEstadoVenta4.setVisibility(View.VISIBLE);
+				tvEstadoVenta5.setVisibility(View.VISIBLE);
+				tvEstadoVenta6.setVisibility(View.GONE);
+				btnAceptarVenta.setVisibility(View.GONE);
+				btnRechazarVenta.setVisibility(View.GONE);
+				btnCompletarVenta.setVisibility(View.VISIBLE);
+
+				if (esVenta) {
+					btnCompletarVenta.setVisibility(View.VISIBLE);
+					btnCompletarVenta.setOnClickListener(v1 -> completarVenta(compraVenta.getId()));
+				}
+				break;
+			case RECHAZADO:
+				progressBar.setProgress(0, true);
+				tvEstadoVenta1.setVisibility(View.GONE);
+				tvEstadoVenta2.setVisibility(View.GONE);
+				tvEstadoVenta3.setVisibility(View.VISIBLE);
+				tvEstadoVenta4.setVisibility(View.GONE);
+				tvEstadoVenta5.setVisibility(View.GONE);
+				tvEstadoVenta6.setVisibility(View.GONE);
+				btnAceptarVenta.setVisibility(View.GONE);
+				btnRechazarVenta.setVisibility(View.GONE);
+				btnCompletarVenta.setVisibility(View.GONE);
+				break;
+			case COMPLETADO:
+				progressBar.setProgress(100, true);
+				tvEstadoVenta1.setVisibility(View.VISIBLE);
+				tvEstadoVenta2.setVisibility(View.VISIBLE);
+				tvEstadoVenta3.setVisibility(View.GONE);
+				tvEstadoVenta4.setVisibility(View.VISIBLE);
+				tvEstadoVenta5.setVisibility(View.VISIBLE);
+				tvEstadoVenta6.setVisibility(View.VISIBLE);
+				btnAceptarVenta.setVisibility(View.GONE);
+				btnRechazarVenta.setVisibility(View.GONE);
+				btnCompletarVenta.setVisibility(View.GONE);
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void completarVenta(UUID id) {
+		progressBarVenta.setVisibility(View.VISIBLE);
+		progressBarVenta.show();
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+		String token = sharedPrefManager.fetchJwt();
+
+		Call<ResponseBody> callCompletarVenta = RetrofitClient
+				.getInstance()
+				.getApi()
+				.modificarVenta(token, id, StatusCompraEnum.COMPLETADO);
+
+		callCompletarVenta.enqueue(new Callback<ResponseBody>() {
+			@Override
+			public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
+				if (response.isSuccessful()) {
+					recargarDatosVenta(token, id);
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+			}
+		});
+	}
+
+	private void rechazarVenta(UUID id) {
+		progressBarVenta.setVisibility(View.VISIBLE);
+		progressBarVenta.show();
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+		String token = sharedPrefManager.fetchJwt();
+
+		Call<ResponseBody> callRechazarVenta = RetrofitClient
+				.getInstance()
+				.getApi()
+				.modificarVenta(token, id, StatusCompraEnum.RECHAZADO);
+
+		callRechazarVenta.enqueue(new Callback<ResponseBody>() {
+			@Override
+			public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
+				if (response.isSuccessful()) {
+					recargarDatosVenta(token, id);
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+			}
+		});
+	}
+
+	private void aceptarVenta(UUID idVenta) {
+		progressBarVenta.setVisibility(View.VISIBLE);
+		progressBarVenta.show();
+
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+		String token = sharedPrefManager.fetchJwt();
+
+		Call<ResponseBody> callAceptarVenta = RetrofitClient
+				.getInstance()
+				.getApi()
+				.modificarVenta(token, idVenta, StatusCompraEnum.ACEPTADO);
+
+		callAceptarVenta.enqueue(new Callback<ResponseBody>() {
+			@Override
+			public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
+				if (response.isSuccessful()) {
+					recargarDatosVenta(token, idVenta);
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+			}
+		});
+	}
+
+	private void recargarDatosVenta(String token, UUID idVenta) {
+
+		Call<ComprasVentasDTO> callVenta = RetrofitClient
+				.getInstance()
+				.getApi()
+				.getCompraVentaById(token, idVenta);
+
+		callVenta.enqueue(new Callback<ComprasVentasDTO>() {
+			@Override
+			public void onResponse(@NonNull Call<ComprasVentasDTO> call, @NonNull retrofit2.Response<ComprasVentasDTO> response) {
+				if (response.isSuccessful()) {
+					ComprasVentasDTO compraVenta = response.body();
+					if (compraVenta != null) {
+						progressBarVenta.hide();
+						configurarDatos(compraVenta, true);
+					}
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<ComprasVentasDTO> call, @NonNull Throwable t) {
+			}
+		});
+	}
+}

@@ -3,6 +3,7 @@ package com.dam.armoniaskills.recyclerutils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,18 +17,22 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ComprasVentasAdapter extends RecyclerView.Adapter<ComprasVentasAdapter.ComprasVentasVH> {
+public class ComprasVentasAdapter extends RecyclerView.Adapter<ComprasVentasAdapter.ComprasVentasVH> implements View.OnClickListener {
 
 	private final ArrayList<ComprasVentasDTO> comprasVentas;
+	private View.OnClickListener listener;
 
-	public ComprasVentasAdapter(ArrayList<ComprasVentasDTO> comprasVentas) {
+	public ComprasVentasAdapter(ArrayList<ComprasVentasDTO> comprasVentas, View.OnClickListener listener) {
 		this.comprasVentas = comprasVentas;
+		this.listener = listener;
 	}
 
 	@NonNull
 	@Override
 	public ComprasVentasVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_venta, parent, false);
+
+		v.setOnClickListener(this);
 
 		return new ComprasVentasVH(v);
 	}
@@ -40,6 +45,13 @@ public class ComprasVentasAdapter extends RecyclerView.Adapter<ComprasVentasAdap
 	@Override
 	public int getItemCount() {
 		return comprasVentas.size();
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (listener != null) {
+			listener.onClick(v);
+		}
 	}
 
 	public class ComprasVentasVH extends RecyclerView.ViewHolder {

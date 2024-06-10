@@ -1,6 +1,7 @@
 package com.dam.armoniaskills.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CarritoFragment extends BottomSheetDialogFragment {
+public class CarritoFragment extends BottomSheetDialogFragment implements View.OnClickListener {
 
 	TextView tvNoCompras, tvNoVentas;
 	RecyclerView rvCompras, rvVentas;
@@ -81,7 +82,6 @@ public class CarritoFragment extends BottomSheetDialogFragment {
 				if (response.isSuccessful()) {
 					compras.clear();
 					compras.addAll(response.body());
-					configurarRV(rvCompras, compras);
 
 					if (compras.isEmpty()) {
 						tvNoCompras.setVisibility(View.VISIBLE);
@@ -102,6 +102,7 @@ public class CarritoFragment extends BottomSheetDialogFragment {
 
 								ventas.clear();
 								ventas.addAll(response.body());
+								configurarRV(rvCompras, compras);
 								configurarRV(rvVentas, ventas);
 
 								if (ventas.isEmpty()) {
@@ -128,8 +129,30 @@ public class CarritoFragment extends BottomSheetDialogFragment {
 	}
 
 	private void configurarRV(RecyclerView rv, ArrayList<ComprasVentasDTO> listaCompraVenta) {
-		ComprasVentasAdapter adapter = new ComprasVentasAdapter(listaCompraVenta);
+		ComprasVentasAdapter adapter = new ComprasVentasAdapter(listaCompraVenta, this);
 		rv.setLayoutManager(new LinearLayoutManager(getContext()));
 		rv.setAdapter(adapter);
+	}
+
+	@Override
+	public void onClick(View v) {
+		RecyclerView parentRecyclerView = (RecyclerView) v.getParent();
+		int pos;
+		CompraVentaEstadoFragment newFragment = null;
+
+		if (parentRecyclerView == rvCompras) {
+			pos = rvCompras.getChildAdapterPosition(v);
+			newFragment = CompraVentaEstadoFragment.newInstance(compras.get(pos), false);
+		} else if (parentRecyclerView == rvVentas) {
+			pos = rvVentas.getChildAdapterPosition(v);
+			newFragment = CompraVentaEstadoFragment.newInstance(ventas.get(pos), true);
+		}
+
+		if (newFragment != null) {
+			dismiss();
+			newFragment.show(getParentFragmentManager(), newFragment.getTag());
+		} else {
+			Log.e("CarritoFragment", "Error: clicked view does not belong to any expected RecyclerView");
+		}
 	}
 }

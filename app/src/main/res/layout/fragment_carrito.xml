@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.CarritoFragment">
 
     <LinearLayout
@@ -11,15 +11,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/progressBarCarrito"
-            android:layout_gravity="center_horizontal"
-            android:indeterminate="true"
-            app:showAnimationBehavior="inward"
-            app:hideAnimationBehavior="outward"
-            android:padding="@dimen/margen" />
+            android:padding="@dimen/margen"
+            android:text="Ventas"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvNoVenta"
@@ -35,12 +33,20 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvVentas"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="wrap_content" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/dividerCarrito"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margen"
+            android:text="Compras"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvNoCompra"
@@ -56,9 +62,18 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCompras"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBarCarrito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="true"
+        android:padding="@dimen/margen"
+        app:hideAnimationBehavior="outward"
+        app:showAnimationBehavior="inward" />
 
 </FrameLayout>

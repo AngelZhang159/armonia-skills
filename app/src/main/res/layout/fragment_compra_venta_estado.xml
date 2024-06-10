@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/margen">
 
     <LinearLayout
@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -30,16 +29,24 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvNombreUsuarioVenta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="30dp"
                     android:paddingVertical="@dimen/margen"
-                    android:text="Usuario" />
+                    android:text="Usuario"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/tvHoraVenta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10/10/2024 12:34" />
 
             </LinearLayout>
 
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civImagenUsuarioVenta"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/user" />
@@ -52,14 +59,14 @@
             android:layout_marginVertical="@dimen/margen" />
 
         <TextView
-            android:id="@+id/tvEstadoVenta1"
+            android:id="@+id/tvEstadoVenta1Contratado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margen"
             android:text="• El usuario ha contratado tu skill" />
 
         <TextView
-            android:id="@+id/tvEstadoVenta2"
+            android:id="@+id/tvEstadoVenta2Pendiente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margen"
@@ -90,21 +97,21 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvEstadoVenta3"
+            android:id="@+id/tvEstadoVenta3Rechazado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margen"
             android:text="• Rechazado" />
 
         <TextView
-            android:id="@+id/tvEstadoVenta4"
+            android:id="@+id/tvEstadoVenta4Contratado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margen"
             android:text="• Contratado" />
 
         <TextView
-            android:id="@+id/tvEstadoVenta5"
+            android:id="@+id/tvEstadoVenta5Preparando"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margen"
@@ -117,21 +124,31 @@
             android:text="Completado" />
 
         <TextView
-            android:id="@+id/tvEstadoVenta7"
+            android:id="@+id/tvEstadoVenta6Completado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margen"
             android:text="• Completado" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressBarVenta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:progress="65"
             app:trackCornerRadius="10dp"
-            app:trackThickness="10dp"
-            android:progress="65" />
+            app:trackThickness="10dp" />
 
 
     </LinearLayout>
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/circleProgressBarVenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:hideAnimationBehavior="outward"
+        app:showAnimationBehavior="inward" />
 
 </FrameLayout>

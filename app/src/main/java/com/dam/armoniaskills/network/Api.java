@@ -7,6 +7,7 @@ import com.dam.armoniaskills.model.ChatMessage;
 import com.dam.armoniaskills.model.ChatRoom;
 import com.dam.armoniaskills.model.Review;
 import com.dam.armoniaskills.model.Skill;
+import com.dam.armoniaskills.model.StatusCompraEnum;
 import com.dam.armoniaskills.model.User;
 
 import java.util.List;
@@ -87,6 +88,7 @@ public interface Api {
 
 	@GET("api/v1/user/perfil/{userId}")
 	Call<PerfilDTO> getPerfil(@Path("userId") String userId);
+
 	@GET("api/v1/skill/category/{category}/search/{query}/price/{priceRange}")
 	Call<List<Skill>> getSkills(@Path("category") String category, @Path("query") String query, @Path("priceRange") String priceRange);
 
@@ -113,4 +115,10 @@ public interface Api {
 
 	@POST("api/v1/user/comprar/{idSkill}")
 	Call<ResponseBody> comprarSkill(@Header("Authorization") String token, @Path("idSkill") UUID id);
+
+	@PATCH("api/v1/user/modificarVenta/{idVenta}/{estado}")
+	Call<ResponseBody> modificarVenta(@Header("Authorization") String token, @Path("idVenta") UUID idVenta, @Path("estado") StatusCompraEnum estado);
+
+	@GET("api/v1/user/compraVenta/{idVenta}")
+	Call<ComprasVentasDTO> getCompraVentaById(@Header("Authorization") String token, @Path("idVenta") UUID idVenta);
 }
