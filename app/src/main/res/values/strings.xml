@@ -46,11 +46,11 @@
     <string name="btn_cancelar_d">Cancelar</string>
     <string name="hint_et_username">Nombre de usuario*</string>
     <string name="contra_obligatoria">Debe introducir una contraseña para cambiarla</string>
-    <string name="rep_contra_obligatoria">Por favor, repita la contraseña</string>
+    <string name="rep_contra_obligatoria">Debe repetir la contraseña</string>
     <string name="contra_no_coinciden">Las contraseñas no coinciden</string>
     <string name="tlf_invalido">El número de teléfono es inválido</string>
     <string name="contra_actualizada">Contraseña actualizada correctamente.</string>
-    <string name="datos_actualizados">Datos actualizados correctamente.</string>
+    <string name="datos_actualizados">Password updated successfully.</string>
     <string name="usuario_existente">El nombre de usuario ya existe.</string>
     <string name="categoria1">Diseño grafico</string>
     <string name="categoria2">Marketing digital</string>
@@ -76,7 +76,7 @@
     <string name="categoria22">Otros</string>
     <string name="err_imagen_servidor">No se ha podido subir la imagen seleccionada</string>
     <string name="skill_creada">Skill creada con exito</string>
-    <string name="error_creacion_skill">Error al crear la Skill</string>
+    <string name="error_creacion_skill">Error al crear la skill</string>
     <string name="historial_retiro">Has retirado %1$.2f€</string>
     <string name="historial_ingreso">Has ingresado %1$.2f€</string>
     <string name="historial_pagado">Has pagado %1$.2f€</string>
@@ -84,7 +84,6 @@
     <string name="config">Configuración de la Skill</string>
     <string name="tv_precio_inicio">%1$s €</string>
     <string name="tv_retirar">¿Cuanto dinero quiere retirar?</string>
-    <string name="euro">€</string>
     <string name="hint_et_cantidad">Cantidad</string>
     <string name="cantidad_disponible">Cantidad disponible: %1$.2f€</string>
     <string name="cantidad_obligatoria">Debe introducir una cantidad</string>
@@ -101,8 +100,8 @@
     <string name="editar_skill">Editar Skill</string>
     <string name="hint_et_descripcion">Descripción*</string>
     <string name="hint_et_precio">Precio*</string>
-    <string name="btn_eliminar">Eliminar skill</string>
-    <string name="dialog_msg_eliminar">¿Desea eliminar la skill definitivamente?</string>
+    <string name="btn_eliminar">Eliminar Skill</string>
+    <string name="dialog_msg_eliminar">¿Desea eliminar la Skill definitivamente?</string>
     <string name="btn_eliminar_d">Eliminar</string>
     <string name="no_reviews">" (0)"</string>
     <string name="otro_error">Error desconocido</string>
@@ -120,14 +119,14 @@
     <string name="tv_info_basica">Información básica</string>
     <string name="tit_categoria">Categoría</string>
     <string name="btn_subir_skill">Guardar Skill</string>
-    <string name="btn_eliminar_skill">Eliminar skill</string>
+    <string name="btn_eliminar_skill">Eliminar Skill</string>
     <string name="valora_tu_experiencia">Valora tu experiencia</string>
     <string name="pulsa_estrellas">Pulsa en las estrellas para dejar tu valoración. A más estrellas, mejor experiencia</string>
     <string name="hint_et_comentario">¡Deja un comentario!</string>
     <string name="btn_enviar">Enviar valoración</string>
     <string name="btn_contratar_skill">Contratar Skill</string>
     <string name="skills">Skills</string>
-    <string name="opiniones">Opiniones</string>
+    <string name="opiniones">Valoraciones</string>
     <string name="categoria0">Todas</string>
     <string name="yesterday">Ayer</string>
     <string name="weeks_ago">Hace %1$d semanas</string>
@@ -138,4 +137,5 @@
     <string name="error_carrito_vacio">Sin compras</string>
     <string name="error_compra">Error al contratar la skill</string>
     <string name="compra_correcta">Skill contratada</string>
+    <string name="euro">€</string>
 </resources>
