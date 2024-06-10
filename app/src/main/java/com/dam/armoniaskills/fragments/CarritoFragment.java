@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dam.armoniaskills.R;
@@ -60,11 +61,9 @@ public class CarritoFragment extends BottomSheetDialogFragment {
 		// Initialize the ArrayLists and the adapters
 		compras = new ArrayList<>();
 		ventas = new ArrayList<>();
-		comprasAdapter = new ComprasVentasAdapter(compras);
-		ventasAdapter = new ComprasVentasAdapter(ventas);
+
 
 		// Set the adapters to the RecyclerViews
-		rvCompras.setAdapter(comprasAdapter);
 		rvVentas.setAdapter(ventasAdapter);
 
 		// Get the arguments from the Bundle
@@ -82,7 +81,7 @@ public class CarritoFragment extends BottomSheetDialogFragment {
 				if (response.isSuccessful()) {
 					compras.clear();
 					compras.addAll(response.body());
-					comprasAdapter.notifyDataSetChanged();
+					configurarRV(rvCompras, compras);
 
 					if (compras.isEmpty()) {
 						tvNoCompras.setVisibility(View.VISIBLE);
@@ -103,7 +102,7 @@ public class CarritoFragment extends BottomSheetDialogFragment {
 
 								ventas.clear();
 								ventas.addAll(response.body());
-								ventasAdapter.notifyDataSetChanged();
+								configurarRV(rvVentas, ventas);
 
 								if (ventas.isEmpty()) {
 									tvNoVentas.setVisibility(View.VISIBLE);
@@ -126,5 +125,11 @@ public class CarritoFragment extends BottomSheetDialogFragment {
 		});
 
 		return view;
+	}
+
+	private void configurarRV(RecyclerView rv, ArrayList<ComprasVentasDTO> listaCompraVenta) {
+		ComprasVentasAdapter adapter = new ComprasVentasAdapter(listaCompraVenta);
+		rv.setLayoutManager(new LinearLayoutManager(getContext()));
+		rv.setAdapter(adapter);
 	}
 }
