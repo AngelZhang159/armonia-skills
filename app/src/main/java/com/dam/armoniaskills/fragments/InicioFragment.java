@@ -170,7 +170,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 	private void cargarSkills(String category, String query, String rangoPrecio) {
 
 		if(query.isEmpty())
-			query = "default_query";
+			query = "defaultQuery";
 
 		Log.i("alcachofas", "categoria: " + category + " query: " + query + " rangoPrecio: " + rangoPrecio);
 		Call<List<Skill>> call = RetrofitClient

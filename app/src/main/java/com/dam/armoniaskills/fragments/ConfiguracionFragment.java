@@ -57,7 +57,7 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 
 	ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(
 			new ActivityResultContracts.PickVisualMedia(), uri -> {
-				if (uri != null) {
+				if (pos >= 0 && pos < listaUris.size()) {
 					imageUri = uri;
 					listaUris.set(pos, imageUri);
 					adapter.notifyDataSetChanged();
@@ -138,7 +138,7 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 		if (v.getId() == R.id.btnEliminar) {
 			mostrarDialogEliminar();
 		} else if (v.getId() == R.id.btnUpdateConfig) {
-			updateSkill();
+			obtenerImagenes();
 		} else {
 			pos = rvImagenes.getChildAdapterPosition(v);
 			pickMedia.launch(new PickVisualMediaRequest.Builder()
@@ -153,12 +153,9 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 		String descripcion = etDescripcion.getText().toString().trim();
 		String precio = etPrecio.getText().toString().trim();
 
-		obtenerImagenes();
-
-
 		Skill skillUpdate = new Skill(skill.getId(), titulo, descripcion, precio, listaImagenes);
 
-		Log.i("SKILL", "updateSkill: " + titulo + " - " + descripcion + " - " + precio + " - " + listaImagenes);
+		Log.i("actualizarTioo", "updateSkill: " + titulo + " - " + descripcion + " - " + precio + " - " + listaImagenes);
 
 		Call<ResponseBody> call = RetrofitClient
 				.getInstance()
@@ -167,15 +164,15 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 		call.enqueue(new Callback<ResponseBody>() {
 			@Override
 			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-				//Toast.makeText(getContext(), R.string.skill_actualizada, Toast.LENGTH_SHORT).show();
-				//Intent intent = new Intent(getContext(), TopBarActivity.class);
-				//intent.putExtra("rellenar", "fragmentoPerfil");
-				//startActivity(intent);
+				Toast.makeText(getContext(), R.string.skill_actualizada, Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(getContext(), TopBarActivity.class);
+				intent.putExtra("rellenar", "fragmentoPerfil");
+				startActivity(intent);
 			}
 
 			@Override
 			public void onFailure(Call<ResponseBody> call, Throwable t) {
-				//Toast.makeText(getContext(), R.string.error_actualizar_skill, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -186,35 +183,100 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 
 		List<String> imageList = new ArrayList<>();
 		ImageUpload imageUpload = new ImageUpload();
+		Log.i("IMAGENES", "uriiiii: " + listaUris);
 
 		for (int i = listaUris.size() - 1; i >= 0; i--) {
 			if (listaUris.get(i) == null) {
 				listaUris.remove(i);
+			} else if(listaUris.get(i).toString().contains("http")){
+				listaUris.remove(i);
 			}
 		}
-		Log.i("IMAGENES", "obtenerImagenes: " + listaUris.size());
+		Log.i("IMAGENES", "obtenerImagenes: " + listaUris);
 		CountDownLatch latch = new CountDownLatch(listaUris.size());
 
-		for (Uri uri : listaUris) {
+		/*
+		if(listaUris.isEmpty()){
+			listaImagenes = imageList;
+			return;
+		}*/
+
+		/*for (Uri uri : listaUris) {
 			if (isAdded()) {
+				Log.i("IMAGENES", "Subiendo imagen: " + uri);
+
 				imageUpload.subirImagen(uri, getContext().getContentResolver(), new UploadCallback() {
 					@Override
 					public void onSuccess(String result) {
 						imageList.add(result);
 						latch.countDown();
+                        listaImagenes.addAll(imageList);
+						Log.i("IMAGENES", "Todas las imagenes: " + listaImagenes);
+
+
+						new Thread(() -> {
+							try {
+								latch.await();
+								getActivity().runOnUiThread(() -> {
+									updateSkill();
+								});
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}).start();
+
 
 					}
 
 					@Override
 					public void onError(Throwable throwable) {
+						Log.e("IMAGENES", "onError: ", throwable);
 						//Toast.makeText(NuevaSkillActivity.this, R.string.err_imagen_servidor, Toast.LENGTH_SHORT).show();
 						latch.countDown();
 					}
 				});
 			}
 		}
+		try {
+			latch.await(); // Esperar hasta que todas las imágenes se hayan subido
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}*/
 
-		listaImagenes= imageList;
+		if(listaUris.isEmpty()){
+			Log.i("IMAGENES", "IMAGENES: " + listaImagenes);
+			updateSkill();
+		} else {
+			new Thread(() -> {
+				for (Uri uri : listaUris) {
+					if (isAdded()) {
+						Log.i("IMAGENES", "Subiendo imagen: " + uri);
+						imageUpload.subirImagen(uri, getContext().getContentResolver(), new UploadCallback() {
+							@Override
+							public void onSuccess(String result) {
+								//imageList.add(result);
+								latch.countDown();
+								listaImagenes.add(result);
+								Log.i("IMAGENES", "Todas las imagenes: " + listaImagenes);
+
+								getActivity().runOnUiThread(() -> {
+									updateSkill();
+								});
+							}
+
+							@Override
+							public void onError(Throwable throwable) {
+								Log.e("IMAGENES", "onError: ", throwable);
+								latch.countDown();
+							}
+						});
+					}
+				}
+			}).start();
+		}
+
+
+
 	}
 
 	private void mostrarDialogEliminar() {
