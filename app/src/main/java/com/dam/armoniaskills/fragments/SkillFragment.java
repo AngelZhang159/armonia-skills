@@ -43,6 +43,7 @@ import com.dam.armoniaskills.recyclerutils.AdapterReviews;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -373,31 +374,15 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.btnContratar) {
-			SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
-			String token = sharedPrefManager.fetchJwt();
-
-			Call<ResponseBody> call = RetrofitClient
-					.getInstance()
-					.getApi()
-					.comprarSkill(token, skill.getId());
-
-			call.enqueue(new Callback<ResponseBody>() {
-				@Override
-				public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-					if (response.isSuccessful()) {
-						Toast.makeText(getContext(), R.string.compra_correcta, Toast.LENGTH_SHORT).show();
-					} else {
-						Toast.makeText(getContext(), R.string.error_compra, Toast.LENGTH_SHORT).show();
-						Log.e("SkillFragment", "Error al comprar " + response);
-					}
-				}
-
-				@Override
-				public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-					Log.e("SkillFragment", "Error al comprar " + t.getMessage());
-					Toast.makeText(getContext(), R.string.error_compra, Toast.LENGTH_SHORT).show();
-				}
+			MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+			builder.setTitle(R.string.comprar_skill);
+			builder.setMessage(R.string.compra_correcta_mensaje);
+			builder.setPositiveButton(R.string.aceptar, (dialog, which) -> {
+				contratarSkill();
 			});
+			builder.setNegativeButton(R.string.cancelar, (dialog, which) -> {
+			});
+			builder.show();
 
 		} else if (v.getId() == R.id.btnAniadirValoracion) {
 			Intent i = new Intent(getContext(), TopBarActivity.class);
@@ -405,5 +390,33 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 			i.putExtra("review", skill);
 			startActivity(i);
 		}
+	}
+
+	private void contratarSkill() {
+		SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+		String token = sharedPrefManager.fetchJwt();
+
+		Call<ResponseBody> call = RetrofitClient
+				.getInstance()
+				.getApi()
+				.comprarSkill(token, skill.getId());
+
+		call.enqueue(new Callback<ResponseBody>() {
+			@Override
+			public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+				if (response.isSuccessful()) {
+					Toast.makeText(getContext(), R.string.compra_correcta, Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getContext(), R.string.saldo_insuficiente, Toast.LENGTH_SHORT).show();
+					Log.e("SkillFragment", "Error al comprar " + response);
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+				Log.e("SkillFragment", "Error al comprar " + t.getMessage());
+				Toast.makeText(getContext(), R.string.error_compra, Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 }

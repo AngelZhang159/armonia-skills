@@ -149,4 +149,8 @@
     <string name="completar_venta">Completado</string>
     <string name="completar_venta_info">El vendedor ha entregado el pedido</string>
     <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="comprar_skill">Contratar skill</string>
+    <string name="compra_correcta_mensaje">Al pulsar aceptar se contratará la skill y se te restará del saldo el precio de la skill</string>
+    <string name="saldo_insuficiente">Saldo insuficiente</string>
 </resources>

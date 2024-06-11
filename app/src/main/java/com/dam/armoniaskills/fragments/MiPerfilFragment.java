@@ -28,6 +28,7 @@ import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterReviews;
 import com.dam.armoniaskills.recyclerutils.AdapterSkills;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONException;
@@ -53,6 +54,7 @@ public class MiPerfilFragment extends Fragment implements View.OnClickListener {
     PerfilDTO perfilDTO;
     TabLayout tabLayout;
     String id;
+    LinearProgressIndicator progressBar;
 
 
     public MiPerfilFragment() {
@@ -79,6 +81,7 @@ public class MiPerfilFragment extends Fragment implements View.OnClickListener {
         ratingBar = view.findViewById(R.id.ratingBarUsuarioPerfil);
         rv = view.findViewById(R.id.rvUsuarioPerfil);
         tvNumReviews = view.findViewById(R.id.tvNumReviews);
+        progressBar = view.findViewById(R.id.progressBarUsuarioPerfil);
 
         tabLayout = view.findViewById(R.id.tlUsuarioPerfil);
         tabLayout.setEnabled(false);
@@ -197,6 +200,8 @@ public class MiPerfilFragment extends Fragment implements View.OnClickListener {
 
                     configurarRVSkills(perfilDTO.getSkills());
                     tabLayout.setEnabled(true);
+
+                    progressBar.hide();
 
                     encenderTablayout();
                 }

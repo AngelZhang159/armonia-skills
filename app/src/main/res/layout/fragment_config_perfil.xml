@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ConfigPerfilFragment">
@@ -9,8 +9,7 @@
     <RelativeLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/margen">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,6 +20,7 @@
                 style="@style/textos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/margen"
                 android:text="@string/tv_perfil"
                 android:textAlignment="center"
                 android:textSize="25sp"
@@ -30,9 +30,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progressBarEditPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:hideAnimationBehavior="outward"
+                app:showAnimationBehavior="inward" />
+
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margen">
 
                 <LinearLayout
                     android:layout_width="match_parent"

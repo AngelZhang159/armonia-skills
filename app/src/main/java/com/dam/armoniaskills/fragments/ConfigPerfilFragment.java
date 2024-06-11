@@ -30,6 +30,7 @@ import com.dam.armoniaskills.network.ImageUpload;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.network.UploadCallback;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +49,7 @@ public class ConfigPerfilFragment extends Fragment implements View.OnClickListen
     Button btnUpdate, btnCambiar, btnCerrarSesion;
     Uri imageUri;
     String imageURL;
+    LinearProgressIndicator progressBar;
 
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(
             new ActivityResultContracts.PickVisualMedia(), uri -> {
@@ -86,6 +88,7 @@ public class ConfigPerfilFragment extends Fragment implements View.OnClickListen
         etPassword = view.findViewById(R.id.etPasswordP);
         etRepPassword = view.findViewById(R.id.etRepPasswordP);
         ivPerfil = view.findViewById(R.id.imvPerfilP);
+        progressBar = view.findViewById(R.id.progressBarEditPerfil);
 
         btnCambiar = view.findViewById(R.id.btnCambiar);
         btnUpdate = view.findViewById(R.id.btnUpdate);
@@ -314,6 +317,8 @@ public class ConfigPerfilFragment extends Fragment implements View.OnClickListen
                         } else {
                             ivPerfil.setImageResource(R.drawable.user);
                         }
+
+                        progressBar.hide();
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();

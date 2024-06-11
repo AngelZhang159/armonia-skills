@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.dto.ComprasVentasDTO;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -75,7 +76,9 @@ public class ComprasVentasAdapter extends RecyclerView.Adapter<ComprasVentasAdap
 			tvNombreUsuario.setText(comprasVentasDTO.getUsername());
 			tvNombreSkill.setText(comprasVentasDTO.getSkillName());
 			tvStatus.setText(comprasVentasDTO.getStatus().toString());
-			tvHora.setText(comprasVentasDTO.getDate().toString());
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", itemView.getResources().getConfiguration().getLocales().get(0));
+			String formattedDate = formatter.format(comprasVentasDTO.getDate());
+			tvHora.setText(formattedDate);
 			tvPrecio.setText(String.format("%s €", comprasVentasDTO.getPrice()));
 
 			String url = "http://10.0.2.2:8080" + comprasVentasDTO.getImageURL();

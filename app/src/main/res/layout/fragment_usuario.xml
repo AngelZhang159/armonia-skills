@@ -93,6 +93,16 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:id="@+id/progressBarUsuarioPerfil"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/rvUsuarioPerfil"
+        app:showAnimationBehavior="inward"
+        app:hideAnimationBehavior="outward"
+        app:layout_anchorGravity="top"
+        android:indeterminate="true"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUsuarioPerfil"
         android:layout_width="match_parent"
