@@ -57,14 +57,19 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 
 	ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(
 			new ActivityResultContracts.PickVisualMedia(), uri -> {
-				if (pos >= 0 && pos < listaUris.size()) {
+				if (uri != null && pos >= 0 && pos < listaUris.size()) {
 					imageUri = uri;
-					listaUris.set(pos, imageUri);
-					adapter.notifyDataSetChanged();
-				} else {
-					listaImagenes.set(pos, null);
+					if (pos < listaImagenes.size()) {
+						// Actualizar la imagen existente
+						listaUris.set(pos, imageUri);
+						listaImagenes.set(pos, ""); // Marcar para ser subida
+					} else {
+						// Añadir nueva imagen
+						listaUris.set(pos, imageUri);
+					}
 					adapter.notifyDataSetChanged();
 				}
+
 			});
 
 	public ConfiguracionFragment() {
@@ -183,7 +188,6 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 
 		List<String> imageList = new ArrayList<>();
 		ImageUpload imageUpload = new ImageUpload();
-		Log.i("IMAGENES", "uriiiii: " + listaUris);
 
 		for (int i = listaUris.size() - 1; i >= 0; i--) {
 			if (listaUris.get(i) == null) {
@@ -192,76 +196,36 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 				listaUris.remove(i);
 			}
 		}
-		Log.i("IMAGENES", "obtenerImagenes: " + listaUris);
 		CountDownLatch latch = new CountDownLatch(listaUris.size());
 
-		/*
-		if(listaUris.isEmpty()){
-			listaImagenes = imageList;
-			return;
-		}*/
-
-		/*for (Uri uri : listaUris) {
-			if (isAdded()) {
-				Log.i("IMAGENES", "Subiendo imagen: " + uri);
-
-				imageUpload.subirImagen(uri, getContext().getContentResolver(), new UploadCallback() {
-					@Override
-					public void onSuccess(String result) {
-						imageList.add(result);
-						latch.countDown();
-                        listaImagenes.addAll(imageList);
-						Log.i("IMAGENES", "Todas las imagenes: " + listaImagenes);
-
-
-						new Thread(() -> {
-							try {
-								latch.await();
-								getActivity().runOnUiThread(() -> {
-									updateSkill();
-								});
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}).start();
-
-
-					}
-
-					@Override
-					public void onError(Throwable throwable) {
-						Log.e("IMAGENES", "onError: ", throwable);
-						//Toast.makeText(NuevaSkillActivity.this, R.string.err_imagen_servidor, Toast.LENGTH_SHORT).show();
-						latch.countDown();
-					}
-				});
-			}
-		}
-		try {
-			latch.await(); // Esperar hasta que todas las imágenes se hayan subido
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
 
 		if(listaUris.isEmpty()){
-			Log.i("IMAGENES", "IMAGENES: " + listaImagenes);
 			updateSkill();
 		} else {
 			new Thread(() -> {
 				for (Uri uri : listaUris) {
 					if (isAdded()) {
-						Log.i("IMAGENES", "Subiendo imagen: " + uri);
 						imageUpload.subirImagen(uri, getContext().getContentResolver(), new UploadCallback() {
 							@Override
 							public void onSuccess(String result) {
-								//imageList.add(result);
-								latch.countDown();
-								listaImagenes.add(result);
-								Log.i("IMAGENES", "Todas las imagenes: " + listaImagenes);
 
-								getActivity().runOnUiThread(() -> {
-									updateSkill();
-								});
+								synchronized (imageList) {
+									imageList.add(result);
+								}
+								latch.countDown();
+
+								if (latch.getCount() == 0) {
+									getActivity().runOnUiThread(() -> {
+										for (int i = 0; i < listaImagenes.size(); i++) {
+											if (listaImagenes.get(i).isEmpty() && !imageList.isEmpty()) {
+												listaImagenes.set(i, imageList.remove(0));
+											}
+										}
+										listaImagenes.addAll(imageList);
+										updateSkill();
+									});
+								}
+
 							}
 
 							@Override
