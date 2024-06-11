@@ -73,7 +73,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 		CategoriaAdapter adapter = new CategoriaAdapter(getContext(), listaCategorias);
 		spinner.setAdapter(adapter);
 
-		String[] rangosPrecio = new String[]{"Todos", "0-100", "100-200", "200-300", "300-400", "400-500", "500-600", "600-700", "700-800", "800-900", "900+"};
+		String[] rangosPrecio = new String[]{getString(R.string.todos), "0-100", "100-200", "200-300", "300-400", "400-500", "500-600", "600-700", "700-800", "800-900", "900+"};
 		AdapterPrecios adapterPrecio = new AdapterPrecios(getContext(), rangosPrecio);
 		spinnerPrecio.setAdapter(adapterPrecio);
 

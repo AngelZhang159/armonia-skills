@@ -36,23 +36,20 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingVertical="@dimen/margen"
-                    android:text="Usuario"
-                    android:textSize="30dp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/tvPrecioVentaDetalle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10€"
-                    android:textSize="30dp"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
 
 
                 <TextView
                     android:id="@+id/tvHoraVenta"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10/10/2024 12:34" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -75,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margen"
-            android:text="• El usuario ha contratado la skill" />
+            android:text="@string/el_usuario_ha_contratado_la_skill" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/margen"
-                android:text="• Pendiente de aceptar" />
+                android:text="@string/pendiente_de_aceptar" />
 
             <Button
                 android:id="@+id/btnInfoAceptarVenta"
@@ -112,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margen"
                 android:layout_weight="1"
-                android:text="Aceptar" />
+                android:text="@string/btn_aceptar_d" />
 
             <Button
                 android:id="@+id/btnRechazarVenta"
@@ -120,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margen"
                 android:layout_weight="1"
-                android:text="Rechazar" />
+                android:text="@string/btn_cancelar_d" />
 
         </LinearLayout>
 
@@ -135,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/margen"
-                android:text="• Rechazado" />
+                android:text="@string/rechazado" />
 
             <Button
                 android:id="@+id/btnInfoRechazarVenta"
@@ -153,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margen"
-            android:text="• Contratado" />
+            android:text="@string/contratado" />
 
 
         <LinearLayout
@@ -167,7 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/margen"
-                android:text="• Preparando" />
+                android:text="@string/preparando" />
 
             <Button
                 android:id="@+id/btnInfoPreparandoVenta"
@@ -183,7 +180,8 @@
             android:id="@+id/btnVentaCompletado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Completado" />
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            android:text="@string/completar_venta" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -196,7 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/margen"
-                android:text="• Completado" />
+                android:text="@string/completado" />
 
             <Button
                 android:id="@+id/btnInfoCompletadoVenta"

@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margen"
-                android:text="Ventas"
+                android:text="@string/tv_ventas"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/margen"
-                android:text="No tienes ningúna venta"
+                android:text="@string/no_venta"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:visibility="gone" />
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margen"
-                android:text="Compras"
+                android:text="@string/tv_compras"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/margen"
-                android:text="No tienes ningúna compra"
+                android:text="@string/no_compra"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:visibility="gone" />

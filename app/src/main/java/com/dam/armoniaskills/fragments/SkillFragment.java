@@ -377,10 +377,10 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 			MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
 			builder.setTitle(R.string.comprar_skill);
 			builder.setMessage(R.string.compra_correcta_mensaje);
-			builder.setPositiveButton(R.string.aceptar, (dialog, which) -> {
+			builder.setPositiveButton(R.string.btn_aceptar_d, (dialog, which) -> {
 				contratarSkill();
 			});
-			builder.setNegativeButton(R.string.cancelar, (dialog, which) -> {
+			builder.setNegativeButton(R.string.btn_cancelar_d, (dialog, which) -> {
 			});
 			builder.show();
 

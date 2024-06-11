@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 					FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
 						if (!task.isSuccessful()) {
-							Toast.makeText(LoginActivity.this, "Error al registrar token FCM", Toast.LENGTH_SHORT).show();
+							Toast.makeText(LoginActivity.this, R.string.error_token, Toast.LENGTH_SHORT).show();
 							Log.e("FCM Token", "Fetching FCM registration token failed", task.getException());
 
 							progressBar.hide();

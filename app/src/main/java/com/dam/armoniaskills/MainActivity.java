@@ -86,16 +86,16 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 	public void checkNotificationEnabled(Context context) {
 		if (!NotificationManagerCompat.from(context).areNotificationsEnabled()) {
 			new MaterialAlertDialogBuilder(context)
-					.setTitle("Enable Notifications")
-					.setMessage("Push notifications are disabled. Would you like to enable them?")
-					.setPositiveButton("Yes", (dialog, which) -> {
+					.setTitle(R.string.notification_title)
+					.setMessage(R.string.notification_message)
+					.setPositiveButton(R.string.btn_aceptar_d, (dialog, which) -> {
 						// Continue with operation
 						Intent intent = new Intent();
 						intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
 						intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
 						context.startActivity(intent);
 					})
-					.setNegativeButton("No", null)
+					.setNegativeButton(R.string.btn_cancelar_d, null)
 					.setIcon(android.R.drawable.stat_notify_chat)
 					.show();
 		}

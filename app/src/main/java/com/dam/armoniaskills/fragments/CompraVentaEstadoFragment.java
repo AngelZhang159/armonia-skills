@@ -91,7 +91,7 @@ public class CompraVentaEstadoFragment extends BottomSheetDialogFragment {
 			MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
 			builder.setTitle(R.string.aceptar_venta);
 			builder.setMessage(R.string.aceptar_venta_info);
-			builder.setPositiveButton(R.string.aceptar, (dialog, which) -> {
+			builder.setPositiveButton(R.string.btn_aceptar_d, (dialog, which) -> {
 			});
 			builder.show();
 		});
@@ -100,7 +100,7 @@ public class CompraVentaEstadoFragment extends BottomSheetDialogFragment {
 			MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
 			builder.setTitle(R.string.rechazar_venta);
 			builder.setMessage(R.string.rechazar_venta_info);
-			builder.setPositiveButton(R.string.aceptar, (dialog, which) -> {
+			builder.setPositiveButton(R.string.btn_aceptar_d, (dialog, which) -> {
 			});
 			builder.show();
 		});
@@ -109,7 +109,7 @@ public class CompraVentaEstadoFragment extends BottomSheetDialogFragment {
 			MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
 			builder.setTitle(R.string.preparando_venta);
 			builder.setMessage(R.string.preparando_venta_info);
-			builder.setPositiveButton(R.string.aceptar, (dialog, which) -> {
+			builder.setPositiveButton(R.string.btn_aceptar_d, (dialog, which) -> {
 			});
 			builder.show();
 		});
@@ -118,7 +118,7 @@ public class CompraVentaEstadoFragment extends BottomSheetDialogFragment {
 			MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
 			builder.setTitle(R.string.completar_venta);
 			builder.setMessage(R.string.completar_venta_info);
-			builder.setPositiveButton(R.string.aceptar, (dialog, which) -> {
+			builder.setPositiveButton(R.string.btn_aceptar_d, (dialog, which) -> {
 			});
 			builder.show();
 		});

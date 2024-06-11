@@ -138,8 +138,8 @@
     <string name="error_compra">Error al contratar la skill</string>
     <string name="compra_correcta">Skill contratada</string>
     <string name="euro">€</string>
-    <string name="tienes_una_nueva_venta">Tienes una nueva venta!</string>
-    <string name="tienes_una_nueva_compra">Has realizado una compra!</string>
+    <string name="tienes_una_nueva_venta">¡Tienes una nueva venta!</string>
+    <string name="tienes_una_nueva_compra">¡Has realizado una compra!</string>
     <string name="aceptar_venta">Pendiente</string>
     <string name="aceptar_venta_info">El vendedor está pendiente de aceptar la venta.</string>
     <string name="rechazar_venta">Rechazado</string>
@@ -148,9 +148,21 @@
     <string name="preparando_venta_info">El vendedor ha aceptado la venta y está preparando tu pedido</string>
     <string name="completar_venta">Completado</string>
     <string name="completar_venta_info">El vendedor ha entregado el pedido</string>
-    <string name="aceptar">Aceptar</string>
-    <string name="cancelar">Cancelar</string>
     <string name="comprar_skill">Contratar skill</string>
-    <string name="compra_correcta_mensaje">Al pulsar aceptar se contratará la skill y se te restará del saldo el precio de la skill</string>
+    <string name="compra_correcta_mensaje">Al pulsar aceptar, aceptas que se te cobre nuestro seguro de reembolso de 2,99€, para devolver el producto en caso de que no sea correcto</string>
     <string name="saldo_insuficiente">Saldo insuficiente</string>
+    <string name="error_token">Error al registrar token FCM</string>
+    <string name="todos">Todos</string>
+    <string name="notification_title">Activar notificaciones</string>
+    <string name="notification_message">Las notificaciones push están deshabilitadas. ¿Le gustaría habilitarlas?</string>
+    <string name="tv_ventas">Ventas</string>
+    <string name="no_venta">No tienes ningúna venta</string>
+    <string name="tv_compras">Compras</string>
+    <string name="no_compra">No tienes ningúna compra</string>
+    <string name="el_usuario_ha_contratado_la_skill">• El usuario ha contratado la skill</string>
+    <string name="pendiente_de_aceptar">• Pendiente de aceptar</string>
+    <string name="rechazado">• Rechazado</string>
+    <string name="contratado">• Contratado</string>
+    <string name="preparando">• Preparando</string>
+    <string name="completado">• Completado</string>
 </resources>
