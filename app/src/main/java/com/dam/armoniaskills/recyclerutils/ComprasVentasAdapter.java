@@ -56,7 +56,7 @@ public class ComprasVentasAdapter extends RecyclerView.Adapter<ComprasVentasAdap
 
 	public class ComprasVentasVH extends RecyclerView.ViewHolder {
 
-		TextView tvNombreUsuario, tvNombreSkill, tvStatus, tvHora;
+		TextView tvNombreUsuario, tvNombreSkill, tvStatus, tvHora, tvPrecio;
 		CircleImageView ivFotoPerfil;
 
 		public ComprasVentasVH(@NonNull View itemView) {
@@ -67,6 +67,7 @@ public class ComprasVentasAdapter extends RecyclerView.Adapter<ComprasVentasAdap
 			tvStatus = itemView.findViewById(R.id.tvStatusVenta);
 			tvHora = itemView.findViewById(R.id.tvFechaVenta);
 			ivFotoPerfil = itemView.findViewById(R.id.ivFotoPerfilVenta);
+			tvPrecio = itemView.findViewById(R.id.tvPrecioVenta);
 
 		}
 
@@ -75,6 +76,7 @@ public class ComprasVentasAdapter extends RecyclerView.Adapter<ComprasVentasAdap
 			tvNombreSkill.setText(comprasVentasDTO.getSkillName());
 			tvStatus.setText(comprasVentasDTO.getStatus().toString());
 			tvHora.setText(comprasVentasDTO.getDate().toString());
+			tvPrecio.setText(String.format("%s €", comprasVentasDTO.getPrice()));
 
 			String url = "http://10.0.2.2:8080" + comprasVentasDTO.getImageURL();
 

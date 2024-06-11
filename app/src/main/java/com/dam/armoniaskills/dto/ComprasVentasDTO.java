@@ -19,16 +19,50 @@ public class ComprasVentasDTO implements Parcelable {
 	private String skillName;
 	private UUID skillId;
 	private StatusCompraEnum status;
+	private double price;
 
-	public ComprasVentasDTO(UUID compraVentaId, String nombreUsuario, Timestamp date, String fotoPerfil, String nombreSkill, UUID skillId, StatusCompraEnum status) {
-		this.id = compraVentaId;
-		this.username = nombreUsuario;
+	public ComprasVentasDTO(UUID id, String username, Timestamp date, String imageURL, String skillName, UUID skillId, StatusCompraEnum status, double price) {
+		this.id = id;
+		this.username = username;
 		this.date = date;
-		this.imageURL = fotoPerfil;
-		this.skillName = nombreSkill;
+		this.imageURL = imageURL;
+		this.skillName = skillName;
 		this.skillId = skillId;
 		this.status = status;
+		this.price = price;
 	}
+
+	protected ComprasVentasDTO(Parcel in) {
+		username = in.readString();
+		imageURL = in.readString();
+		skillName = in.readString();
+		price = in.readDouble();
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(username);
+		dest.writeString(imageURL);
+		dest.writeString(skillName);
+		dest.writeDouble(price);
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	public static final Creator<ComprasVentasDTO> CREATOR = new Creator<ComprasVentasDTO>() {
+		@Override
+		public ComprasVentasDTO createFromParcel(Parcel in) {
+			return new ComprasVentasDTO(in);
+		}
+
+		@Override
+		public ComprasVentasDTO[] newArray(int size) {
+			return new ComprasVentasDTO[size];
+		}
+	};
 
 	public UUID getId() {
 		return id;
@@ -86,33 +120,11 @@ public class ComprasVentasDTO implements Parcelable {
 		this.status = status;
 	}
 
-	protected ComprasVentasDTO(Parcel in) {
-		username = in.readString();
-		imageURL = in.readString();
-		skillName = in.readString();
+	public double getPrice() {
+		return price;
 	}
 
-	public static final Creator<ComprasVentasDTO> CREATOR = new Creator<ComprasVentasDTO>() {
-		@Override
-		public ComprasVentasDTO createFromParcel(Parcel in) {
-			return new ComprasVentasDTO(in);
-		}
-
-		@Override
-		public ComprasVentasDTO[] newArray(int size) {
-			return new ComprasVentasDTO[size];
-		}
-	};
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(@NonNull Parcel dest, int flags) {
-		dest.writeString(username);
-		dest.writeString(imageURL);
-		dest.writeString(skillName);
+	public void setPrice(double price) {
+		this.price = price;
 	}
 }

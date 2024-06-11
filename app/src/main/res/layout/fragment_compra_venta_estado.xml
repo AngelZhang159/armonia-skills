@@ -22,19 +22,31 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/compraVentaTitulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tienes una nueva venta!"
+                    android:text="@string/tienes_una_nueva_venta"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
 
                 <TextView
                     android:id="@+id/tvNombreUsuarioVenta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margen"
                     android:text="Usuario"
                     android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/tvPrecioVentaDetalle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10€"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
 
                 <TextView
                     android:id="@+id/tvHoraVenta"
@@ -63,14 +75,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margen"
-            android:text="• El usuario ha contratado tu skill" />
+            android:text="• El usuario ha contratado la skill" />
 
-        <TextView
-            android:id="@+id/tvEstadoVenta2Pendiente"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margen"
-            android:text="• Pendiente de aceptar" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvEstadoVenta2Pendiente"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/margen"
+                android:text="• Pendiente de aceptar" />
+
+            <Button
+                android:id="@+id/btnInfoAceptarVenta"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:icon="@drawable/baseline_info_outline_24" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llBotonesVenta"
@@ -96,12 +124,29 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvEstadoVenta3Rechazado"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margen"
-            android:text="• Rechazado" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvEstadoVenta3Rechazado"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/margen"
+                android:text="• Rechazado" />
+
+            <Button
+                android:id="@+id/btnInfoRechazarVenta"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:icon="@drawable/baseline_info_outline_24" />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tvEstadoVenta4Contratado"
@@ -110,12 +155,29 @@
             android:padding="@dimen/margen"
             android:text="• Contratado" />
 
-        <TextView
-            android:id="@+id/tvEstadoVenta5Preparando"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margen"
-            android:text="• Preparando" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvEstadoVenta5Preparando"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/margen"
+                android:text="• Preparando" />
+
+            <Button
+                android:id="@+id/btnInfoPreparandoVenta"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:icon="@drawable/baseline_info_outline_24" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnVentaCompletado"
@@ -123,12 +185,28 @@
             android:layout_height="wrap_content"
             android:text="Completado" />
 
-        <TextView
-            android:id="@+id/tvEstadoVenta6Completado"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margen"
-            android:text="• Completado" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvEstadoVenta6Completado"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/margen"
+                android:text="• Completado" />
+
+            <Button
+                android:id="@+id/btnInfoCompletadoVenta"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:icon="@drawable/baseline_info_outline_24" />
+
+        </LinearLayout>
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressBarVenta"

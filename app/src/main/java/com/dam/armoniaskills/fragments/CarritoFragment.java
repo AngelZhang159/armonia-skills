@@ -16,6 +16,8 @@ import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.dto.ComprasVentasDTO;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.ComprasVentasAdapter;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -32,8 +34,7 @@ public class CarritoFragment extends BottomSheetDialogFragment implements View.O
 	TextView tvNoCompras, tvNoVentas;
 	RecyclerView rvCompras, rvVentas;
 	ArrayList<ComprasVentasDTO> compras, ventas;
-	// Assume you have an adapter class named ComprasVentasAdapter
-	ComprasVentasAdapter comprasAdapter, ventasAdapter;
+	ComprasVentasAdapter ventasAdapter;
 	CircularProgressIndicator progressBar;
 	MaterialDivider divider;
 
@@ -62,7 +63,6 @@ public class CarritoFragment extends BottomSheetDialogFragment implements View.O
 		// Initialize the ArrayLists and the adapters
 		compras = new ArrayList<>();
 		ventas = new ArrayList<>();
-
 
 		// Set the adapters to the RecyclerViews
 		rvVentas.setAdapter(ventasAdapter);
@@ -153,6 +153,19 @@ public class CarritoFragment extends BottomSheetDialogFragment implements View.O
 			newFragment.show(getParentFragmentManager(), newFragment.getTag());
 		} else {
 			Log.e("CarritoFragment", "Error: clicked view does not belong to any expected RecyclerView");
+		}
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		BottomSheetDialog dialog = (BottomSheetDialog) getDialog();
+		if (dialog != null) {
+			View bottomSheet = dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+			if (bottomSheet != null) {
+				BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(bottomSheet);
+				behavior.setDraggable(false);
+			}
 		}
 	}
 }
