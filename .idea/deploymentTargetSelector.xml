@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-06-11T12:55:06.003759Z">
+        <DropdownSelection timestamp="2024-06-11T15:32:41.405803Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Havic\.android\avd\Medium_Phone_API_34_2.avd" />

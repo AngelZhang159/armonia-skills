@@ -105,19 +105,23 @@
 
             <Button
                 android:id="@+id/btnAceptarVenta"
+                style="@style/Widget.Material3.Button.IconButton.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margen"
                 android:layout_weight="1"
-                android:text="@string/btn_aceptar_d" />
+                android:text="@string/btn_aceptar_d"
+                app:icon="@drawable/baseline_check_24" />
 
             <Button
+                style="@style/Widget.Material3.Button.IconButton.Outlined"
                 android:id="@+id/btnRechazarVenta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margen"
                 android:layout_weight="1"
-                android:text="@string/btn_cancelar_d" />
+                android:text="@string/btn_cancelar_d"
+                app:icon="@drawable/baseline_close_24" />
 
         </LinearLayout>
 
@@ -177,8 +181,40 @@
         </LinearLayout>
 
         <Button
+            app:icon="@drawable/baseline_local_shipping_24"
+            android:id="@+id/btnVentaEnviado"
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enviado" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvEstadoVenta6Enviado"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/margen"
+                android:text="• Enviado" />
+
+            <Button
+                android:id="@+id/btnInfoEnviadoVenta"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:icon="@drawable/baseline_info_outline_24" />
+
+        </LinearLayout>
+
+        <Button
             android:id="@+id/btnVentaCompletado"
             android:layout_width="match_parent"
+            app:icon="@drawable/baseline_check_24"
             android:layout_height="wrap_content"
             style="@style/Widget.Material3.Button.IconButton.Outlined"
             android:text="@string/completar_venta" />
@@ -189,7 +225,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvEstadoVenta6Completado"
+                android:id="@+id/tvEstadoVenta7Completado"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

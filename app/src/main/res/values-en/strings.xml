@@ -149,9 +149,13 @@
     <string name="completar_venta">Completed</string>
     <string name="completar_venta_info">The seller has delivered the order</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="aceptar">Accept</string>
+    <string name="cancelar">Cancel</string>
     <string name="comprar_skill">Hire skill</string>
     <string name="compra_correcta_mensaje">By clicking accept, you agree to be charged our refund insurance of €2.99, to return the product in case it is not correct</string>
     <string name="saldo_insuficiente">Insufficient balance</string>
+    <string name="enviado_venta">Shipped</string>
+    <string name="enviado_venta_info">The seller has shipped the product</string>
     <string name="error_token">Error al registrar token FCM</string>
     <string name="todos">All</string>
     <string name="notification_title">Enable notifications</string>
