@@ -170,4 +170,6 @@
     <string name="completado">• Completado</string>
     <string name="enviado">Enviado</string>
     <string name="skills_no_encontradas">No se han econtrado Skills con los filtros indicados</string>
+    <string name="pendiente">Pendiente</string>
+    <string name="aceptado">Aceptado</string>
 </resources>

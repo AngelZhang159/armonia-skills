@@ -169,4 +169,6 @@
     <string name="completado">• Completed</string>
     <string name="enviado">Shipped</string>
     <string name="skills_no_encontradas">No Skills have been found with the indicated filters</string>
+    <string name="pendiente">Pending</string>
+    <string name="aceptado">Accepted</string>
 </resources>

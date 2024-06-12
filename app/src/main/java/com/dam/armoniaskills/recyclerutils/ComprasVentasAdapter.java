@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -74,7 +75,27 @@ public class ComprasVentasAdapter extends RecyclerView.Adapter<ComprasVentasAdap
 		public void bindCompraVenta(ComprasVentasDTO comprasVentasDTO) {
 			tvNombreUsuario.setText(comprasVentasDTO.getUsername());
 			tvNombreSkill.setText(comprasVentasDTO.getSkillName());
-			tvStatus.setText(comprasVentasDTO.getStatus().toString());
+
+			String status = comprasVentasDTO.getStatus().toString();
+			String statusTraducido = "";
+			if (status.equals("PENDIENTE")){
+				statusTraducido = itemView.getContext().getString(R.string.pendiente);
+				tvStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.amarillo));
+			} else if (status.equals("ACEPTADO")){
+				statusTraducido = itemView.getContext().getString(R.string.aceptado);
+				tvStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.verde));
+			} else if (status.equals("RECHAZADO")){
+				statusTraducido = itemView.getContext().getString(R.string.rechazado);
+				tvStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.rojo));
+			} else if (status.equals("ENVIADO")){
+				statusTraducido = itemView.getContext().getString(R.string.enviado);
+				tvStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.azul));
+			} else if (status.equals("COMPLETADO")){
+				statusTraducido = itemView.getContext().getString(R.string.completado);
+				tvStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.verde));
+			}
+
+			tvStatus.setText(statusTraducido);
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", itemView.getResources().getConfiguration().getLocales().get(0));
 			String formattedDate = formatter.format(comprasVentasDTO.getDate());
 			tvHora.setText(formattedDate);

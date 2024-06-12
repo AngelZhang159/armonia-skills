@@ -37,7 +37,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvVentas"
                 android:layout_width="match_parent"
-                android:layout_height="250dp" />
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/dividerCarrito"
@@ -66,7 +66,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCompras"
                 android:layout_width="match_parent"
-                android:layout_height="250dp" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
