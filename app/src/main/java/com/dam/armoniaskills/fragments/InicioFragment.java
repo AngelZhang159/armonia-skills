@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dam.armoniaskills.R;
-import com.dam.armoniaskills.SeleccionActivity;
 import com.dam.armoniaskills.TopBarActivity;
 import com.dam.armoniaskills.listutils.AdapterPrecios;
 import com.dam.armoniaskills.listutils.CategoriaAdapter;
@@ -112,6 +110,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 				cargarSkills(titulo, query, precioSeleccionado);
 
 			}
+
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
 
@@ -132,6 +131,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
 
 			}
+
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
 
@@ -169,7 +169,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
 	private void cargarSkills(String category, String query, String rangoPrecio) {
 
-		if(query.isEmpty())
+		if (query.isEmpty())
 			query = "defaultQuery";
 
 		Log.i("alcachofas", "categoria: " + category + " query: " + query + " rangoPrecio: " + rangoPrecio);

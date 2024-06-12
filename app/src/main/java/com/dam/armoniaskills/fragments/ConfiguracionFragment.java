@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dam.armoniaskills.NuevaSkillActivity;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.TopBarActivity;
 import com.dam.armoniaskills.authentication.SharedPrefManager;
@@ -32,7 +31,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 import okhttp3.ResponseBody;
@@ -53,8 +51,6 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 	List<Uri> listaUris;
 	Uri imageUri;
 	int pos;
-	private Skill skill;
-
 	ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(
 			new ActivityResultContracts.PickVisualMedia(), uri -> {
 				if (uri != null && pos >= 0 && pos < listaUris.size()) {
@@ -71,6 +67,7 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 				}
 
 			});
+	private Skill skill;
 
 	public ConfiguracionFragment() {
 		// Required empty public constructor
@@ -133,9 +130,9 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 	}
 
 	private void configurarRv() {
-        adapter = new AdapterImagenes(listaUris, this);
-        rvImagenes.setLayoutManager(new GridLayoutManager(getContext(), 5));
-        rvImagenes.setAdapter(adapter);
+		adapter = new AdapterImagenes(listaUris, this);
+		rvImagenes.setLayoutManager(new GridLayoutManager(getContext(), 5));
+		rvImagenes.setAdapter(adapter);
 	}
 
 	@Override
@@ -192,14 +189,14 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 		for (int i = listaUris.size() - 1; i >= 0; i--) {
 			if (listaUris.get(i) == null) {
 				listaUris.remove(i);
-			} else if(listaUris.get(i).toString().contains("http")){
+			} else if (listaUris.get(i).toString().contains("http")) {
 				listaUris.remove(i);
 			}
 		}
 		CountDownLatch latch = new CountDownLatch(listaUris.size());
 
 
-		if(listaUris.isEmpty()){
+		if (listaUris.isEmpty()) {
 			updateSkill();
 		} else {
 			new Thread(() -> {
@@ -238,7 +235,6 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 				}
 			}).start();
 		}
-
 
 
 	}

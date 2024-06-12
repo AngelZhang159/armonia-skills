@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margen"
     android:layout_marginHorizontal="@dimen/margen"
+    android:layout_marginTop="@dimen/margen"
     app:cardCornerRadius="@dimen/margen"
     app:cardElevation="@dimen/margen">
 
@@ -36,6 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
+                    android:singleLine="true"
                     android:textSize="20sp" />
 
                 <TextView
@@ -53,12 +54,14 @@
                 android:id="@+id/tvServicioChat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvMensajeChat"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
 
         </LinearLayout>
 

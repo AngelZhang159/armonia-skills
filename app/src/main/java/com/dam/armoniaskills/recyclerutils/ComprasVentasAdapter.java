@@ -3,7 +3,6 @@ package com.dam.armoniaskills.recyclerutils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -79,7 +78,7 @@ public class ComprasVentasAdapter extends RecyclerView.Adapter<ComprasVentasAdap
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", itemView.getResources().getConfiguration().getLocales().get(0));
 			String formattedDate = formatter.format(comprasVentasDTO.getDate());
 			tvHora.setText(formattedDate);
-			tvPrecio.setText(String.format("%s €", comprasVentasDTO.getPrice()));
+			tvPrecio.setText(String.format(itemView.getResources().getString(R.string.dinero), comprasVentasDTO.getPrice()));
 
 			String url = "http://10.0.2.2:8080" + comprasVentasDTO.getImageURL();
 

@@ -38,16 +38,16 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/margen"
+                    android:gravity="center"
                     android:orientation="horizontal"
-                    android:gravity="center">
+                    android:padding="@dimen/margen">
 
                     <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/progressBarBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:showAnimationBehavior="outward"
                         android:indeterminate="true"
-                        android:id="@+id/progressBarBalance"/>
+                        app:showAnimationBehavior="outward" />
 
                     <TextView
                         android:id="@+id/tvDinero"
@@ -73,20 +73,26 @@
 
                     <Button
                         android:id="@+id/btnDepositarBalance"
+                        style="@style/Widget.Material3.Button.Icon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margen"
                         android:layout_weight="1"
+                        android:singleLine="true"
                         android:text="@string/btn_depositar"
+                        android:textSize="10sp"
                         app:icon="@drawable/baseline_add_24" />
 
                     <Button
                         android:id="@+id/btnRetirarBalance"
+                        style="@style/Widget.Material3.Button.Icon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margen"
                         android:layout_weight="1"
+                        android:singleLine="true"
                         android:text="@string/btn_retirar"
+                        android:textSize="10sp"
                         app:icon="@drawable/baseline_account_balance_24" />
 
                 </LinearLayout>

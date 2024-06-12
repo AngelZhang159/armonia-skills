@@ -31,12 +31,12 @@ import com.dam.armoniaskills.fragments.UsuarioFragment;
 import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.BuildConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.UUID;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

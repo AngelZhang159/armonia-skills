@@ -3,8 +3,6 @@ package com.dam.armoniaskills.dto;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-
 import com.dam.armoniaskills.model.StatusCompraEnum;
 
 import java.sql.Timestamp;
@@ -12,6 +10,17 @@ import java.util.UUID;
 
 public class ComprasVentasDTO implements Parcelable {
 
+	public static final Creator<ComprasVentasDTO> CREATOR = new Creator<ComprasVentasDTO>() {
+		@Override
+		public ComprasVentasDTO createFromParcel(Parcel in) {
+			return new ComprasVentasDTO(in);
+		}
+
+		@Override
+		public ComprasVentasDTO[] newArray(int size) {
+			return new ComprasVentasDTO[size];
+		}
+	};
 	private UUID id;
 	private String username;
 	private Timestamp date;
@@ -51,18 +60,6 @@ public class ComprasVentasDTO implements Parcelable {
 	public int describeContents() {
 		return 0;
 	}
-
-	public static final Creator<ComprasVentasDTO> CREATOR = new Creator<ComprasVentasDTO>() {
-		@Override
-		public ComprasVentasDTO createFromParcel(Parcel in) {
-			return new ComprasVentasDTO(in);
-		}
-
-		@Override
-		public ComprasVentasDTO[] newArray(int size) {
-			return new ComprasVentasDTO[size];
-		}
-	};
 
 	public UUID getId() {
 		return id;

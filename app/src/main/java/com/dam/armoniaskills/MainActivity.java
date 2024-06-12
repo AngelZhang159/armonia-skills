@@ -21,7 +21,6 @@ import com.dam.armoniaskills.authentication.SharedPrefManager;
 import com.dam.armoniaskills.fragments.BalanceFragment;
 import com.dam.armoniaskills.fragments.ChatListFragment;
 import com.dam.armoniaskills.fragments.InicioFragment;
-import com.dam.armoniaskills.fragments.MiPerfilFragment;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;

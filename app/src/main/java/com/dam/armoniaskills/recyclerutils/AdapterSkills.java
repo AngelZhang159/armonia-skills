@@ -151,7 +151,7 @@ public class AdapterSkills extends RecyclerView.Adapter<AdapterSkills.SkillsVH> 
 
 			slider.setImageList(listaSlide);
 
-			tvPrecio.setText(String.format(itemView.getContext().getString(R.string.tv_precio_inicio), skill.getPrice()));
+			tvPrecio.setText(String.format(itemView.getContext().getString(R.string.tv_precio_inicio), Double.parseDouble(skill.getPrice())));
 			tvTitulo.setText(skill.getTitle());
 
 			List<String> imageList = skill.getImageList();

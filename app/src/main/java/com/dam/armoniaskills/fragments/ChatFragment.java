@@ -42,11 +42,11 @@ import retrofit2.Response;
 
 public class ChatFragment extends Fragment {
 
+	LinearProgressIndicator progressBar;
 	private EditText messageInput;
 	private AdapterMensajes adapter;
 	private ArrayList<ChatMessage> chatMessages;
 	private RecyclerView rv;
-	LinearProgressIndicator progressBar;
 	private WebSocket webSocket;
 
 	@Override

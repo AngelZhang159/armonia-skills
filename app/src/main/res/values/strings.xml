@@ -81,7 +81,7 @@
     <string name="historial_ingreso">Has ingresado %1$.2f€</string>
     <string name="historial_pagado">Has pagado %1$.2f€</string>
     <string name="config">Configuración de la Skill</string>
-    <string name="tv_precio_inicio">%1$s €</string>
+    <string name="tv_precio_inicio" translatable="false">%1$.2f€</string>
     <string name="tv_retirar">¿Cuanto dinero quiere retirar?</string>
     <string name="hint_et_cantidad">Cantidad</string>
     <string name="cantidad_disponible">Cantidad disponible: %1$.2f€</string>
@@ -117,7 +117,7 @@
     <string name="precio_obligatorio">Debe introducir un precio</string>
     <string name="tv_info_basica">Información básica</string>
     <string name="tit_categoria">Categoría</string>
-    <string name="btn_subir_skill">Guardar Skill</string>
+    <string name="btn_subir_skill">Publicar Skill</string>
     <string name="btn_eliminar_skill">Eliminar Skill</string>
     <string name="valora_tu_experiencia">Valora tu experiencia</string>
     <string name="pulsa_estrellas">Pulsa en las estrellas para dejar tu valoración. A más estrellas, mejor experiencia</string>
@@ -136,7 +136,7 @@
     <string name="error_carrito_vacio">Sin compras</string>
     <string name="error_compra">Error al contratar la skill</string>
     <string name="compra_correcta">Skill contratada</string>
-    <string name="euro">€</string>
+    <string name="euro" translatable="false">€</string>
     <string name="tienes_una_nueva_venta">¡Tienes una nueva venta!</string>
     <string name="tienes_una_nueva_compra">¡Has realizado una compra!</string>
     <string name="aceptar_venta">Pendiente</string>
@@ -168,4 +168,5 @@
     <string name="contratado">• Contratado</string>
     <string name="preparando">• Preparando</string>
     <string name="completado">• Completado</string>
+    <string name="dinero" translatable="false">%.2f€</string>
 </resources>

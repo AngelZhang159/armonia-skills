@@ -88,7 +88,7 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
 				if (response.isSuccessful()) {
 					progressBar.setVisibility(View.GONE);
 					Double dinero = response.body();
-					tvDinero.setText(String.format("%s€", String.valueOf(dinero)));
+					tvDinero.setText(String.format(getString(R.string.dinero), dinero));
 				} else {
 					Toast.makeText(getContext(), R.string.error_balance, Toast.LENGTH_SHORT).show();
 				}

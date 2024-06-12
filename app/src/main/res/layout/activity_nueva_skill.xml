@@ -44,7 +44,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:layout_marginTop="@dimen/margen"
             android:hint="@string/hint_et_descripcion"
             app:endIconMode="clear_text">
@@ -52,9 +52,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDescNuevaSkill"
                 android:layout_width="match_parent"
-                android:layout_height="125dp"
+                android:layout_height="match_parent"
                 android:gravity="top"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -116,17 +116,16 @@
 
             <Button
                 android:id="@+id/btnConfirmarNuevaSkill"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/btn_subir_skill" />
 
             <Button
                 android:id="@+id/btnCancelarNuevaSkill"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margen"
-                android:layout_weight="2"
                 android:text="@string/btn_cancelar_d" />
 
         </LinearLayout>

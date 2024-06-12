@@ -98,7 +98,7 @@ public class RetirarFragment extends Fragment implements View.OnClickListener {
 			public void onResponse(@NonNull Call<Double> call, @NonNull retrofit2.Response<Double> response) {
 				if (response.isSuccessful()) {
 					Double dinero = response.body();
-					tvCantidad.setText(String.format("%s€", String.valueOf(dinero)));
+					tvCantidad.setText(String.format(getString(R.string.dinero), dinero));
 				} else {
 					Toast.makeText(getContext(), R.string.error_balance, Toast.LENGTH_SHORT).show();
 				}

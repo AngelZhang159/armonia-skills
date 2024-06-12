@@ -163,7 +163,7 @@ public class CompraVentaEstadoFragment extends BottomSheetDialogFragment {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", getResources().getConfiguration().getLocales().get(0));
 		String formattedDate = formatter.format(date);
 		tvFechaCompra.setText(formattedDate);
-		tvPrecioCompra.setText(String.format("%s €", compraVenta.getPrice()));
+		tvPrecioCompra.setText(String.format(getString(R.string.dinero), compraVenta.getPrice()));
 
 		switch (compraVenta.getStatus()) {
 			case PENDIENTE:

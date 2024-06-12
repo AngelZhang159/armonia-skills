@@ -71,8 +71,8 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 	RatingBar ratingBar;
 	LinearLayout llUserDetalle;
 	ScrollView scrollView;
+	String username, userImage;
 	private Skill skill;
-
 
 	public SkillFragment() {
 	}
@@ -113,6 +113,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 		ratingBar = v.findViewById(R.id.ratingBarSkill);
 		llUserDetalle = v.findViewById(R.id.llUserDetalle);
 		scrollView = v.findViewById(R.id.svSkillDetalle);
+		btnChat.setEnabled(false);
 
 		readUsuario();
 
@@ -128,24 +129,24 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 			fragmentTransaction.commit();
 		});
 
-		btnChat.setOnClickListener(v1 -> {
-			nuevoChat(new ChatCallback() {
-				@Override
-				public void onChatCreated(ChatRoom chatRoom) {
-					Log.d("SkillFragment", "Chat creado " + chatRoom.getId() + chatRoom.getSkillId() + chatRoom.getSenderId() + chatRoom.getReceiverId());
-					Intent i = new Intent(getContext(), TopBarActivity.class);
-					i.putExtra("rellenar", "fragmentoChat");
-					i.putExtra("chatId", chatRoom.getId().toString());
-					i.putExtra("otroUsuarioId", chatRoom.getReceiverId().toString());
-					startActivity(i);
-				}
+		btnChat.setOnClickListener(v1 -> nuevoChat(new ChatCallback() {
+			@Override
+			public void onChatCreated(ChatRoom chatRoom) {
+				Log.d("SkillFragment", "Chat creado " + chatRoom.getId() + chatRoom.getSkillId() + chatRoom.getSenderId() + chatRoom.getReceiverId());
+				Intent i = new Intent(getContext(), TopBarActivity.class);
+				i.putExtra("rellenar", "fragmentoChat");
+				i.putExtra("chatId", chatRoom.getId().toString());
+				i.putExtra("otroUsuarioId", chatRoom.getReceiverId().toString());
+				i.putExtra("userName", username);
+				i.putExtra("userImage", userImage);
+				startActivity(i);
+			}
 
-				@Override
-				public void onError() {
-					Toast.makeText(getContext(), R.string.error_crear_chat, Toast.LENGTH_SHORT).show();
-				}
-			});
-		});
+			@Override
+			public void onError() {
+				Toast.makeText(getContext(), R.string.error_crear_chat, Toast.LENGTH_SHORT).show();
+			}
+		}));
 
 		cargarSkill();
 
@@ -224,6 +225,11 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 					tvUsername.setText(user.getUsername());
 					tvTitVal.setText(String.format(getString(R.string.tit_valoraciones), user.getFullName()));
 
+					username = user.getUsername();
+					userImage = user.getImageURL();
+
+					btnChat.setEnabled(true);
+
 					if (!skill.getImageList().isEmpty()) {
 						cargarFondoDinamico(urlLocal + skill.getImageList().get(0), user);
 					}
@@ -238,7 +244,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 
 		slider.setImageList(listaSlide);
 
-		tvPrecio.setText(String.format(getString(R.string.tv_precio_inicio), skill.getPrice()));
+		tvPrecio.setText(String.format(getString(R.string.tv_precio_inicio), Double.parseDouble(skill.getPrice())));
 		tvTitulo.setText(skill.getTitle());
 		tvDescripcion.setText(skill.getDescription());
 

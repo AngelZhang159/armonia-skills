@@ -11,36 +11,36 @@ import com.dam.armoniaskills.R;
 
 public class AdapterPrecios extends ArrayAdapter<String> {
 
-    private Context context;
-    private String[] rangosPrecio;
+	private Context context;
+	private String[] rangosPrecio;
 
-    public AdapterPrecios(Context context, String[] rangosPrecio) {
-        super(context, R.layout.item_precio, rangosPrecio);
-        this.context = context;
-        this.rangosPrecio = rangosPrecio;
-    }
+	public AdapterPrecios(Context context, String[] rangosPrecio) {
+		super(context, R.layout.item_precio, rangosPrecio);
+		this.context = context;
+		this.rangosPrecio = rangosPrecio;
+	}
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_precio, parent, false);
-        }
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		if (convertView == null) {
+			convertView = LayoutInflater.from(context).inflate(R.layout.item_precio, parent, false);
+		}
 
-        TextView tvPrecio = convertView.findViewById(R.id.tvRangoPrecio);
-        tvPrecio.setText(rangosPrecio[position]);
+		TextView tvPrecio = convertView.findViewById(R.id.tvRangoPrecio);
+		tvPrecio.setText(rangosPrecio[position]);
 
-        return convertView;
-    }
+		return convertView;
+	}
 
-    @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
-        }
+	@Override
+	public View getDropDownView(int position, View convertView, ViewGroup parent) {
+		if (convertView == null) {
+			convertView = LayoutInflater.from(context).inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
+		}
 
-        TextView label = convertView.findViewById(android.R.id.text1);
-        label.setText(rangosPrecio[position]);
+		TextView label = convertView.findViewById(android.R.id.text1);
+		label.setText(rangosPrecio[position]);
 
-        return convertView;
-    }
+		return convertView;
+	}
 }

@@ -114,8 +114,8 @@
                 app:icon="@drawable/baseline_check_24" />
 
             <Button
-                style="@style/Widget.Material3.Button.IconButton.Outlined"
                 android:id="@+id/btnRechazarVenta"
+                style="@style/Widget.Material3.Button.IconButton.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margen"
@@ -181,12 +181,12 @@
         </LinearLayout>
 
         <Button
-            app:icon="@drawable/baseline_local_shipping_24"
             android:id="@+id/btnVentaEnviado"
             style="@style/Widget.Material3.Button.IconButton.Outlined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enviado" />
+            android:text="Enviado"
+            app:icon="@drawable/baseline_local_shipping_24" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -213,11 +213,11 @@
 
         <Button
             android:id="@+id/btnVentaCompletado"
-            android:layout_width="match_parent"
-            app:icon="@drawable/baseline_check_24"
-            android:layout_height="wrap_content"
             style="@style/Widget.Material3.Button.IconButton.Outlined"
-            android:text="@string/completar_venta" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/completar_venta"
+            app:icon="@drawable/baseline_check_24" />
 
         <LinearLayout
             android:layout_width="match_parent"

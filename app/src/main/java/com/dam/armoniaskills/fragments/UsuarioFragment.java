@@ -25,6 +25,7 @@ import com.dam.armoniaskills.model.Skill;
 import com.dam.armoniaskills.network.RetrofitClient;
 import com.dam.armoniaskills.recyclerutils.AdapterReviews;
 import com.dam.armoniaskills.recyclerutils.AdapterSkills;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class UsuarioFragment extends Fragment implements View.OnClickListener {
 	RecyclerView rv;
 	PerfilDTO perfilDTO;
 	TabLayout tabLayout;
+	LinearProgressIndicator progressBar;
 	private String userId;
 
 	public UsuarioFragment() {
@@ -80,6 +82,7 @@ public class UsuarioFragment extends Fragment implements View.OnClickListener {
 		ratingBar = view.findViewById(R.id.ratingBarUsuarioPerfil);
 		rv = view.findViewById(R.id.rvUsuarioPerfil);
 		tvNumReviews = view.findViewById(R.id.tvNumReviews);
+		progressBar = view.findViewById(R.id.progressBarUsuarioPerfil);
 
 		tabLayout = view.findViewById(R.id.tlUsuarioPerfil);
 		tabLayout.setEnabled(false);
@@ -120,6 +123,7 @@ public class UsuarioFragment extends Fragment implements View.OnClickListener {
 
 					configurarRVSkills(perfilDTO.getSkills());
 					tabLayout.setEnabled(true);
+					progressBar.hide();
 
 					encenderTablayout();
 				}
@@ -128,6 +132,7 @@ public class UsuarioFragment extends Fragment implements View.OnClickListener {
 			@Override
 			public void onFailure(Call<PerfilDTO> call, Throwable t) {
 				// Handle the error here
+				progressBar.hide();
 			}
 		});
 	}
@@ -154,7 +159,7 @@ public class UsuarioFragment extends Fragment implements View.OnClickListener {
 	}
 
 	private void configurarRVReviews(List<Review> reviews) {
-		AdapterReviews adapter = new AdapterReviews(new ArrayList<>(reviews), R.color.md_theme_surface);
+		AdapterReviews adapter = new AdapterReviews(new ArrayList<>(reviews), getResources().getColor(R.color.md_theme_surface));
 		rv.setLayoutManager(new LinearLayoutManager(getContext()));
 		rv.setAdapter(adapter);
 	}

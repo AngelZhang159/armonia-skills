@@ -69,11 +69,11 @@
             android:id="@+id/progressBarInicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:showAnimationBehavior="inward"
+            android:indeterminate="true"
             app:hideAnimationBehavior="outward"
             app:layout_anchor="@id/appBarLayout"
-            android:indeterminate="true"
-            app:layout_anchorGravity="bottom" />
+            app:layout_anchorGravity="bottom"
+            app:showAnimationBehavior="inward" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSkills"
