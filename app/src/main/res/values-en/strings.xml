@@ -95,7 +95,7 @@
     <string name="tvAniadirVal">Submit your review</string>
     <string name="tv_estrellas">%1$d</string>
     <string name="tv_media_reviews">" (%1$d)"</string>
-    <string name="tit_valoraciones">%1$s reviews</string>
+    <string name="tit_valoraciones">%1$s \'s reviews</string>
     <string name="editar_skill">Edit Skill</string>
     <string name="hint_et_descripcion">Description*</string>
     <string name="hint_et_precio">Price*</string>
@@ -168,4 +168,5 @@
     <string name="preparando">• Preparing</string>
     <string name="completado">• Completed</string>
     <string name="enviado">Shipped</string>
+    <string name="skills_no_encontradas">No Skills have been found with the indicated filters</string>
 </resources>

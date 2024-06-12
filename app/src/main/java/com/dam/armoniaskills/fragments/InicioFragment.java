@@ -184,6 +184,10 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 				if (response.isSuccessful()) {
 					listaSkills.clear();
 					listaSkills.addAll(response.body());
+
+					if (listaSkills.isEmpty()) {
+						Toast.makeText(getContext(), R.string.skills_no_encontradas, Toast.LENGTH_SHORT).show();
+					}
 					Log.i("alcachofas", "onResponse: " + listaSkills.size());
 					if (adapter == null) {
 						Log.i("alcachofas", "adapter null: " + listaSkills.size());
@@ -192,7 +196,6 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 					} else {
 						adapter.notifyDataSetChanged();
 						Log.i("alcachofas", "adapter no null: " + listaSkills.size());
-
 					}
 				}
 			}
