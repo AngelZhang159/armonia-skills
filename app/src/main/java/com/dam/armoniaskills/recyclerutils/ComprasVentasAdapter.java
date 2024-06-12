@@ -78,7 +78,7 @@ public class ComprasVentasAdapter extends RecyclerView.Adapter<ComprasVentasAdap
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", itemView.getResources().getConfiguration().getLocales().get(0));
 			String formattedDate = formatter.format(comprasVentasDTO.getDate());
 			tvHora.setText(formattedDate);
-			tvPrecio.setText(String.format(itemView.getResources().getString(R.string.dinero), comprasVentasDTO.getPrice()));
+			tvPrecio.setText(String.format(itemView.getResources().getString(R.string.tv_precio_inicio), comprasVentasDTO.getPrice()));
 
 			String url = "http://10.0.2.2:8080" + comprasVentasDTO.getImageURL();
 

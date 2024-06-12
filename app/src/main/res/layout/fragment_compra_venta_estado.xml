@@ -181,12 +181,12 @@
         </LinearLayout>
 
         <Button
+            app:icon="@drawable/baseline_local_shipping_24"
             android:id="@+id/btnVentaEnviado"
             style="@style/Widget.Material3.Button.IconButton.Outlined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enviado"
-            app:icon="@drawable/baseline_local_shipping_24" />
+            android:text="Enviado" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -213,11 +213,11 @@
 
         <Button
             android:id="@+id/btnVentaCompletado"
-            style="@style/Widget.Material3.Button.IconButton.Outlined"
             android:layout_width="match_parent"
+            app:icon="@drawable/baseline_check_24"
             android:layout_height="wrap_content"
-            android:text="@string/completar_venta"
-            app:icon="@drawable/baseline_check_24" />
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            android:text="@string/completar_venta" />
 
         <LinearLayout
             android:layout_width="match_parent"

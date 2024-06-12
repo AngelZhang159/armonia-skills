@@ -117,7 +117,7 @@
     <string name="precio_obligatorio">Debe introducir un precio</string>
     <string name="tv_info_basica">Información básica</string>
     <string name="tit_categoria">Categoría</string>
-    <string name="btn_subir_skill">Publicar Skill</string>
+    <string name="btn_subir_skill">Guardar Skill</string>
     <string name="btn_eliminar_skill">Eliminar Skill</string>
     <string name="valora_tu_experiencia">Valora tu experiencia</string>
     <string name="pulsa_estrellas">Pulsa en las estrellas para dejar tu valoración. A más estrellas, mejor experiencia</string>
@@ -168,5 +168,5 @@
     <string name="contratado">• Contratado</string>
     <string name="preparando">• Preparando</string>
     <string name="completado">• Completado</string>
-    <string name="dinero" translatable="false">%.2f€</string>
+    <string name="enviado">Enviado</string>
 </resources>
