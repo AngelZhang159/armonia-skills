@@ -43,8 +43,8 @@
     <string name="btn_cerrar_sesion">Sign out</string>
     <string name="seleccionar_img">No image selected</string>
     <string name="dialog_msg_perfil">Are you sure you want to lsign out?</string>
-    <string name="btn_aceptar_d">Yes</string>
-    <string name="btn_cancelar_d">No</string>
+    <string name="btn_aceptar_d">Accept</string>
+    <string name="btn_cancelar_d">Cancel</string>
     <string name="hint_et_username">Username*</string>
     <string name="contra_obligatoria">You must enter a password to change it</string>
     <string name="rep_contra_obligatoria">You must repeat the password</string>

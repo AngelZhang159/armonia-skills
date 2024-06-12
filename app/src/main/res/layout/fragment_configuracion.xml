@@ -30,7 +30,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margen"
+            android:layout_marginTop="@dimen/margen"
             android:hint="@string/hint_et_titulo"
             app:endIconMode="clear_text">
 
@@ -43,22 +43,23 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_margin="@dimen/margen"
+            android:layout_height="wrap_content"
             android:hint="@string/hint_et_descripcion"
+            android:layout_marginTop="@dimen/margen"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDescripcionConfig"
                 android:layout_width="match_parent"
                 android:inputType="textMultiLine"
-                android:layout_height="match_parent" />
+                android:gravity="top"
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margen"
+            android:layout_marginTop="@dimen/margen"
             android:hint="@string/hint_et_precio"
             app:endIconMode="clear_text">
 

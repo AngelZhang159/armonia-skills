@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dam.armoniaskills.MainActivity;
 import com.dam.armoniaskills.R;
 import com.dam.armoniaskills.TopBarActivity;
 import com.dam.armoniaskills.authentication.SharedPrefManager;
@@ -275,8 +276,7 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 			@Override
 			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 				Toast.makeText(getContext(), R.string.skill_eliminada, Toast.LENGTH_SHORT).show();
-				Intent intent = new Intent(getContext(), TopBarActivity.class);
-				intent.putExtra("rellenar", "fragmentoPerfil");
+				Intent intent = new Intent(getContext(), MainActivity.class);
 				startActivity(intent);
 			}
 
