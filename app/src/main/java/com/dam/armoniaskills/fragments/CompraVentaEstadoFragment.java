@@ -157,7 +157,7 @@ public class CompraVentaEstadoFragment extends BottomSheetDialogFragment {
 
 	private void configurarDatos(ComprasVentasDTO compraVenta, boolean esVenta) {
 		tvNombreUsuario.setText(compraVenta.getUsername());
-		String url = "http://10.0.2.2:8080" + compraVenta.getImageURL();
+		String url = "http://54.224.230.212:8080" + compraVenta.getImageURL();
 		Glide.with(getContext()).load(url).into(ivFotoPerfil);
 		Date date = compraVenta.getDate();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", getResources().getConfiguration().getLocales().get(0));

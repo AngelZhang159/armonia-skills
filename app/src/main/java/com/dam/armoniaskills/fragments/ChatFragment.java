@@ -157,7 +157,7 @@ public class ChatFragment extends Fragment {
 				.build();
 
 		Request request = new Request.Builder()
-				.url("ws://10.0.2.2:8080/ws")
+				.url("ws://54.224.230.212:8080/ws")
 				.addHeader("Authorization", token)
 				.build();
 

@@ -18,11 +18,9 @@ import java.util.List;
 public class AdapterReviews extends RecyclerView.Adapter<AdapterReviews.ReviewVH> {
 
 	List<Review> listaReviews;
-	int textColor;
 
-	public AdapterReviews(List<Review> listaReviews, int textColor) {
+	public AdapterReviews(List<Review> listaReviews) {
 		this.listaReviews = listaReviews;
-		this.textColor = textColor;
 	}
 
 	@NonNull
@@ -58,10 +56,7 @@ public class AdapterReviews extends RecyclerView.Adapter<AdapterReviews.ReviewVH
 		}
 
 		public void bindReview(Review review) {
-			String urlLocal = "http://10.0.2.2:8080";
-			tvEstrellas.setTextColor(textColor);
-			tvValoracion.setTextColor(textColor);
-			tvUser.setTextColor(textColor);
+			String urlLocal = "http://54.224.230.212:8080";
 
 			if (review.getImageUrl() == null) {
 				ivUser.setImageResource(R.drawable.user);

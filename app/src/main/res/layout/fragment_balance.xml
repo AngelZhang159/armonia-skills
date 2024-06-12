@@ -111,6 +111,7 @@
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_gravity="end"
             android:text="@string/eliminar_hist" />
 
@@ -118,6 +119,7 @@
             android:id="@+id/rvBalance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:padding="@dimen/margen" />
 
     </LinearLayout>

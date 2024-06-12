@@ -110,7 +110,7 @@ public class MiPerfilFragment extends Fragment implements View.OnClickListener {
 	}
 
 	private void configurarRVReviews(List<Review> reviews) {
-		AdapterReviews adapter = new AdapterReviews(new ArrayList<>(reviews), getResources().getColor(R.color.md_theme_surface));
+		AdapterReviews adapter = new AdapterReviews(new ArrayList<>(reviews));
 		rv.setLayoutManager(new LinearLayoutManager(getContext()));
 		rv.setAdapter(adapter);
 	}
@@ -176,7 +176,7 @@ public class MiPerfilFragment extends Fragment implements View.OnClickListener {
 						if (perfilDTO.getFoto() == null) {
 							Glide.with(getActivity()).load(R.drawable.user).into(imvUser);
 						} else {
-							String url = "http://10.0.2.2:8080" + perfilDTO.getFoto();
+							String url = "http://54.224.230.212:8080" + perfilDTO.getFoto();
 							Glide.with(getActivity()).load(url).into(imvUser);
 						}
 					}

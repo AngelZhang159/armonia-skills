@@ -167,7 +167,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 
 			tvValoracion.setText(String.format(getString(R.string.tv_media_reviews), listaReviews.size()));
 
-			adapter = new AdapterReviews(listaReviews, textColor);
+			adapter = new AdapterReviews(listaReviews);
 			rv.setLayoutManager(new LinearLayoutManager(getContext()));
 			rv.setAdapter(adapter);
 		} else {
@@ -206,7 +206,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 
 	private void cargarSkill() {
 		List<SlideModel> listaSlide = new ArrayList<>();
-		String urlLocal = "http://10.0.2.2:8080";
+		String urlLocal = "http://54.224.230.212:8080";
 
 		for (String url : skill.getImageList()) {
 			url = urlLocal + url;

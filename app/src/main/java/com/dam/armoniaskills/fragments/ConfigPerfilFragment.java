@@ -309,7 +309,7 @@ public class ConfigPerfilFragment extends Fragment implements View.OnClickListen
 						}
 
 						if (!imageURL.isEmpty() && !imageURL.equals("null")) {
-							imageURL = "http://10.0.2.2:8080" + imageURL;
+							imageURL = "http://54.224.230.212:8080" + imageURL;
 							Glide.with(getContext())
 									.load(imageURL)
 									.into(ivPerfil);
