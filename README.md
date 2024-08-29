@@ -15,8 +15,15 @@
 
 ## Descripción del Proyecto
 
-![imagen](https://github.com/user-attachments/assets/5d6063e1-7794-4b0c-8db2-31d255e0a77c)
+<img src="https://github.com/user-attachments/assets/66fe9679-1801-4505-9b0f-353bc20afee2" width="200" padding="10">
+<img src="https://github.com/user-attachments/assets/c426858b-bf96-4490-a779-e94428fcc3c0" width="200" padding="10">
+<img src="https://github.com/user-attachments/assets/ca270432-8978-44d9-95c9-366144303eda" width="200" padding="10">
+<img src="https://github.com/user-attachments/assets/83fcbfa2-e75c-41e0-a3ef-89f672ced72d" width="200" padding="10">
+<img src="https://github.com/user-attachments/assets/ad574fa4-eab3-4934-80cc-4848afd99129" width="200" padding="10">
+<img src="https://github.com/user-attachments/assets/bc7cce10-9d4a-4e41-8dbf-ad10e3417513" width="200" padding="10">
+<img src="https://github.com/user-attachments/assets/6db206ff-057f-42d7-9feb-bb02bf5c78db" width="200" padding="10">
 
+![imagen](https://github.com/user-attachments/assets/5d6063e1-7794-4b0c-8db2-31d255e0a77c)
 
 Armonía Skills se basa en una arquitectura cliente-servidor, donde la aplicación Android interactúa con un backend en SpringBoot a través de una API REST que permite operaciones CRUD. Esta solución facilita la creación y gestión de servicios por parte de los usuarios y su contratación por otros.
 
