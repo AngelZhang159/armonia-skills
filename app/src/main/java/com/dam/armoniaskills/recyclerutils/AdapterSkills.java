@@ -121,7 +121,7 @@ public class AdapterSkills extends RecyclerView.Adapter<AdapterSkills.SkillsVH> 
 
 		public void bindSkill(Skill skill) {
 
-			String urlLocal = "http://54.224.230.212:8080";
+			String urlLocal = "http://13.39.104.96:8080";
 
 			getUser(skill.getUserID(), new UserCallback() {
 				@Override

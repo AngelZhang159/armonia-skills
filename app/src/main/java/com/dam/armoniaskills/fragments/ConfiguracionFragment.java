@@ -95,7 +95,7 @@ public class ConfiguracionFragment extends Fragment implements View.OnClickListe
 							 Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_configuracion, container, false);
 
-		String urlLocal = "http://54.224.230.212:8080";
+		String urlLocal = "http://13.39.104.96:8080";
 
 		etTitulo = v.findViewById(R.id.etTituloConfig);
 		etDescripcion = v.findViewById(R.id.etDescripcionConfig);

@@ -206,7 +206,7 @@ public class SkillFragment extends Fragment implements View.OnClickListener {
 
 	private void cargarSkill() {
 		List<SlideModel> listaSlide = new ArrayList<>();
-		String urlLocal = "http://54.224.230.212:8080";
+		String urlLocal = "http://13.39.104.96:8080";
 
 		for (String url : skill.getImageList()) {
 			url = urlLocal + url;

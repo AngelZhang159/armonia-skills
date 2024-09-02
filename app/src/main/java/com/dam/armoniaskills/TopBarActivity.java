@@ -118,7 +118,7 @@ public class TopBarActivity extends AppCompatActivity {
 		String otroUsuarioId = getIntent().getStringExtra("otroUsuarioId");
 
 		if (foto != null) {
-			String url = "http://54.224.230.212:8080" + foto;
+			String url = "http://13.39.104.96:8080" + foto;
 			Glide.with(this).load(url).into(userImage);
 		} else {
 			userImage.setImageResource(R.drawable.user);

@@ -102,7 +102,7 @@ public class UsuarioFragment extends Fragment implements View.OnClickListener {
 					if (perfilDTO.getFoto() == null) {
 						Glide.with(getContext()).load(R.drawable.user).into(imvUser);
 					} else {
-						String url = "http://54.224.230.212:8080" + perfilDTO.getFoto();
+						String url = "http://13.39.104.96:8080" + perfilDTO.getFoto();
 						Glide.with(getContext()).load(url).into(imvUser);
 					}
 					tvUsername.setText(perfilDTO.getNombre());

@@ -112,7 +112,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ChatVH> implem
 			}
 
 			if (chatDTO.getFotoPerfil() != null) {
-				String url = "http://54.224.230.212:8080" + chatDTO.getFotoPerfil();
+				String url = "http://13.39.104.96:8080" + chatDTO.getFotoPerfil();
 
 				Glide.with(itemView).load(url).into(iv);
 			}

@@ -101,7 +101,7 @@ public class ComprasVentasAdapter extends RecyclerView.Adapter<ComprasVentasAdap
 			tvHora.setText(formattedDate);
 			tvPrecio.setText(String.format(itemView.getResources().getString(R.string.tv_precio_inicio), comprasVentasDTO.getPrice()));
 
-			String url = "http://54.224.230.212:8080" + comprasVentasDTO.getImageURL();
+			String url = "http://13.39.104.96:8080" + comprasVentasDTO.getImageURL();
 
 			Glide.with(itemView.getContext())
 					.load(url)
