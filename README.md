@@ -23,8 +23,6 @@
 <img src="https://github.com/user-attachments/assets/bc7cce10-9d4a-4e41-8dbf-ad10e3417513" width="200" padding="10">
 <img src="https://github.com/user-attachments/assets/6db206ff-057f-42d7-9feb-bb02bf5c78db" width="200" padding="10">
 
-![imagen](https://github.com/user-attachments/assets/5d6063e1-7794-4b0c-8db2-31d255e0a77c)
-
 Armonía Skills se basa en una arquitectura cliente-servidor, donde la aplicación Android interactúa con un backend en SpringBoot a través de una API REST que permite operaciones CRUD. Esta solución facilita la creación y gestión de servicios por parte de los usuarios y su contratación por otros.
 
 ## Funcionalidades Principales
@@ -42,8 +40,15 @@ Armonía Skills se basa en una arquitectura cliente-servidor, donde la aplicaci�
 
 ## Instalación
 
+### Versión Release
+
+1. **Descarga el .apk en un dispositivo o emulador Android**
+2. **Instala el .apk en el dispositivo**
+
+### Clonando el proyecto
+
 1. **Clona el Proyecto**: Descarga el código fuente del repositorio y ábrelo en Android Studio.
-2. **Configura el Backend**: Si has iniciado el backend, realiza un "Replace All" de la IP del servidor (13.38.130.77) por tu propia IP, ya que la IP actual no está activa.
+2. **Configura el Backend**: Si quieres utilizar tu propia instancia del Backend, realiza un "Replace All" de la IP del servidor por tu propia IP.
 3. **Ejecuta la Aplicación**: Haz clic en "Run" en Android Studio para ejecutar la aplicación en un emulador o dispositivo físico.
 4. **Dispositivo Físico** (Opcional): Si deseas usar un dispositivo Android, activa la depuración USB en los ajustes de desarrollador y conéctalo a tu computadora mediante USB (también es posible la conexión por Wi-Fi). Luego, haz clic en "Run" en Android Studio.
 
