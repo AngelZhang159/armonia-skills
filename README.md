@@ -42,6 +42,13 @@ Armonía Skills se basa en una arquitectura cliente-servidor, donde la aplicaci�
 
 ## Instalación
 
+### Versión Release
+
+1. **Descarga el .apk en un dispositivo o emulador Android**
+2. **Instala el .apk en el dispositivo**
+
+### Clonando el proyecto
+
 1. **Clona el Proyecto**: Descarga el código fuente del repositorio y ábrelo en Android Studio.
 2. **Configura el Backend**: Si has iniciado el backend, realiza un "Replace All" de la IP del servidor (13.38.130.77) por tu propia IP, ya que la IP actual no está activa.
 3. **Ejecuta la Aplicación**: Haz clic en "Run" en Android Studio para ejecutar la aplicación en un emulador o dispositivo físico.
